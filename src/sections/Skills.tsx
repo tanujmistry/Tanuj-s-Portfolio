@@ -68,8 +68,8 @@ export const Skills: React.FC = () => {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 font-mono text-xs text-[#4ADEDE] light:text-[#0284C7] tracking-wider uppercase font-bold">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#60F1AD]" />
+            <div className="inline-flex items-center gap-2 font-mono text-xs text-[#4ADEDE] light:text-[#EA580C] tracking-wider uppercase font-bold">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#60F1AD] light:bg-[#FDBA74]" />
               <span>// 02 — TECHNICAL SKILLS</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold text-[#FFFFFF] light:text-[#111827] font-sans tracking-tight">
@@ -81,7 +81,7 @@ export const Skills: React.FC = () => {
           </div>
 
           {/* Quick Domain Filter Tabs */}
-          <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-[#18181B] light:bg-[#F3F4F6] border border-[#27272A] light:border-gray-300 text-xs font-mono">
+          <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] text-xs font-mono">
             {[
               { id: 'all', label: 'All Disciplines' },
               { id: 'hardware', label: 'Hardware & FPGA' },
@@ -93,8 +93,8 @@ export const Skills: React.FC = () => {
                 onClick={() => setActiveFilter(tab.id as FilterTab)}
                 className={`px-3.5 py-1.5 rounded-lg transition-all cursor-pointer ${
                   activeFilter === tab.id
-                    ? 'bg-[#4ADEDE] text-[#030712] font-bold shadow-sm'
-                    : 'text-[#A1A1AA] light:text-[#4B5563] hover:text-[#FFFFFF] light:hover:text-[#111827] hover:bg-[#27272A] light:hover:bg-[#E5E7EB]'
+                    ? 'bg-[#4ADEDE] light:bg-[#EA580C] text-[#030712] light:text-white font-bold shadow-sm'
+                    : 'text-[#A1A1AA] hover:text-[#FFFFFF] hover:bg-[#27272A]'
                 }`}
               >
                 {tab.label}
@@ -117,26 +117,26 @@ export const Skills: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.45, delay: index * 0.08 }}
-                className="group relative rounded-2xl bg-[#18181B] light:bg-white border border-[#27272A] light:border-gray-200 hover:border-[#4ADEDE] transition-all duration-300 p-6 flex flex-col justify-between shadow-card hover:-translate-y-1"
+                className="group relative rounded-2xl bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] hover:border-[#4ADEDE] light:hover:border-[#EA580C] transition-all duration-300 p-6 flex flex-col justify-between shadow-card hover:-translate-y-1"
               >
                 <div>
                   {/* Card Header: Icon + Title + Skill Count */}
-                  <div className="flex items-center justify-between gap-3 pb-4 mb-5 border-b border-[#27272A] light:border-gray-200">
+                  <div className="flex items-center justify-between gap-3 pb-4 mb-5 border-b border-[#27272A] light:border-[#374151]">
                     <div className="flex items-center gap-3">
-                      <div className="p-2.5 rounded-xl bg-[#030712] light:bg-[#F3F4F6] border border-[#27272A] light:border-gray-200 text-[#4ADEDE]">
+                      <div className="p-2.5 rounded-xl bg-[#030712] light:bg-[#0E1013] border border-[#27272A] light:border-[#374151] text-[#4ADEDE] light:text-[#EA580C]">
                         {getCategoryIcon(cat.iconName)}
                       </div>
                       <div>
-                        <h3 className="text-base font-bold text-[#FFFFFF] light:text-[#111827] font-sans">
+                        <h3 className="text-base font-bold text-[#FFFFFF] light:text-white font-sans">
                           {cat.title}
                         </h3>
-                        <span className="font-mono text-[10px] text-[#A1A1AA] light:text-[#6B7280]">
+                        <span className="font-mono text-[10px] text-[#A1A1AA] light:text-gray-400">
                           // DOMAIN 0{index + 1}
                         </span>
                       </div>
                     </div>
 
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#030712] light:bg-[#F3F4F6] text-[#60F1AD] light:text-[#059669] border border-[#27272A] light:border-gray-200">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#030712] light:bg-[#0E1013] text-[#60F1AD] light:text-[#FDBA74] border border-[#27272A] light:border-[#374151]">
                       {cat.skills.length} skills
                     </span>
                   </div>
@@ -150,12 +150,12 @@ export const Skills: React.FC = () => {
                           key={skill}
                           className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono transition-all duration-200 cursor-default select-none ${
                             isHighlighted
-                              ? 'bg-[#4ADEDE] text-[#030712] border border-[#4ADEDE] font-bold shadow-sm'
-                              : 'bg-[#030712] light:bg-[#F3F4F6] text-[#FFFFFF] light:text-[#111827] border border-[#27272A] light:border-gray-300 hover:border-[#60F1AD]'
+                              ? 'bg-[#4ADEDE] light:bg-[#EA580C] text-[#030712] light:text-white border border-[#4ADEDE] light:border-[#EA580C] font-bold shadow-sm'
+                              : 'bg-[#030712] light:bg-[#0E1013] text-[#FFFFFF] light:text-white border border-[#27272A] light:border-[#374151] hover:border-[#60F1AD] light:hover:border-[#EA580C]'
                           }`}
                         >
                           {isHighlighted && (
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#030712]" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#030712] light:bg-white" />
                           )}
                           {skill}
                         </span>
@@ -165,9 +165,9 @@ export const Skills: React.FC = () => {
                 </div>
 
                 {/* Subdued Bottom Indicator */}
-                <div className="mt-6 pt-3 border-t border-[#27272A] light:border-gray-200 flex items-center justify-between text-[10px] font-mono text-[#A1A1AA] light:text-[#6B7280]">
+                <div className="mt-6 pt-3 border-t border-[#27272A] light:border-[#374151] flex items-center justify-between text-[10px] font-mono text-[#A1A1AA] light:text-gray-400">
                   <span className="flex items-center gap-1">
-                    <span className="w-1 h-1 rounded-full bg-[#60F1AD]" />
+                    <span className="w-1 h-1 rounded-full bg-[#60F1AD] light:bg-[#FDBA74]" />
                     Verified Production / Lab Experience
                   </span>
                 </div>
@@ -179,9 +179,9 @@ export const Skills: React.FC = () => {
         {/* Bottom Legend */}
         <div className="mt-8 pt-4 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#A1A1AA] light:text-[#4B5563] border-t border-[#27272A] light:border-gray-200 px-2">
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1 text-[#4ADEDE] font-bold">
-              <span className="w-2 h-2 rounded-full bg-[#4ADEDE]" />
-              <span>Cyan Badge:</span>
+            <span className="inline-flex items-center gap-1 text-[#4ADEDE] light:text-[#EA580C] font-bold">
+              <span className="w-2 h-2 rounded-full bg-[#4ADEDE] light:bg-[#EA580C]" />
+              <span>Core Badge:</span>
             </span>
             <span>Flagship project / core specialization stack</span>
           </div>

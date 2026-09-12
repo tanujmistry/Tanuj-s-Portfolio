@@ -128,18 +128,18 @@ export const Navbar: React.FC = () => {
                     onClick={(e) => scrollToSection(e, link.href)}
                     className={`relative px-3 py-1.5 text-xs font-mono transition-all duration-200 rounded-md group ${
                       isActive
-                        ? 'text-[#4ADEDE] light:text-[#050505] font-semibold'
-                        : 'text-[#A1A1AA] light:text-[#4B5563] hover:text-white light:hover:text-[#111827] hover:bg-[#18181B] light:hover:bg-[#F4F4F5]'
+                        ? 'text-[#4ADEDE] light:text-[#EA580C] font-semibold'
+                        : 'text-[#A1A1AA] light:text-[#4B5563] hover:text-white light:hover:text-[#111827] hover:bg-[#18181B] light:hover:bg-[#FFF7ED]'
                     }`}
                   >
-                    <span className="text-[#60F1AD] light:text-[#9CA3AF] mr-1 text-[10px]">
+                    <span className="text-[#60F1AD] light:text-[#EA580C] mr-1 text-[10px]">
                       0{idx + 1}.
                     </span>
                     {link.name}
                     {isActive && (
                       <motion.div
                         layoutId="activeNavIndicator"
-                        className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#4ADEDE] light:bg-[#050505] rounded-full"
+                        className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#4ADEDE] light:bg-[#EA580C] rounded-full"
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -177,7 +177,7 @@ export const Navbar: React.FC = () => {
                   onClick={() => setTheme('light')}
                   className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono transition-all duration-200 cursor-pointer ${
                     theme === 'light'
-                      ? 'bg-white text-[#0284C7] border border-[#0284C7]/40 shadow-sm font-bold'
+                      ? 'bg-white text-[#EA580C] border border-[#EA580C]/40 shadow-sm font-bold'
                       : 'text-[#A1A1AA] light:text-[#6B7280] hover:text-[#111827]'
                   }`}
                   aria-checked={theme === 'light'}
@@ -192,10 +192,10 @@ export const Navbar: React.FC = () => {
               <a
                 href="/Tanuj_Mistry_Resume.pdf"
                 download="Tanuj_Mistry_Resume.pdf"
-                className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-mono tracking-wide text-[#030712] font-bold bg-[#4ADEDE] hover:bg-[#3bc4c4] border border-[#4ADEDE] shadow-md transition-all duration-200"
+                className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-mono tracking-wide text-[#030712] light:text-white font-bold bg-[#4ADEDE] light:bg-[#EA580C] hover:bg-[#3bc4c4] light:hover:bg-[#C2410C] border border-[#4ADEDE] light:border-[#EA580C] shadow-md transition-all duration-200"
                 aria-label="Download Resume"
               >
-                <FileDown className="w-3.5 h-3.5 text-[#030712]" />
+                <FileDown className="w-3.5 h-3.5 text-[#030712] light:text-white" />
                 <span>Resume</span>
               </a>
 
@@ -265,7 +265,7 @@ export const Navbar: React.FC = () => {
                         onClick={() => setTheme('light')}
                         className={`flex items-center gap-1 px-2 py-1 rounded text-[11px] font-mono transition-all ${
                           theme === 'light'
-                            ? 'bg-white text-[#0284C7] border border-[#0284C7]/40 font-bold'
+                            ? 'bg-white text-[#EA580C] border border-[#EA580C]/40 font-bold'
                             : 'text-[#A1A1AA] light:text-[#6B7280]'
                         }`}
                         title="Light Mode"

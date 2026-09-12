@@ -81,12 +81,12 @@ export const Hero: React.FC = () => {
             className="lg:col-span-7 space-y-6"
           >
             {/* Status Pill Badge */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#18181B] light:bg-[#F3F4F6] border border-[#27272A] light:border-gray-300 text-xs font-mono shadow-sm">
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] text-xs font-mono shadow-sm">
               <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#60F1AD] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#60F1AD]" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#60F1AD] light:bg-[#FDBA74] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#60F1AD] light:bg-[#FDBA74]" />
               </span>
-              <span className="text-[#4ADEDE] light:text-[#0284C7] font-semibold tracking-wide">
+              <span className="text-[#4ADEDE] light:text-[#EA580C] font-semibold tracking-wide">
                 NIELIT Project Intern // Real-Time FPGA + CNN
               </span>
             </div>
@@ -102,29 +102,29 @@ export const Hero: React.FC = () => {
             </div>
 
             {/* Role Title */}
-            <div className="flex flex-wrap items-center gap-2 font-mono text-lg sm:text-xl lg:text-2xl text-[#4ADEDE] light:text-[#0284C7] font-semibold">
+            <div className="flex flex-wrap items-center gap-2 font-mono text-lg sm:text-xl lg:text-2xl text-[#4ADEDE] light:text-[#EA580C] font-semibold">
               <span>{personalInfo.title}</span>
-              <span className="text-[#27272A] light:text-gray-400 hidden sm:inline">|</span>
+              <span className="text-[#27272A] light:text-gray-300 hidden sm:inline">|</span>
               <span className="text-[#A1A1AA] light:text-[#4B5563] text-base sm:text-xl font-normal">AI/ML &amp; Embedded Systems</span>
             </div>
 
             {/* One-Sentence Value Proposition */}
             <p className="text-[#A1A1AA] light:text-[#4B5563] text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl font-sans font-normal">
-              Bridging the silicon-software divide by engineering custom <span className="text-[#FFFFFF] light:text-[#111827] font-semibold">FPGA accelerators</span>, <span className="text-[#FFFFFF] light:text-[#111827] font-semibold">real-time DSP pipelines</span>, and deploying <span className="text-[#60F1AD] light:text-[#059669] font-semibold underline decoration-[#4ADEDE] underline-offset-4">quantized deep learning models</span> directly onto resource-constrained embedded hardware.
+              Bridging the silicon-software divide by engineering custom <span className="text-[#FFFFFF] light:text-[#111827] font-semibold">FPGA accelerators</span>, <span className="text-[#FFFFFF] light:text-[#111827] font-semibold">real-time DSP pipelines</span>, and deploying <span className="text-[#60F1AD] light:text-[#EA580C] font-semibold underline decoration-[#4ADEDE] light:decoration-[#EA580C] underline-offset-4">quantized deep learning models</span> directly onto resource-constrained embedded hardware.
             </p>
 
             {/* Micro Hardware Specs Pill Row */}
             <div className="flex flex-wrap gap-2 pt-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#18181B] light:bg-[#F3F4F6] border border-[#27272A] light:border-gray-300 text-xs font-mono text-[#FFFFFF] light:text-[#111827]">
-                <Cpu className="w-3.5 h-3.5 text-[#4ADEDE]" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] text-xs font-mono text-[#FFFFFF] light:text-white">
+                <Cpu className="w-3.5 h-3.5 text-[#4ADEDE] light:text-[#EA580C]" />
                 Xilinx Vivado &amp; Verilog
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#18181B] light:bg-[#F3F4F6] border border-[#27272A] light:border-gray-300 text-xs font-mono text-[#FFFFFF] light:text-[#111827]">
-                <Layers className="w-3.5 h-3.5 text-[#60F1AD]" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] text-xs font-mono text-[#FFFFFF] light:text-white">
+                <Layers className="w-3.5 h-3.5 text-[#60F1AD] light:text-[#FDBA74]" />
                 Quantized CNN Inference
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#18181B] light:bg-[#F3F4F6] border border-[#27272A] light:border-gray-300 text-xs font-mono text-[#FFFFFF] light:text-[#111827]">
-                <Terminal className="w-3.5 h-3.5 text-[#4ADEDE]" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] text-xs font-mono text-[#FFFFFF] light:text-white">
+                <Terminal className="w-3.5 h-3.5 text-[#4ADEDE] light:text-[#EA580C]" />
                 ARM / ESP32 &amp; CAN Bus
               </span>
             </div>
@@ -134,7 +134,7 @@ export const Hero: React.FC = () => {
               <button
                 type="button"
                 onClick={() => scrollTo('projects')}
-                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#4ADEDE] text-[#030712] font-mono text-sm font-bold hover:bg-[#60F1AD] shadow-lg shadow-[#4ADEDE]/20 transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[#4ADEDE] cursor-pointer"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#4ADEDE] light:bg-[#EA580C] text-[#030712] light:text-white font-mono text-sm font-bold hover:bg-[#60F1AD] light:hover:bg-[#C2410C] shadow-lg shadow-[#4ADEDE]/20 light:shadow-[#EA580C]/25 transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[#4ADEDE] light:focus:ring-[#EA580C] cursor-pointer"
               >
                 <span>View My Work</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -143,19 +143,19 @@ export const Hero: React.FC = () => {
               <button
                 type="button"
                 onClick={() => scrollTo('contact')}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#18181B] light:bg-[#F3F4F6] hover:bg-[#27272A] light:hover:bg-gray-200 border border-[#27272A] light:border-gray-300 hover:border-[#4ADEDE] text-[#FFFFFF] light:text-[#111827] font-mono text-sm transition-all duration-200 hover:-translate-y-0.5 focus:outline-none cursor-pointer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#18181B] light:bg-[#191C21] hover:bg-[#27272A] light:hover:bg-[#272a30] border border-[#27272A] light:border-[#374151] hover:border-[#4ADEDE] light:hover:border-[#EA580C] text-[#FFFFFF] light:text-white font-mono text-sm transition-all duration-200 hover:-translate-y-0.5 focus:outline-none cursor-pointer"
               >
-                <Mail className="w-4 h-4 text-[#4ADEDE]" />
+                <Mail className="w-4 h-4 text-[#4ADEDE] light:text-[#EA580C]" />
                 <span>Get in Touch</span>
               </button>
             </div>
 
             {/* Quick Education / CGPA Snippet */}
-            <div className="pt-4 border-t border-[#27272A] light:border-gray-300 text-xs font-mono text-[#A1A1AA] light:text-[#4B5563] flex flex-wrap items-center gap-x-4 gap-y-1">
+            <div className="pt-4 border-t border-[#27272A] light:border-gray-200 text-xs font-mono text-[#A1A1AA] light:text-[#4B5563] flex flex-wrap items-center gap-x-4 gap-y-1">
               <span>B.Tech E&amp;TC @ GEC Aurangabad</span>
-              <span className="text-[#27272A] light:text-gray-400">•</span>
-              <span className="text-[#60F1AD] light:text-[#059669] font-bold">CGPA: 8.65 / 10.0</span>
-              <span className="text-[#27272A] light:text-gray-400">•</span>
+              <span className="text-[#27272A] light:text-gray-300">•</span>
+              <span className="text-[#60F1AD] light:text-[#EA580C] font-bold">CGPA: 8.65 / 10.0</span>
+              <span className="text-[#27272A] light:text-gray-300">•</span>
               <span>Nov 2022 – June 2026</span>
             </div>
           </motion.div>

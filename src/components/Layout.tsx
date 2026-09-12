@@ -29,16 +29,16 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <ThemeProvider>
-      <div className="relative min-h-screen bg-[#030712] light:bg-white text-white light:text-[#111827] font-sans selection:bg-[#4ADEDE] selection:text-[#030712] flex flex-col transition-colors duration-300">
+      <div className="relative min-h-screen bg-[#030712] light:bg-white text-white light:text-[#111827] font-sans selection:bg-[#4ADEDE] selection:text-[#030712] light:selection:bg-[#EA580C] light:selection:text-white flex flex-col transition-colors duration-300">
         {/* Background Cyber Ambience */}
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
           {/* Subtle grid pattern */}
           <div className="absolute inset-0 bg-grid opacity-20 light:opacity-40" />
 
-          {/* Ambient cyan and mint radial highlights */}
-          <div className="absolute -top-40 right-0 w-[500px] h-[500px] bg-[#4ADEDE]/5 light:bg-black/[0.02] rounded-full blur-[140px]" />
-          <div className="absolute top-1/3 -left-40 w-[600px] h-[600px] bg-[#60F1AD]/5 light:bg-black/[0.02] rounded-full blur-[140px]" />
-          <div className="absolute bottom-1/4 right-[-10%] w-[500px] h-[500px] bg-[#4ADEDE]/4 light:bg-black/[0.015] rounded-full blur-[140px]" />
+          {/* Ambient radial highlights */}
+          <div className="absolute -top-40 right-0 w-[500px] h-[500px] bg-[#4ADEDE]/5 light:bg-[#EA580C]/5 rounded-full blur-[140px]" />
+          <div className="absolute top-1/3 -left-40 w-[600px] h-[600px] bg-[#60F1AD]/5 light:bg-[#FDBA74]/5 rounded-full blur-[140px]" />
+          <div className="absolute bottom-1/4 right-[-10%] w-[500px] h-[500px] bg-[#4ADEDE]/4 light:bg-[#EA580C]/4 rounded-full blur-[140px]" />
         </div>
 
         {/* Sticky Top Navbar */}
@@ -61,7 +61,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.2 }}
               onClick={scrollToTop}
-              className="fixed bottom-6 right-6 z-40 p-2.5 rounded-lg bg-[#18181B] light:bg-white border border-[#27272A] light:border-[#D4D4D4] hover:border-[#4ADEDE] text-white light:text-[#111827] hover:text-[#4ADEDE] shadow-lg backdrop-blur-md transition-all focus:outline-none cursor-pointer"
+              className="fixed bottom-6 right-6 z-40 p-2.5 rounded-lg bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] hover:border-[#4ADEDE] light:hover:border-[#EA580C] text-white light:text-white hover:text-[#4ADEDE] light:hover:text-[#EA580C] shadow-lg backdrop-blur-md transition-all focus:outline-none cursor-pointer"
               aria-label="Scroll to top"
             >
               <ChevronUp className="w-4 h-4" />

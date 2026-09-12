@@ -9,12 +9,12 @@ import { experiences, type ExperienceItem } from '../data/portfolio';
 
 export const Experience: React.FC = () => {
   return (
-    <section id="experience" className="relative py-20 sm:py-24 lg:py-28 border-t border-[#27272A] light:border-gray-200 bg-[#030712] light:bg-white text-[#FFFFFF] light:text-[#111827] overflow-hidden transition-colors duration-300">
+    <section id="experience" className="relative py-20 sm:py-24 lg:py-28 border-t border-[#27272A] light:border-[#E5E7EB] bg-[#030712] light:bg-white text-[#FFFFFF] light:text-[#111827] overflow-hidden transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="space-y-2 mb-16 max-w-2xl">
-          <div className="inline-flex items-center gap-2 font-mono text-xs text-[#4ADEDE] light:text-[#0284C7] tracking-wider uppercase font-bold">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#60F1AD]" />
+          <div className="inline-flex items-center gap-2 font-mono text-xs text-[#4ADEDE] light:text-[#EA580C] tracking-wider uppercase font-bold">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#60F1AD] light:bg-[#FDBA74]" />
             <span>// 03 — EXPERIENCE</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-[#FFFFFF] light:text-[#111827] font-sans tracking-tight">
@@ -28,10 +28,10 @@ export const Experience: React.FC = () => {
         {/* Timeline Container */}
         <div className="relative">
           {/* Vertical Central Line on Desktop */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2 bg-[#27272A] light:bg-gray-200" />
+          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2 bg-[#27272A] light:border-gray-200 light:bg-[#E5E7EB]" />
 
           {/* Vertical Line on Mobile */}
-          <div className="md:hidden absolute left-5 top-0 bottom-0 w-[2px] bg-[#27272A] light:bg-gray-200" />
+          <div className="md:hidden absolute left-5 top-0 bottom-0 w-[2px] bg-[#27272A] light:border-gray-200 light:bg-[#E5E7EB]" />
 
           {/* Timeline Items */}
           <div className="space-y-12 md:space-y-16">
@@ -46,22 +46,22 @@ export const Experience: React.FC = () => {
                   {/* Timeline Central Node */}
                   {/* Desktop Node */}
                   <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-6 z-20 items-center justify-center">
-                    <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-[#18181B] light:bg-white border-2 border-[#4ADEDE] shadow-md shadow-[#4ADEDE]/20">
+                    <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-[#18181B] light:bg-[#191C21] border-2 border-[#4ADEDE] light:border-[#EA580C] shadow-md shadow-[#4ADEDE]/20 light:shadow-[#EA580C]/20">
                       {exp.isCurrent ? (
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#60F1AD] animate-ping" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#60F1AD] light:bg-[#FDBA74] animate-ping" />
                       ) : (
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#4ADEDE]" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#4ADEDE] light:bg-[#EA580C]" />
                       )}
                     </div>
                   </div>
 
                   {/* Mobile Node */}
                   <div className="md:hidden absolute left-5 -translate-x-1/2 top-6 z-20 flex items-center justify-center">
-                    <div className="relative flex items-center justify-center w-6 h-6 rounded-full bg-[#18181B] light:bg-white border-2 border-[#4ADEDE] shadow-md shadow-[#4ADEDE]/20">
+                    <div className="relative flex items-center justify-center w-6 h-6 rounded-full bg-[#18181B] light:bg-[#191C21] border-2 border-[#4ADEDE] light:border-[#EA580C] shadow-md shadow-[#4ADEDE]/20 light:shadow-[#EA580C]/20">
                       {exp.isCurrent ? (
-                        <span className="w-2 h-2 rounded-full bg-[#60F1AD] animate-ping" />
+                        <span className="w-2 h-2 rounded-full bg-[#60F1AD] light:bg-[#FDBA74] animate-ping" />
                       ) : (
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#4ADEDE]" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#4ADEDE] light:bg-[#EA580C]" />
                       )}
                     </div>
                   </div>
@@ -84,14 +84,14 @@ export const Experience: React.FC = () => {
                         transition={{ duration: 0.5 }}
                         className="space-y-1.5 pr-6"
                       >
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18181B] light:bg-[#F3F4F6] border border-[#27272A] light:border-gray-300 text-xs font-mono text-[#4ADEDE] light:text-[#0284C7] font-semibold">
-                          <Calendar className="w-3.5 h-3.5 text-[#4ADEDE]" />
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] text-xs font-mono text-[#4ADEDE] light:text-[#EA580C] font-semibold">
+                          <Calendar className="w-3.5 h-3.5 text-[#4ADEDE] light:text-[#EA580C]" />
                           <span>{exp.period}</span>
                         </div>
                         <div className="text-xs font-mono text-[#A1A1AA] light:text-[#4B5563]">
                           {exp.location}
                         </div>
-                        <div className="text-xs font-mono text-[#60F1AD] light:text-[#059669]">
+                        <div className="text-xs font-mono text-[#60F1AD] light:text-[#EA580C]">
                           // ROLE 0{index + 1}
                         </div>
                       </motion.div>
@@ -114,14 +114,14 @@ export const Experience: React.FC = () => {
                         transition={{ duration: 0.5 }}
                         className="space-y-1.5 pl-6"
                       >
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18181B] light:bg-[#F3F4F6] border border-[#27272A] light:border-gray-300 text-xs font-mono text-[#4ADEDE] light:text-[#0284C7] font-semibold">
-                          <Calendar className="w-3.5 h-3.5 text-[#4ADEDE]" />
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] text-xs font-mono text-[#4ADEDE] light:text-[#EA580C] font-semibold">
+                          <Calendar className="w-3.5 h-3.5 text-[#4ADEDE] light:text-[#EA580C]" />
                           <span>{exp.period}</span>
                         </div>
                         <div className="text-xs font-mono text-[#A1A1AA] light:text-[#4B5563]">
                           {exp.location}
                         </div>
-                        <div className="text-xs font-mono text-[#60F1AD] light:text-[#059669]">
+                        <div className="text-xs font-mono text-[#60F1AD] light:text-[#EA580C]">
                           // ROLE 0{index + 1}
                         </div>
                       </motion.div>
@@ -149,52 +149,52 @@ const ExperienceCard: React.FC<{ exp: ExperienceItem }> = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className={`group relative rounded-2xl bg-[#18181B] light:bg-white border ${
+      className={`group relative rounded-2xl bg-[#18181B] light:bg-[#191C21] border ${
         exp.isCurrent
-          ? 'border-[#4ADEDE] shadow-lg shadow-[#4ADEDE]/10'
-          : 'border-[#27272A] light:border-gray-200 hover:border-[#4ADEDE]'
+          ? 'border-[#4ADEDE] light:border-[#EA580C] shadow-lg shadow-[#4ADEDE]/10 light:shadow-[#EA580C]/10'
+          : 'border-[#27272A] light:border-[#374151] hover:border-[#4ADEDE] light:hover:border-[#EA580C]'
       } p-6 transition-all duration-300 shadow-card hover:-translate-y-1`}
     >
       {/* Top Header: Badge + Title + Company */}
-      <div className="flex flex-wrap items-start justify-between gap-3 pb-3 border-b border-[#27272A] light:border-gray-200">
+      <div className="flex flex-wrap items-start justify-between gap-3 pb-3 border-b border-[#27272A] light:border-[#2E353F]">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-lg sm:text-xl font-bold text-[#FFFFFF] light:text-[#111827] font-sans group-hover:text-[#4ADEDE] transition-colors">
+            <h3 className="text-lg sm:text-xl font-bold text-[#FFFFFF] light:text-white font-sans group-hover:text-[#4ADEDE] light:group-hover:text-[#EA580C] transition-colors">
               {exp.role}
             </h3>
             {exp.isCurrent && (
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#4ADEDE] text-[#030712] shadow-sm">
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#4ADEDE] light:bg-[#EA580C] text-[#030712] light:text-white shadow-sm">
                 ACTIVE
               </span>
             )}
           </div>
 
-          <div className="text-sm font-mono text-[#60F1AD] light:text-[#059669] font-semibold">
+          <div className="text-sm font-mono text-[#60F1AD] light:text-[#FDBA74] font-semibold">
             {exp.organization}
           </div>
         </div>
 
         {/* Mobile Date Tag */}
-        <div className="md:hidden inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#030712] light:bg-[#F3F4F6] border border-[#27272A] light:border-gray-300 text-xs font-mono text-[#4ADEDE] light:text-[#0284C7]">
-          <Calendar className="w-3 h-3 text-[#4ADEDE]" />
+        <div className="md:hidden inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#030712] light:bg-[#0E1013] border border-[#27272A] light:border-[#2E353F] text-xs font-mono text-[#4ADEDE] light:text-[#EA580C]">
+          <Calendar className="w-3 h-3 text-[#4ADEDE] light:text-[#EA580C]" />
           <span>{exp.period}</span>
         </div>
       </div>
 
       {/* Role Meta Subtitle: Location & Type */}
-      <div className="flex items-center gap-3 pt-2 text-xs font-mono text-[#A1A1AA] light:text-[#4B5563]">
+      <div className="flex items-center gap-3 pt-2 text-xs font-mono text-[#A1A1AA] light:text-gray-400">
         <span className="flex items-center gap-1">
-          <MapPin className="w-3 h-3 text-[#4ADEDE]" />
+          <MapPin className="w-3 h-3 text-[#4ADEDE] light:text-[#EA580C]" />
           {exp.location}
         </span>
         <span>•</span>
-        <span className="px-2 py-0.5 rounded bg-[#030712] light:bg-[#F3F4F6] text-[#60F1AD] light:text-[#059669] border border-[#27272A] light:border-gray-200">
+        <span className="px-2 py-0.5 rounded bg-[#030712] light:bg-[#0E1013] text-[#60F1AD] light:text-[#FDBA74] border border-[#27272A] light:border-[#2E353F]">
           {exp.type}
         </span>
       </div>
 
       {/* Concise summary */}
-      <p className="text-sm text-[#A1A1AA] light:text-[#374151] mt-3 leading-relaxed font-sans">
+      <p className="text-sm text-[#A1A1AA] light:text-gray-300 mt-3 leading-relaxed font-sans">
         {exp.description}
       </p>
 
@@ -203,20 +203,20 @@ const ExperienceCard: React.FC<{ exp: ExperienceItem }> = ({
         {exp.achievements.map((item, idx) => (
           <li
             key={idx}
-            className="flex items-start gap-2.5 text-xs sm:text-sm text-[#A1A1AA] light:text-[#374151] leading-relaxed"
+            className="flex items-start gap-2.5 text-xs sm:text-sm text-[#A1A1AA] light:text-gray-300 leading-relaxed"
           >
-            <ChevronRight className="w-4 h-4 text-[#4ADEDE] shrink-0 mt-0.5" />
+            <ChevronRight className="w-4 h-4 text-[#4ADEDE] light:text-[#EA580C] shrink-0 mt-0.5" />
             <span>{item}</span>
           </li>
         ))}
       </ul>
 
       {/* Technology Tags */}
-      <div className="mt-5 pt-4 border-t border-[#27272A] light:border-gray-200 flex flex-wrap gap-1.5">
+      <div className="mt-5 pt-4 border-t border-[#27272A] light:border-[#2E353F] flex flex-wrap gap-1.5">
         {exp.skills.map((skill) => (
           <span
             key={skill}
-            className="px-2.5 py-0.5 rounded text-[11px] font-mono bg-[#030712] light:bg-[#F3F4F6] text-[#FFFFFF] light:text-[#111827] border border-[#27272A] light:border-gray-300 hover:border-[#4ADEDE] transition-colors"
+            className="px-2.5 py-0.5 rounded text-[11px] font-mono bg-[#030712] light:bg-[#0E1013] text-[#FFFFFF] light:text-white border border-[#27272A] light:border-[#2E353F] hover:border-[#4ADEDE] light:hover:border-[#EA580C] transition-colors"
           >
             {skill}
           </span>

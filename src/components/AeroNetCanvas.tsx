@@ -217,7 +217,11 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // 1. Dark Void Canvas Base (#030712 with subtle depth radial)
+      const isLight = document.documentElement.classList.contains('light');
+      const primaryCol = isLight ? '#EA580C' : '#4ADEDE';
+      const accentCol = isLight ? '#FDBA74' : '#60F1AD';
+
+      // 1. Dark Void Canvas Base
       const bgGradient = ctx.createRadialGradient(
         width * 0.5,
         height * 0.45,
@@ -226,8 +230,13 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
         height * 0.45,
         Math.max(width, height) * 0.7
       );
-      bgGradient.addColorStop(0, '#071322');
-      bgGradient.addColorStop(1, '#030712');
+      if (isLight) {
+        bgGradient.addColorStop(0, '#1E222A');
+        bgGradient.addColorStop(1, '#0E1013');
+      } else {
+        bgGradient.addColorStop(0, '#071322');
+        bgGradient.addColorStop(1, '#030712');
+      }
       ctx.fillStyle = bgGradient;
       ctx.fillRect(0, 0, width, height);
 
@@ -237,7 +246,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       const baseRadius = Math.min(width, height) * 0.42;
 
       ctx.save();
-      ctx.strokeStyle = 'rgba(74, 222, 222, 0.08)';
+      ctx.strokeStyle = isLight ? 'rgba(234, 88, 12, 0.12)' : 'rgba(74, 222, 222, 0.08)';
       ctx.lineWidth = 1;
 
       // Range concentric circles
@@ -248,7 +257,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       });
 
       // Axis crosshairs
-      ctx.strokeStyle = 'rgba(74, 222, 222, 0.06)';
+      ctx.strokeStyle = isLight ? 'rgba(234, 88, 12, 0.08)' : 'rgba(74, 222, 222, 0.06)';
       ctx.beginPath();
       ctx.moveTo(centerX, 16);
       ctx.lineTo(centerX, height - 16);
@@ -277,9 +286,15 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
         centerY,
         baseRadius * 1.05
       );
-      sweepGradient.addColorStop(0, 'rgba(74, 222, 222, 0.18)'); // Primary #4ADEDE
-      sweepGradient.addColorStop(0.7, 'rgba(96, 241, 173, 0.05)'); // Secondary #60F1AD
-      sweepGradient.addColorStop(1, 'rgba(3, 7, 18, 0)');
+      if (isLight) {
+        sweepGradient.addColorStop(0, 'rgba(234, 88, 12, 0.22)');
+        sweepGradient.addColorStop(0.7, 'rgba(253, 186, 116, 0.06)');
+        sweepGradient.addColorStop(1, 'rgba(14, 16, 19, 0)');
+      } else {
+        sweepGradient.addColorStop(0, 'rgba(74, 222, 222, 0.18)');
+        sweepGradient.addColorStop(0.7, 'rgba(96, 241, 173, 0.05)');
+        sweepGradient.addColorStop(1, 'rgba(3, 7, 18, 0)');
+      }
 
       ctx.fillStyle = sweepGradient;
       ctx.beginPath();
@@ -289,7 +304,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       ctx.fill();
 
       // Leading beam ray
-      ctx.strokeStyle = 'rgba(74, 222, 222, 0.5)';
+      ctx.strokeStyle = isLight ? 'rgba(234, 88, 12, 0.6)' : 'rgba(74, 222, 222, 0.5)';
       ctx.lineWidth = 1.2;
       ctx.beginPath();
       ctx.moveTo(centerX, centerY);
@@ -325,14 +340,14 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
 
       ctx.save();
       // Ground HQ pulse
-      ctx.strokeStyle = `rgba(96, 241, 173, ${waveAlpha * 0.4})`;
+      ctx.strokeStyle = isLight ? `rgba(253, 186, 116, ${waveAlpha * 0.45})` : `rgba(96, 241, 173, ${waveAlpha * 0.4})`;
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.arc(hqNode.cx, hqNode.cy, waveRadius, 0, Math.PI * 2);
       ctx.stroke();
 
       // Satellite downlink pulse
-      ctx.strokeStyle = `rgba(74, 222, 222, ${waveAlpha * 0.35})`;
+      ctx.strokeStyle = isLight ? `rgba(234, 88, 12, ${waveAlpha * 0.4})` : `rgba(74, 222, 222, ${waveAlpha * 0.35})`;
       ctx.beginPath();
       ctx.arc(satNode.cx, satNode.cy, waveRadius * 0.8, 0, Math.PI * 2);
       ctx.stroke();
@@ -368,13 +383,17 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
         const px = n1.cx + (n2.cx - n1.cx) * pkt.progress;
         const py = n1.cy + (n2.cy - n1.cy) * pkt.progress;
 
+        const effectivePktColor = isLight
+          ? pkt.color === '#4ADEDE' ? '#EA580C' : pkt.color === '#60F1AD' ? '#FDBA74' : '#FFFFFF'
+          : pkt.color;
+
         // Fading comet trail behind packet
         ctx.save();
         for (let t = 1; t <= 4; t++) {
           const trailProgress = Math.max(0, pkt.progress - t * 0.015);
           const tx = n1.cx + (n2.cx - n1.cx) * trailProgress;
           const ty = n1.cy + (n2.cy - n1.cy) * trailProgress;
-          ctx.fillStyle = pkt.color;
+          ctx.fillStyle = effectivePktColor;
           ctx.globalAlpha = (0.5 / t);
           ctx.beginPath();
           ctx.arc(tx, ty, pkt.size * (1 - t * 0.18), 0, Math.PI * 2);
@@ -382,8 +401,8 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
         }
 
         // Main photon head
-        ctx.fillStyle = pkt.color;
-        ctx.shadowColor = pkt.color;
+        ctx.fillStyle = effectivePktColor;
+        ctx.shadowColor = effectivePktColor;
         ctx.shadowBlur = 10;
         ctx.globalAlpha = 1;
         ctx.beginPath();
@@ -403,7 +422,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
 
         // Outer glow on hover or active selection
         if (isSelected || isHovered) {
-          ctx.strokeStyle = isSelected ? '#4ADEDE' : '#60F1AD';
+          ctx.strokeStyle = isSelected ? primaryCol : accentCol;
           ctx.lineWidth = 1.2;
           ctx.setLineDash([3, 3]);
           ctx.beginPath();
@@ -413,7 +432,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
           // Reticle corner brackets
           const bSize = 6;
           ctx.setLineDash([]);
-          ctx.strokeStyle = isSelected ? '#4ADEDE' : '#60F1AD';
+          ctx.strokeStyle = isSelected ? primaryCol : accentCol;
           ctx.lineWidth = 1.5;
 
           // Top-left bracket
@@ -432,8 +451,11 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
         }
 
         // Inner solid core
-        ctx.fillStyle = node.color;
-        ctx.shadowColor = node.color;
+        const effectiveNodeColor = isLight
+          ? node.color === '#4ADEDE' ? '#EA580C' : node.color === '#60F1AD' ? '#FDBA74' : '#FFFFFF'
+          : node.color;
+        ctx.fillStyle = effectiveNodeColor;
+        ctx.shadowColor = effectiveNodeColor;
         ctx.shadowBlur = isSelected ? 12 : 5;
         ctx.beginPath();
         ctx.arc(nx, ny, isSelected ? 5.5 : 4, 0, Math.PI * 2);

@@ -149,6 +149,10 @@ export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ classN
         }
       });
 
+      const isLight = document.documentElement.classList.contains('light');
+      const primaryCol = isLight ? '#EA580C' : '#4ADEDE';
+      const accentCol = isLight ? '#FDBA74' : '#60F1AD';
+
       // 1. Draw Synaptic Axon Connections
       ctx.save();
       for (let i = 0; i < nodes.length; i++) {
@@ -164,10 +168,14 @@ export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ classN
             const avgEnergy = (n1.energy + n2.energy) / 2;
 
             if (avgEnergy > 0.4) {
-              ctx.strokeStyle = `rgba(74, 222, 222, ${alpha + avgEnergy * 0.35})`;
+              ctx.strokeStyle = isLight
+                ? `rgba(234, 88, 12, ${alpha + avgEnergy * 0.45})`
+                : `rgba(74, 222, 222, ${alpha + avgEnergy * 0.35})`;
               ctx.lineWidth = 1.2;
             } else {
-              ctx.strokeStyle = `rgba(96, 241, 173, ${alpha * 0.6})`;
+              ctx.strokeStyle = isLight
+                ? `rgba(253, 186, 116, ${alpha * 0.65})`
+                : `rgba(96, 241, 173, ${alpha * 0.6})`;
               ctx.lineWidth = 0.8;
             }
 
@@ -197,8 +205,8 @@ export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ classN
         const currentY = fromNode.y + (toNode.y - fromNode.y) * ap.progress;
 
         ctx.save();
-        ctx.fillStyle = '#60F1AD';
-        ctx.shadowColor = '#60F1AD';
+        ctx.fillStyle = accentCol;
+        ctx.shadowColor = accentCol;
         ctx.shadowBlur = 8;
         ctx.beginPath();
         ctx.arc(currentX, currentY, 2.5, 0, Math.PI * 2);
@@ -212,8 +220,8 @@ export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ classN
         const currentRadius = node.baseRadius + node.energy * 2.5;
 
         if (node.energy > 0.3) {
-          ctx.fillStyle = '#4ADEDE';
-          ctx.shadowColor = '#4ADEDE';
+          ctx.fillStyle = primaryCol;
+          ctx.shadowColor = primaryCol;
           ctx.shadowBlur = node.energy * 12;
         } else {
           ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
@@ -225,7 +233,9 @@ export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ classN
 
         // Subtle outer excitation ring
         if (node.energy > 0.4) {
-          ctx.strokeStyle = `rgba(74, 222, 222, ${node.energy * 0.6})`;
+          ctx.strokeStyle = isLight
+            ? `rgba(234, 88, 12, ${node.energy * 0.6})`
+            : `rgba(74, 222, 222, ${node.energy * 0.6})`;
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.arc(node.x, node.y, currentRadius + 3, 0, Math.PI * 2);
