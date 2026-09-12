@@ -2,9 +2,10 @@ import React, { useEffect, useRef } from 'react';
 
 interface DitherCanvasProps {
   className?: string;
+  inverse?: boolean;
 }
 
-export const DitherCanvas: React.FC<DitherCanvasProps> = ({ className = '' }) => {
+export const DitherCanvas: React.FC<DitherCanvasProps> = ({ className = '', inverse = false }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -56,7 +57,7 @@ export const DitherCanvas: React.FC<DitherCanvasProps> = ({ className = '' }) =>
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
 
-    const step = 6; // Grid pixel step size for crisp retro-dither aesthetic
+    const step = 5; // Grid pixel step size for crisp Bayer dither aesthetic
 
     const render = () => {
       if (!ctx || width === 0 || height === 0) {
@@ -64,10 +65,11 @@ export const DitherCanvas: React.FC<DitherCanvasProps> = ({ className = '' }) =>
         return;
       }
 
-      ctx.fillStyle = '#0a0e17';
+      // High-contrast monochromatic canvas background
+      ctx.fillStyle = inverse ? '#FFFFFF' : '#050505';
       ctx.fillRect(0, 0, width, height);
 
-      time += 0.025;
+      time += 0.022;
 
       const cols = Math.ceil(width / step);
       const rows = Math.ceil(height / step);
@@ -99,18 +101,15 @@ export const DitherCanvas: React.FC<DitherCanvasProps> = ({ className = '' }) =>
           const bayerValue = bayer4x4[r % 4][c % 4] / 16;
 
           if (intensity > bayerValue) {
-            // Dither pixel active
-            const alpha = 0.25 + (intensity - bayerValue) * 0.75;
-            // Interpolate between cyan/teal and light purple
-            if (intensity > 0.7) {
-              ctx.fillStyle = `rgba(0, 229, 199, ${alpha * 0.9})`;
-            } else if (intensity > 0.4) {
-              ctx.fillStyle = `rgba(34, 211, 238, ${alpha * 0.6})`;
+            // Dither pixel active in pure monochrome
+            const alpha = 0.35 + (intensity - bayerValue) * 0.65;
+            if (inverse) {
+              ctx.fillStyle = `rgba(5, 5, 5, ${alpha})`;
             } else {
-              ctx.fillStyle = `rgba(223, 184, 242, ${alpha * 0.4})`;
+              ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
             }
 
-            ctx.fillRect(x, y, step - 1.5, step - 1.5);
+            ctx.fillRect(x, y, step - 1, step - 1);
           }
         }
       }
@@ -126,7 +125,7 @@ export const DitherCanvas: React.FC<DitherCanvasProps> = ({ className = '' }) =>
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, []);
+  }, [inverse]);
 
   return (
     <div ref={containerRef} className={`relative w-full h-full overflow-hidden ${className}`}>

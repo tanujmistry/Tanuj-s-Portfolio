@@ -100,13 +100,13 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
         return;
       }
 
-      // Phosphor persistence decay (subtle CRT fade)
-      ctx.fillStyle = 'rgba(10, 14, 23, 0.22)';
+      // Phosphor persistence decay (subtle CRT fade on deep black)
+      ctx.fillStyle = 'rgba(5, 5, 5, 0.24)';
       ctx.fillRect(0, 0, width, height);
 
       // Draw Oscilloscope Graticule (Grid)
       ctx.save();
-      ctx.strokeStyle = 'rgba(34, 211, 238, 0.07)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.07)';
       ctx.lineWidth = 1;
 
       const gridCols = 10;
@@ -128,24 +128,22 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
       ctx.stroke();
 
       // Center crosshairs with tick marks
-      ctx.strokeStyle = 'rgba(0, 229, 199, 0.16)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
       ctx.beginPath();
-      // Center horizontal
       const centerY = height / 2;
       ctx.moveTo(0, centerY);
       ctx.lineTo(width, centerY);
-      // Center vertical
       const centerX = width / 2;
       ctx.moveTo(centerX, 0);
       ctx.lineTo(centerX, height);
       ctx.stroke();
       ctx.restore();
 
-      // Signal Waveform Trace
+      // Signal Waveform Trace (Pure Monochromatic White Beam)
       ctx.save();
       ctx.lineWidth = 2;
-      ctx.strokeStyle = '#00e5c7';
-      ctx.shadowColor = 'rgba(0, 229, 199, 0.7)';
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
       ctx.shadowBlur = 8;
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
@@ -161,12 +159,10 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
         let signalVal = 0;
 
         if (signalMode === 'ecg') {
-          // ECG heartbeat signal with periodic cycle
-          const cycleRate = 1.15; // ~70-75 bpm
+          const cycleRate = 1.15;
           const tPos = ((x / width) * 2 - time * cycleRate);
           signalVal = getEcgSample(tPos);
         } else if (signalMode === 'dsp') {
-          // Mixed sinusoidal FIR/IIR response
           const freq1 = 0.035;
           const freq2 = 0.09;
           signalVal =
@@ -174,13 +170,11 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
             0.25 * Math.cos(x * freq2 + time * 3) +
             0.08 * Math.sin(x * 0.2);
         } else {
-          // High-frequency telemetry packets
           const packetEnvelope = Math.sin(x * 0.008 - time * 2);
           const carrier = Math.sin(x * 0.12 - time * 12);
           signalVal = 0.5 * packetEnvelope * carrier;
         }
 
-        // Amplitude mapping to screen height
         const amplitude = height * 0.34;
         const y = centerY - signalVal * amplitude;
 
@@ -192,10 +186,10 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
       }
       ctx.stroke();
 
-      // Scanning sweep head dot (authentic phosphor beam)
+      // Scanning sweep head dot (stark white phosphor beam)
       const leadY = centerY - getEcgSample((scanX / width) * 2 - time * 1.15) * (height * 0.34);
-      ctx.fillStyle = '#ffffff';
-      ctx.shadowColor = '#00e5c7';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.shadowColor = '#FFFFFF';
       ctx.shadowBlur = 14;
       ctx.beginPath();
       ctx.arc(scanX, leadY, 3, 0, Math.PI * 2);
@@ -218,47 +212,47 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
   return (
     <div
       ref={containerRef}
-      className={`relative w-full rounded-2xl bg-navy-950/70 border border-circuit-border p-3 sm:p-4 backdrop-blur-md shadow-card overflow-hidden ${className}`}
+      className={`relative w-full rounded-2xl bg-[#050505] border border-[#D4D4D4] p-3 sm:p-4 shadow-card overflow-hidden text-white ${className}`}
     >
       {/* Top telemetry bar */}
-      <div className="flex items-center justify-between pb-3 border-b border-navy-700/50 text-[11px] font-mono">
+      <div className="flex items-center justify-between pb-3 border-b border-neutral-800 text-[11px] font-mono">
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-circuit-teal opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-circuit-teal"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
           </span>
-          <span className="text-circuit-teal font-semibold">OSCILLOSCOPE // CH1</span>
-          <span className="hidden sm:inline text-navy-600">|</span>
-          <span className="hidden sm:inline text-slate-400">CLK: {sampleRate}</span>
+          <span className="text-white font-bold">OSCILLOSCOPE // CH1</span>
+          <span className="hidden sm:inline text-neutral-600">|</span>
+          <span className="hidden sm:inline text-neutral-400">CLK: {sampleRate}</span>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3 text-slate-300">
-          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-navy-900 border border-navy-700/80 text-[10px]">
-            <Activity className="w-3 h-3 text-circuit-teal" />
+        <div className="flex items-center gap-2 sm:gap-3 text-neutral-300">
+          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-neutral-900 border border-neutral-750 text-[10px] text-white">
+            <Activity className="w-3 h-3 text-white" />
             <span>{bpm} BPM</span>
           </div>
 
-          <div className="hidden sm:flex items-center gap-1 px-2 py-0.5 rounded bg-navy-900 border border-navy-700/80 text-[10px] text-circuit-cyan">
+          <div className="hidden sm:flex items-center gap-1 px-2 py-0.5 rounded bg-neutral-900 border border-neutral-750 text-[10px] text-neutral-300">
             <span>200mV / DIV</span>
           </div>
         </div>
       </div>
 
       {/* Canvas Display */}
-      <div className="relative w-full h-[220px] sm:h-[280px] lg:h-[320px] rounded-lg overflow-hidden my-3 bg-navy-950/90 border border-navy-800">
+      <div className="relative w-full h-[220px] sm:h-[280px] lg:h-[320px] rounded-lg overflow-hidden my-3 bg-[#050505] border border-neutral-800">
         <canvas ref={canvasRef} className="w-full h-full block" />
 
         {/* Oscilloscope Corner Overlay Labels */}
-        <div className="absolute top-2 left-2 text-[10px] font-mono text-circuit-teal/70 pointer-events-none select-none">
+        <div className="absolute top-2 left-2 text-[10px] font-mono text-neutral-400 pointer-events-none select-none">
           TRIG: AUTO [CH1]
         </div>
-        <div className="absolute top-2 right-2 text-[10px] font-mono text-circuit-cyan/70 pointer-events-none select-none">
+        <div className="absolute top-2 right-2 text-[10px] font-mono text-white/80 pointer-events-none select-none">
           VPP: 1.22V
         </div>
-        <div className="absolute bottom-2 left-2 text-[9px] font-mono text-slate-500 pointer-events-none select-none">
+        <div className="absolute bottom-2 left-2 text-[9px] font-mono text-neutral-500 pointer-events-none select-none">
           MODEL: XILINX VIVADO CNN AFE
         </div>
-        <div className="absolute bottom-2 right-2 text-[9px] font-mono text-slate-500 pointer-events-none select-none">
+        <div className="absolute bottom-2 right-2 text-[9px] font-mono text-neutral-500 pointer-events-none select-none">
           FPGA 50MHz SAMPLING
         </div>
       </div>
@@ -266,41 +260,41 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
       {/* Bottom Mode Switchers & Hardware Signals */}
       <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-[11px] font-mono">
         <div className="flex items-center gap-1.5">
-          <span className="text-slate-400 text-[10px] mr-1">SIGNAL SOURCE:</span>
+          <span className="text-neutral-400 text-[10px] mr-1">SIGNAL SOURCE:</span>
           <button
             onClick={() => setSignalMode('ecg')}
-            className={`px-2.5 py-1 rounded text-[10px] font-medium transition-all ${
+            className={`px-2.5 py-1 rounded text-[10px] font-medium transition-all cursor-pointer ${
               signalMode === 'ecg'
-                ? 'bg-circuit-teal/20 text-circuit-teal border border-circuit-teal/50 shadow-glow-subtle'
-                : 'text-slate-400 hover:text-slate-200 bg-navy-900 border border-navy-800'
+                ? 'bg-white text-[#050505] font-bold shadow-sm'
+                : 'text-neutral-400 hover:text-white bg-neutral-900 border border-neutral-800'
             }`}
           >
             ECG Biopotential
           </button>
           <button
             onClick={() => setSignalMode('dsp')}
-            className={`px-2.5 py-1 rounded text-[10px] font-medium transition-all ${
+            className={`px-2.5 py-1 rounded text-[10px] font-medium transition-all cursor-pointer ${
               signalMode === 'dsp'
-                ? 'bg-circuit-cyan/20 text-circuit-cyan border border-circuit-cyan/50 shadow-glow-subtle'
-                : 'text-slate-400 hover:text-slate-200 bg-navy-900 border border-navy-800'
+                ? 'bg-white text-[#050505] font-bold shadow-sm'
+                : 'text-neutral-400 hover:text-white bg-neutral-900 border border-neutral-800'
             }`}
           >
             DSP Filtered
           </button>
           <button
             onClick={() => setSignalMode('telemetry')}
-            className={`hidden sm:inline-flex px-2.5 py-1 rounded text-[10px] font-medium transition-all ${
+            className={`hidden sm:inline-flex px-2.5 py-1 rounded text-[10px] font-medium transition-all cursor-pointer ${
               signalMode === 'telemetry'
-                ? 'bg-circuit-green/20 text-circuit-green border border-circuit-green/50 shadow-glow-subtle'
-                : 'text-slate-400 hover:text-slate-200 bg-navy-900 border border-navy-800'
+                ? 'bg-white text-[#050505] font-bold shadow-sm'
+                : 'text-neutral-400 hover:text-white bg-neutral-900 border border-neutral-800'
             }`}
           >
             CAN Telemetry
           </button>
         </div>
 
-        <div className="flex items-center gap-2 text-[10px] text-circuit-muted">
-          <span className="w-1.5 h-1.5 rounded-full bg-circuit-green inline-block animate-pulse" />
+        <div className="flex items-center gap-2 text-[10px] text-neutral-400">
+          <span className="w-1.5 h-1.5 rounded-full bg-white inline-block animate-pulse" />
           <span>REAL-TIME INFERENCE: ACTIVE</span>
         </div>
       </div>

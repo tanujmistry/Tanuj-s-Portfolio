@@ -27,16 +27,16 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="relative min-h-screen bg-navy-900 text-slate-100 font-sans selection:bg-circuit-teal/20 selection:text-circuit-teal flex flex-col">
+    <div className="relative min-h-screen bg-white text-[#111827] font-sans selection:bg-[#050505] selection:text-white flex flex-col">
       {/* Background Engineering Ambience */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         {/* Subtle grid pattern */}
-        <div className="absolute inset-0 bg-grid opacity-30" />
+        <div className="absolute inset-0 bg-grid opacity-40" />
 
-        {/* Ambient radial glows */}
-        <div className="absolute -top-40 right-0 w-[500px] h-[500px] bg-circuit-teal/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/3 -left-40 w-[600px] h-[600px] bg-circuit-cyan/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-[-10%] w-[500px] h-[500px] bg-circuit-teal/4 rounded-full blur-3xl" />
+        {/* Ambient neutral radial highlights */}
+        <div className="absolute -top-40 right-0 w-[500px] h-[500px] bg-black/[0.02] rounded-full blur-3xl" />
+        <div className="absolute top-1/3 -left-40 w-[600px] h-[600px] bg-black/[0.02] rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-[-10%] w-[500px] h-[500px] bg-black/[0.015] rounded-full blur-3xl" />
       </div>
 
       {/* Sticky Top Navbar */}
@@ -59,7 +59,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.2 }}
             onClick={scrollToTop}
-            className="fixed bottom-6 right-6 z-40 p-2.5 rounded-lg bg-navy-800/90 border border-circuit-teal/30 hover:border-circuit-teal text-circuit-teal hover:bg-circuit-teal/10 shadow-card backdrop-blur-md transition-all focus:outline-none"
+            className="fixed bottom-6 right-6 z-40 p-2.5 rounded-lg bg-white border border-[#D4D4D4] hover:border-[#050505] text-[#111827] hover:bg-[#050505] hover:text-white shadow-card backdrop-blur-md transition-all focus:outline-none cursor-pointer"
             aria-label="Scroll to top"
           >
             <ChevronUp className="w-4 h-4" />

@@ -38,7 +38,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
           onClick={onClose}
-          className="fixed inset-0 bg-navy-950/85 backdrop-blur-md"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm"
           aria-hidden="true"
         />
 
@@ -48,24 +48,24 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-navy-900 border border-circuit-teal/30 rounded-2xl p-6 sm:p-8 shadow-2xl z-10"
+          className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white border border-[#D4D4D4] rounded-2xl p-6 sm:p-8 shadow-2xl z-10 text-[#111827]"
         >
           {/* Header */}
-          <div className="flex items-start justify-between gap-4 pb-4 border-b border-navy-700/60">
+          <div className="flex items-start justify-between gap-4 pb-4 border-b border-[#D4D4D4]">
             <div className="space-y-1.5">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded text-[11px] font-mono bg-navy-800 text-circuit-cyan border border-navy-700">
+                <span className="px-2.5 py-0.5 rounded text-[11px] font-mono bg-[#F4F4F5] text-[#111827] border border-[#D4D4D4]">
                   {project.category}
                 </span>
                 {project.isFlagship && (
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-mono bg-circuit-teal/15 text-circuit-teal border border-circuit-teal/40 font-semibold shadow-glow-subtle">
-                    <Sparkles className="w-3 h-3" />
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-mono bg-[#050505] text-white border border-[#050505] font-semibold">
+                    <Sparkles className="w-3 h-3 text-white" />
                     FLAGSHIP HERO PROJECT
                   </span>
                 )}
               </div>
 
-              <h2 className="text-xl sm:text-2xl font-bold text-white font-sans tracking-tight">
+              <h2 className="text-xl sm:text-2xl font-bold text-[#111827] font-sans tracking-tight">
                 {project.title}
               </h2>
             </div>
@@ -73,7 +73,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-navy-800 border border-transparent hover:border-navy-700 transition-colors focus:outline-none"
+              className="p-1.5 rounded-lg text-[#4B5563] hover:text-[#111827] hover:bg-[#F4F4F5] border border-transparent hover:border-[#D4D4D4] transition-colors focus:outline-none cursor-pointer"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -82,32 +82,32 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
           {/* Performance Metric Banner */}
           {project.metrics && (
-            <div className="my-5 p-3 rounded-lg bg-navy-950/80 border border-circuit-teal/25 flex items-center gap-2.5 text-xs font-mono text-circuit-teal">
-              <Activity className="w-4 h-4 shrink-0" />
+            <div className="my-5 p-3 rounded-lg bg-[#F4F4F5] border border-[#D4D4D4] flex items-center gap-2.5 text-xs font-mono text-[#111827] font-medium">
+              <Activity className="w-4 h-4 shrink-0 text-[#050505]" />
               <span>{project.metrics}</span>
             </div>
           )}
 
           {/* Full Engineering Description */}
           <div className="space-y-4 my-5">
-            <div className="text-xs font-mono text-slate-400 uppercase tracking-wider">
+            <div className="text-xs font-mono text-[#4B5563] uppercase tracking-wider">
               // ARCHITECTURAL OVERVIEW
             </div>
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
+            <p className="text-sm sm:text-base text-[#374151] leading-relaxed font-sans">
               {project.fullDescription}
             </p>
           </div>
 
           {/* Key Engineering Highlights */}
           {project.highlights && project.highlights.length > 0 && (
-            <div className="space-y-3 my-5 pt-4 border-t border-navy-700/50">
-              <div className="text-xs font-mono text-slate-400 uppercase tracking-wider">
+            <div className="space-y-3 my-5 pt-4 border-t border-[#D4D4D4]">
+              <div className="text-xs font-mono text-[#4B5563] uppercase tracking-wider">
                 // KEY IMPLEMENTATION HIGHLIGHTS
               </div>
               <ul className="space-y-2">
                 {project.highlights.map((highlight, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    <CheckCircle2 className="w-4 h-4 text-circuit-teal shrink-0 mt-0.5" />
+                  <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#374151] leading-relaxed">
+                    <CheckCircle2 className="w-4 h-4 text-[#050505] shrink-0 mt-0.5" />
                     <span>{highlight}</span>
                   </li>
                 ))}
@@ -116,16 +116,16 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           )}
 
           {/* Tools & Frameworks */}
-          <div className="my-5 pt-4 border-t border-navy-700/50 space-y-2">
-            <div className="flex items-center gap-1.5 text-xs font-mono text-slate-400 uppercase tracking-wider">
-              <Wrench className="w-3.5 h-3.5 text-circuit-cyan" />
+          <div className="my-5 pt-4 border-t border-[#D4D4D4] space-y-2">
+            <div className="flex items-center gap-1.5 text-xs font-mono text-[#4B5563] uppercase tracking-wider">
+              <Wrench className="w-3.5 h-3.5 text-[#050505]" />
               <span>TOOLS &amp; HARDWARE ENVIRONMENT</span>
             </div>
             <div className="flex flex-wrap gap-2 pt-1">
               {project.tools.map((tool) => (
                 <span
                   key={tool}
-                  className="px-2.5 py-1 rounded-md text-xs font-mono bg-navy-950 text-slate-200 border border-navy-700/80 hover:border-circuit-teal/40 transition-colors"
+                  className="px-2.5 py-1 rounded-md text-xs font-mono bg-[#F4F4F5] text-[#111827] border border-[#D4D4D4]"
                 >
                   {tool}
                 </span>
@@ -134,7 +134,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           </div>
 
           {/* Action Footer */}
-          <div className="pt-6 border-t border-navy-700/60 flex flex-wrap items-center justify-between gap-4">
+          <div className="pt-6 border-t border-[#D4D4D4] flex flex-wrap items-center justify-between gap-4">
             <a
               href="#contact"
               onClick={() => {
@@ -144,7 +144,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                   element.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
-              className="inline-flex items-center gap-2 text-xs font-mono text-circuit-teal hover:text-circuit-cyan transition-colors"
+              className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#050505] hover:underline"
             >
               <span>Discuss this implementation</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -153,7 +153,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg bg-navy-800 hover:bg-navy-750 border border-navy-700 text-slate-200 text-xs font-mono transition-colors"
+              className="px-4 py-2 rounded-lg bg-[#F4F4F5] hover:bg-[#E5E7EB] border border-[#D4D4D4] text-[#111827] text-xs font-mono transition-colors cursor-pointer"
             >
               Close Details
             </button>

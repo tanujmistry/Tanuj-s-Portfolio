@@ -16,8 +16,8 @@ interface DetectedPoint {
 
 export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
   className = '',
-  scanColor = '#4ADE80',
-  gridColor = 'rgba(74, 222, 128, 0.12)',
+  scanColor = '#050505',
+  gridColor = 'rgba(0, 0, 0, 0.08)',
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -67,13 +67,13 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
 
-    // Virtual telemetry target nodes to scan and illuminate
+    // Virtual telemetry target nodes to scan and illuminate in monochrome
     const targetNodes: DetectedPoint[] = [
-      { x: 0.18, y: 0.32, label: 'FPGA_VIVADO', intensity: 0, color: '#4ADE80' },
-      { x: 0.82, y: 0.28, label: 'ECG_AFE_CH1', intensity: 0, color: '#00e5c7' },
-      { x: 0.25, y: 0.74, label: 'CAN_BUS_12S', intensity: 0, color: '#22d3ee' },
-      { x: 0.75, y: 0.68, label: 'CNN_QUANT_8B', intensity: 0, color: '#DFB8F2' },
-      { x: 0.5, y: 0.5, label: 'MAIN_CORE_DSP', intensity: 0, color: '#4ADE80' },
+      { x: 0.18, y: 0.32, label: 'FPGA_VIVADO', intensity: 0, color: scanColor },
+      { x: 0.82, y: 0.28, label: 'ECG_AFE_CH1', intensity: 0, color: scanColor },
+      { x: 0.25, y: 0.74, label: 'CAN_BUS_12S', intensity: 0, color: scanColor },
+      { x: 0.75, y: 0.68, label: 'CNN_QUANT_8B', intensity: 0, color: scanColor },
+      { x: 0.5, y: 0.5, label: 'MAIN_CORE_DSP', intensity: 0, color: scanColor },
     ];
 
     const cellSize = 36;
@@ -91,7 +91,6 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
       ctx.strokeStyle = gridColor;
       ctx.lineWidth = 1;
 
-      // Vertical lines
       for (let x = 0; x <= width; x += cellSize) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
@@ -99,7 +98,6 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
         ctx.stroke();
       }
 
-      // Horizontal lines
       for (let y = 0; y <= height; y += cellSize) {
         ctx.beginPath();
         ctx.moveTo(0, y);
@@ -129,14 +127,16 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
         scanY
       );
 
-      if (scanDirection === 1) {
-        gradient.addColorStop(0, 'rgba(74, 222, 128, 0)');
-        gradient.addColorStop(0.7, 'rgba(126, 59, 151, 0.15)'); // secondary purple accent
-        gradient.addColorStop(1, 'rgba(74, 222, 128, 0.35)');
+      const isWhiteScan = scanColor === '#FFFFFF' || scanColor === '#fff';
+
+      if (isWhiteScan) {
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+        gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.08)');
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.25)');
       } else {
-        gradient.addColorStop(0, 'rgba(74, 222, 128, 0)');
-        gradient.addColorStop(0.7, 'rgba(126, 59, 151, 0.15)');
-        gradient.addColorStop(1, 'rgba(74, 222, 128, 0.35)');
+        gradient.addColorStop(0, 'rgba(5, 5, 5, 0)');
+        gradient.addColorStop(0.7, 'rgba(5, 5, 5, 0.06)');
+        gradient.addColorStop(1, 'rgba(5, 5, 5, 0.18)');
       }
 
       ctx.fillStyle = gradient;
@@ -149,7 +149,7 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
       // Sharp scanline edge
       ctx.strokeStyle = scanColor;
       ctx.shadowColor = scanColor;
-      ctx.shadowBlur = 12;
+      ctx.shadowBlur = 8;
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(0, scanY);
@@ -163,8 +163,8 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
         for (let y = 0; y <= height; y += cellSize) {
           const distToScan = Math.abs(y - scanY);
           if (distToScan < 45) {
-            const opacity = (1 - distToScan / 45) * 0.8;
-            ctx.fillStyle = `rgba(74, 222, 128, ${opacity})`;
+            const opacity = (1 - distToScan / 45) * 0.7;
+            ctx.fillStyle = isWhiteScan ? `rgba(255, 255, 255, ${opacity})` : `rgba(5, 5, 5, ${opacity})`;
             ctx.fillRect(x - 1.5, y - 1.5, 3, 3);
           }
         }
@@ -184,27 +184,24 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
         }
 
         ctx.save();
-        // Outer targeting ring
         ctx.strokeStyle = node.color;
         ctx.globalAlpha = node.intensity;
         ctx.lineWidth = 1.5;
         ctx.shadowColor = node.color;
-        ctx.shadowBlur = node.intensity * 10;
+        ctx.shadowBlur = node.intensity * 8;
 
         ctx.beginPath();
         ctx.arc(px, py, 10 + (1 - node.intensity) * 6, 0, Math.PI * 2);
         ctx.stroke();
 
-        // Inner solid core
         ctx.fillStyle = node.color;
         ctx.beginPath();
         ctx.arc(px, py, 3, 0, Math.PI * 2);
         ctx.fill();
 
-        // Technical Node Tag
         if (node.intensity > 0.4) {
           ctx.font = '9px "JetBrains Mono", monospace';
-          ctx.fillStyle = '#ffffff';
+          ctx.fillStyle = isWhiteScan ? '#FFFFFF' : '#111827';
           ctx.fillText(`// ${node.label}`, px + 14, py + 3);
         }
         ctx.restore();
@@ -213,14 +210,14 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
       // 6. Interactive Mouse Cursor Pulse
       if (mouseX >= 0 && mouseY >= 0) {
         ctx.save();
-        ctx.strokeStyle = '#DFB8F2';
+        ctx.strokeStyle = isWhiteScan ? '#D4D4D4' : '#6B7280';
         ctx.lineWidth = 1;
         ctx.setLineDash([4, 4]);
         ctx.beginPath();
-        ctx.arc(mouseX, mouseY, 30, 0, Math.PI * 2);
+        ctx.arc(mouseX, mouseY, 28, 0, Math.PI * 2);
         ctx.stroke();
 
-        ctx.fillStyle = '#4ADE80';
+        ctx.fillStyle = scanColor;
         ctx.beginPath();
         ctx.arc(mouseX, mouseY, 2.5, 0, Math.PI * 2);
         ctx.fill();

@@ -83,7 +83,7 @@ export const Navbar: React.FC = () => {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-navy-900/80 backdrop-blur-md border-b border-navy-700/40 shadow-nav py-3'
+            ? 'bg-white/90 backdrop-blur-md border-b border-[#D4D4D4] shadow-sm py-3'
             : 'bg-transparent border-b border-transparent py-5'
         }`}
       >
@@ -93,22 +93,22 @@ export const Navbar: React.FC = () => {
             <a
               href="#hero"
               onClick={(e) => scrollToSection(e, '#hero')}
-              className="group flex items-center gap-2.5 text-slate-100 focus:outline-none"
+              className="group flex items-center gap-2.5 text-[#111827] focus:outline-none"
               aria-label="Tanuj Mistry - Home"
             >
-              <div className="relative flex items-center justify-center w-9 h-9 rounded-lg bg-navy-800 border border-navy-700/80 group-hover:border-circuit-teal/60 transition-colors">
-                <span className="font-mono font-bold text-sm tracking-wider text-circuit-teal group-hover:text-circuit-cyan transition-colors">
+              <div className="relative flex items-center justify-center w-9 h-9 rounded-lg bg-[#050505] text-white border border-[#050505] group-hover:bg-neutral-800 transition-colors">
+                <span className="font-mono font-bold text-sm tracking-wider text-white">
                   TM
                 </span>
-                {/* Micro circuit trace node */}
-                <span className="absolute -bottom-1 -right-1 w-2 h-2 rounded-full bg-circuit-teal animate-pulse" />
+                {/* Micro algorithmic trace dot */}
+                <span className="absolute -bottom-1 -right-1 w-2 h-2 rounded-full bg-[#050505] border border-white" />
               </div>
 
               <div className="flex flex-col">
-                <span className="font-sans font-semibold text-sm tracking-tight text-white group-hover:text-circuit-teal transition-colors">
+                <span className="font-sans font-semibold text-sm tracking-tight text-[#111827] group-hover:text-black transition-colors">
                   {personalInfo.name}
                 </span>
-                <span className="font-mono text-[10px] text-slate-400 tracking-wider hidden sm:block">
+                <span className="font-mono text-[10px] text-[#4B5563] tracking-wider hidden sm:block">
                   E&amp;TC // HARDWARE+AI
                 </span>
               </div>
@@ -125,18 +125,18 @@ export const Navbar: React.FC = () => {
                     onClick={(e) => scrollToSection(e, link.href)}
                     className={`relative px-3 py-1.5 text-xs font-mono transition-all duration-200 rounded-md group ${
                       isActive
-                        ? 'text-circuit-teal font-medium'
-                        : 'text-slate-400 hover:text-slate-100 hover:bg-navy-800/50'
+                        ? 'text-[#050505] font-semibold'
+                        : 'text-[#4B5563] hover:text-[#111827] hover:bg-[#F4F4F5]'
                     }`}
                   >
-                    <span className="text-circuit-teal/40 group-hover:text-circuit-teal/70 mr-1 text-[10px]">
+                    <span className="text-[#9CA3AF] mr-1 text-[10px]">
                       0{idx + 1}.
                     </span>
                     {link.name}
                     {isActive && (
                       <motion.div
                         layoutId="activeNavIndicator"
-                        className="absolute bottom-0 left-3 right-3 h-[2px] bg-gradient-to-r from-circuit-teal to-circuit-cyan rounded-full"
+                        className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#050505] rounded-full"
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -150,10 +150,10 @@ export const Navbar: React.FC = () => {
               <a
                 href="/Tanuj_Mistry_Resume.pdf"
                 download="Tanuj_Mistry_Resume.pdf"
-                className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md text-xs font-mono tracking-wide text-circuit-teal border border-circuit-teal/30 bg-circuit-teal/5 hover:bg-circuit-teal/15 hover:border-circuit-teal hover:shadow-glow-subtle transition-all duration-200"
+                className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md text-xs font-mono tracking-wide text-white bg-[#050505] hover:bg-neutral-800 border border-[#050505] shadow-sm transition-all duration-200"
                 aria-label="Download Resume"
               >
-                <FileDown className="w-3.5 h-3.5 text-circuit-teal" />
+                <FileDown className="w-3.5 h-3.5 text-white" />
                 <span>Resume</span>
               </a>
 
@@ -161,11 +161,11 @@ export const Navbar: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-navy-800 border border-transparent hover:border-navy-700/60 focus:outline-none transition-colors"
+                className="md:hidden p-2 rounded-lg text-[#111827] hover:bg-[#F4F4F5] border border-transparent hover:border-[#D4D4D4] focus:outline-none transition-colors"
                 aria-expanded={mobileMenuOpen}
                 aria-label="Toggle mobile menu"
               >
-                {mobileMenuOpen ? <X className="w-5 h-5 text-circuit-teal" /> : <Menu className="w-5 h-5" />}
+                {mobileMenuOpen ? <X className="w-5 h-5 text-[#050505]" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
           </nav>
@@ -183,7 +183,7 @@ export const Navbar: React.FC = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 bg-navy-950/80 backdrop-blur-sm z-50 md:hidden"
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 md:hidden"
               aria-hidden="true"
             />
 
@@ -193,18 +193,18 @@ export const Navbar: React.FC = () => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-              className="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-navy-900 border-l border-navy-700/70 z-50 p-6 flex flex-col justify-between shadow-2xl md:hidden overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white border-l border-[#D4D4D4] z-50 p-6 flex flex-col justify-between shadow-2xl md:hidden overflow-y-auto"
             >
               {/* Drawer Header */}
               <div>
-                <div className="flex items-center justify-between pb-6 border-b border-navy-700/50">
+                <div className="flex items-center justify-between pb-6 border-b border-[#D4D4D4]">
                   <div className="flex items-center gap-2">
-                    <Terminal className="w-4 h-4 text-circuit-teal" />
-                    <span className="font-mono text-xs text-circuit-teal tracking-wider uppercase">// Navigation</span>
+                    <Terminal className="w-4 h-4 text-[#050505]" />
+                    <span className="font-mono text-xs text-[#050505] font-bold tracking-wider uppercase">// Navigation</span>
                   </div>
                   <button
                     onClick={() => setMobileMenuOpen(false)}
-                    className="p-1.5 rounded-md text-slate-400 hover:text-white hover:bg-navy-800 focus:outline-none"
+                    className="p-1.5 rounded-md text-[#4B5563] hover:text-[#111827] hover:bg-[#F4F4F5] focus:outline-none"
                     aria-label="Close menu"
                   >
                     <X className="w-5 h-5" />
@@ -222,12 +222,12 @@ export const Navbar: React.FC = () => {
                         onClick={(e) => scrollToSection(e, link.href)}
                         className={`flex items-center justify-between px-3.5 py-3 rounded-lg text-sm font-mono transition-all ${
                           isActive
-                            ? 'text-circuit-teal bg-circuit-teal/10 border border-circuit-teal/20 font-medium'
-                            : 'text-slate-300 hover:text-white hover:bg-navy-800/80'
+                            ? 'text-[#050505] bg-[#F4F4F5] border border-[#D4D4D4] font-semibold'
+                            : 'text-[#4B5563] hover:text-[#111827] hover:bg-[#F4F4F5]'
                         }`}
                       >
                         <div className="flex items-center gap-3">
-                          <span className="text-xs text-circuit-teal/50">0{idx + 1}.</span>
+                          <span className="text-xs text-[#9CA3AF]">0{idx + 1}.</span>
                           <span>{link.name}</span>
                         </div>
                         <ArrowUpRight className="w-3.5 h-3.5 opacity-50" />
@@ -238,31 +238,31 @@ export const Navbar: React.FC = () => {
               </div>
 
               {/* Drawer Footer Actions */}
-              <div className="pt-6 border-t border-navy-700/50 space-y-4">
+              <div className="pt-6 border-t border-[#D4D4D4] space-y-4">
                 <a
                   href="/Tanuj_Mistry_Resume.pdf"
                   download="Tanuj_Mistry_Resume.pdf"
-                  className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-xs font-mono font-medium text-circuit-teal border border-circuit-teal/40 bg-circuit-teal/10 hover:bg-circuit-teal/20 transition-all shadow-glow-subtle"
+                  className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-xs font-mono font-medium text-white bg-[#050505] hover:bg-neutral-800 transition-all shadow-sm"
                 >
-                  <FileDown className="w-4 h-4" />
+                  <FileDown className="w-4 h-4 text-white" />
                   <span>Download Resume (PDF)</span>
                 </a>
 
                 {/* Direct quick contact links */}
-                <div className="flex items-center justify-around pt-2 text-slate-400 text-xs">
+                <div className="flex items-center justify-around pt-2 text-[#4B5563] text-xs">
                   <a
                     href={`mailto:${personalInfo.email}`}
-                    className="flex items-center gap-1.5 hover:text-circuit-teal transition-colors"
+                    className="flex items-center gap-1.5 hover:text-[#050505] transition-colors"
                   >
                     <Mail className="w-3.5 h-3.5" />
                     <span>Email</span>
                   </a>
-                  <span className="text-navy-700">•</span>
+                  <span className="text-[#D4D4D4]">•</span>
                   <a
                     href={personalInfo.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 hover:text-circuit-teal transition-colors"
+                    className="flex items-center gap-1.5 hover:text-[#050505] transition-colors"
                   >
                     <LinkedinIcon className="w-3.5 h-3.5" />
                     <span>LinkedIn</span>

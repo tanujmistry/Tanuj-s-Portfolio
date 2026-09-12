@@ -8,26 +8,38 @@ export default {
   theme: {
     extend: {
       colors: {
+        mono: {
+          bg: '#FFFFFF',
+          secondary: '#050505',
+          accent: '#FFFFFF',
+          surface: '#D4D4D4',
+          'surface-light': '#F4F4F5',
+          'surface-subtle': '#FAFAFA',
+          text: '#111827',
+          'text-secondary': '#4B5563',
+          border: '#D4D4D4',
+          'border-subtle': '#E5E7EB',
+        },
         navy: {
-          950: '#05080f',
-          900: '#0a0e17', // Base dark mode background
-          850: '#0e1422',
-          800: '#131b2e', // Elevated cards & containers
-          750: '#18243c', // Hover states
-          700: '#1e293b', // Borders & dividers
-          600: '#334155',
-          500: '#475569',
+          950: '#050505',
+          900: '#111827',
+          850: '#1F2937',
+          800: '#F4F4F5',
+          750: '#E5E7EB',
+          700: '#D4D4D4',
+          600: '#9CA3AF',
+          500: '#6B7280',
         },
         circuit: {
-          teal: '#00e5c7',  // Primary electric accent
-          cyan: '#22d3ee',  // Secondary signal accent
-          green: '#10b981', // Hardware telemetry OK
-          amber: '#f59e0b', // Status caution
-          rose: '#f43f5e',  // Error / interrupt
-          muted: '#64748b',
-          border: 'rgba(34, 211, 238, 0.12)',
-          'border-active': 'rgba(0, 229, 199, 0.45)',
-          glow: 'rgba(0, 229, 199, 0.15)',
+          teal: '#050505',
+          cyan: '#111827',
+          green: '#111827',
+          amber: '#4B5563',
+          rose: '#EF4444',
+          muted: '#4B5563',
+          border: '#D4D4D4',
+          'border-active': '#050505',
+          glow: 'rgba(5, 5, 5, 0.08)',
         },
       },
       fontFamily: {
@@ -42,15 +54,16 @@ export default {
         'section-lg': '8rem',
       },
       boxShadow: {
-        'glow-teal': '0 0 25px -4px rgba(0, 229, 199, 0.35)',
-        'glow-cyan': '0 0 25px -4px rgba(34, 211, 238, 0.35)',
-        'glow-subtle': '0 0 15px 0 rgba(0, 229, 199, 0.12)',
-        'card': '0 10px 30px -10px rgba(0, 0, 0, 0.5)',
-        'nav': '0 4px 20px -2px rgba(5, 8, 15, 0.7)',
+        'card': '0 4px 20px -2px rgba(0, 0, 0, 0.06), 0 1px 3px 0 rgba(0, 0, 0, 0.04)',
+        'card-hover': '0 10px 30px -5px rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.05)',
+        'nav': '0 2px 15px -2px rgba(0, 0, 0, 0.05)',
+        'glow-teal': '0 4px 20px -2px rgba(5, 5, 5, 0.25)',
+        'glow-cyan': '0 4px 20px -2px rgba(5, 5, 5, 0.2)',
+        'glow-subtle': '0 2px 10px 0 rgba(5, 5, 5, 0.08)',
       },
       backgroundImage: {
-        'grid-pattern': "radial-gradient(rgba(34, 211, 238, 0.08) 1px, transparent 1px)",
-        'dot-pattern': "radial-gradient(rgba(0, 229, 199, 0.1) 1px, transparent 1px)",
+        'grid-pattern': "linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px)",
+        'dot-pattern': "radial-gradient(rgba(0, 0, 0, 0.12) 1px, transparent 1px)",
       },
       animation: {
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
