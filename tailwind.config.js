@@ -66,6 +66,16 @@ export default {
           border: '#FFFFFF',
           accent: '#9CA3AF',
         },
+        signal: {
+          primary: '#8EE7D8',
+          secondary: '#57D8A4',
+          accent: '#57D8A4',
+          bg: '#030305',
+          surface: '#18181B',
+          textPrimary: '#FFFFFF',
+          textSecondary: '#A1A1AA',
+          border: '#27272A',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],

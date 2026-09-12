@@ -156,6 +156,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
 
     let radarAngle = 0;
     let waveRadius = 0;
+    let animTime = 0;
 
     const resize = () => {
       const rect = container.getBoundingClientRect();
@@ -299,26 +300,48 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       ctx.stroke();
       ctx.restore();
 
-      // 4. Expanding RF Wavefront pulses from ground HQ (2000ms pulse)
-      waveRadius = (waveRadius + 0.5) % (baseRadius * 0.65);
-      const waveAlpha = Math.max(0, 1 - waveRadius / (baseRadius * 0.65));
-      const hqNode = nodes[3];
+      // Dynamic waypoint kinematics simulation
+      animTime += 0.015;
+      const dynamicNodes = nodes.map((node, i) => {
+        let dx = 0;
+        let dy = 0;
+        if (node.type === 'uav') {
+          dx = Math.sin(animTime * 0.7 + i * 2) * 0.022;
+          dy = Math.cos(animTime * 0.5 + i * 2) * 0.014;
+        } else if (node.type === 'vehicle') {
+          dx = Math.sin(animTime * 1.2) * 0.032;
+          dy = Math.cos(animTime * 1.2) * 0.008;
+        } else if (node.type === 'satellite') {
+          dx = Math.sin(animTime * 0.25) * 0.035;
+        }
+        return { ...node, cx: (node.x + dx) * width, cy: (node.y + dy) * height };
+      });
+
+      // 4. Expanding RF Wavefront pulses from ground HQ and Satellite
+      waveRadius = (waveRadius + 0.6) % (baseRadius * 0.7);
+      const waveAlpha = Math.max(0, 1 - waveRadius / (baseRadius * 0.7));
+      const hqNode = dynamicNodes[3];
+      const satNode = dynamicNodes[0];
+
       ctx.save();
-      ctx.strokeStyle = `rgba(166, 157, 185, ${waveAlpha * 0.3})`;
+      // Ground HQ pulse
+      ctx.strokeStyle = `rgba(166, 157, 185, ${waveAlpha * 0.35})`;
       ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.arc(hqNode.x * width, hqNode.y * height, waveRadius, 0, Math.PI * 2);
+      ctx.arc(hqNode.cx, hqNode.cy, waveRadius, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Satellite downlink pulse
+      ctx.strokeStyle = `rgba(255, 255, 255, ${waveAlpha * 0.25})`;
+      ctx.beginPath();
+      ctx.arc(satNode.cx, satNode.cy, waveRadius * 0.8, 0, Math.PI * 2);
       ctx.stroke();
       ctx.restore();
 
-      // 5. Mesh Routing Links (Topological vector lines)
+      // 5. Mesh Routing Links (Topological vector lines connecting dynamic nodes)
       links.forEach((link) => {
-        const n1 = nodes[link.from];
-        const n2 = nodes[link.to];
-        const x1 = n1.x * width;
-        const y1 = n1.y * height;
-        const x2 = n2.x * width;
-        const y2 = n2.y * height;
+        const n1 = dynamicNodes[link.from];
+        const n2 = dynamicNodes[link.to];
 
         ctx.save();
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
@@ -327,28 +350,42 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
           ctx.setLineDash(link.dash);
         }
         ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
+        ctx.moveTo(n1.cx, n1.cy);
+        ctx.lineTo(n2.cx, n2.cy);
         ctx.stroke();
         ctx.restore();
       });
 
-      // 6. Real-time Animated Data Packets (Photon pulses along links)
+      // 6. Real-time Animated Data Packets with Photon Trails
       packets.forEach((pkt) => {
         pkt.progress += pkt.speed;
         if (pkt.progress >= 1) {
           pkt.progress = 0;
         }
 
-        const n1 = nodes[pkt.fromIndex];
-        const n2 = nodes[pkt.toIndex];
-        const px = n1.x * width + (n2.x * width - n1.x * width) * pkt.progress;
-        const py = n1.y * height + (n2.y * height - n1.y * height) * pkt.progress;
+        const n1 = dynamicNodes[pkt.fromIndex];
+        const n2 = dynamicNodes[pkt.toIndex];
+        const px = n1.cx + (n2.cx - n1.cx) * pkt.progress;
+        const py = n1.cy + (n2.cy - n1.cy) * pkt.progress;
 
+        // Fading comet trail behind packet
         ctx.save();
+        for (let t = 1; t <= 4; t++) {
+          const trailProgress = Math.max(0, pkt.progress - t * 0.015);
+          const tx = n1.cx + (n2.cx - n1.cx) * trailProgress;
+          const ty = n1.cy + (n2.cy - n1.cy) * trailProgress;
+          ctx.fillStyle = pkt.color;
+          ctx.globalAlpha = (0.5 / t);
+          ctx.beginPath();
+          ctx.arc(tx, ty, pkt.size * (1 - t * 0.18), 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Main photon head
         ctx.fillStyle = pkt.color;
         ctx.shadowColor = pkt.color;
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = 10;
+        ctx.globalAlpha = 1;
         ctx.beginPath();
         ctx.arc(px, py, pkt.size, 0, Math.PI * 2);
         ctx.fill();
@@ -356,9 +393,9 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       });
 
       // 7. Node Markers & Flight Telemetry Labels
-      nodes.forEach((node) => {
-        const nx = node.x * width;
-        const ny = node.y * height;
+      dynamicNodes.forEach((node) => {
+        const nx = node.cx;
+        const ny = node.cy;
         const isSelected = node.id === internalSelectedId;
         const isHovered = node.id === hoveredNodeId;
 

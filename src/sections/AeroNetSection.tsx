@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Radio,
@@ -12,6 +12,14 @@ import { AeroNetCanvas, type AeroNode } from '../components/AeroNetCanvas';
 export const AeroNetSection: React.FC = () => {
   const [selectedFrequency, setSelectedFrequency] = useState<string>('2.4 GHz FHSS');
   const [activeWorkflowStep, setActiveWorkflowStep] = useState<number>(1);
+
+  // Automated pipeline cycle every 3500ms
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveWorkflowStep((prev) => (prev % 4) + 1);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
   const [selectedNode, setSelectedNode] = useState<AeroNode>({
     id: 'uav_01',
     name: 'UAV_SWARM_ALPHA',
