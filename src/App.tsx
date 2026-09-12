@@ -5,6 +5,7 @@ import { GridScanSection } from './sections/GridScanSection';
 import { Skills } from './sections/Skills';
 import { DitherOSSection } from './sections/DitherOSSection';
 import { NeuroSyncSection } from './sections/NeuroSyncSection';
+import { AeroNetSection } from './sections/AeroNetSection';
 import { Experience } from './sections/Experience';
 import { Projects } from './sections/Projects';
 import { Certifications } from './sections/Certifications';
@@ -30,6 +31,9 @@ export default function App() {
 
       {/* NeuroSync Master Feature Section */}
       <NeuroSyncSection />
+
+      {/* AeroNet Visualization Telemetry & Interface Hierarchy Section */}
+      <AeroNetSection />
 
       {/* Section 03: Experience */}
       <Experience />
