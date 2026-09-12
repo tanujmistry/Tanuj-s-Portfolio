@@ -34,8 +34,23 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <!-- Theme Initialization Script to prevent flash of wrong mode -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('portfolio-theme');
+          if (saved === 'light') {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+          } else {
+            document.documentElement.classList.remove('light');
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
-  <body class="bg-[#030712] text-white antialiased font-sans selection:bg-[#4ADEDE] selection:text-[#030712] min-h-screen overflow-x-hidden">
+  <body class="bg-white dark:bg-[#030712] text-[#111827] dark:text-white antialiased font-sans selection:bg-[#4ADEDE] selection:text-[#030712] min-h-screen overflow-x-hidden transition-colors duration-300">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

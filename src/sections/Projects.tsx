@@ -40,7 +40,7 @@ export const Projects: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.5 }}
-            className="group relative rounded-2xl bg-[#18181B] light:bg-[#030712] text-white border border-[#27272A] hover:border-[#4ADEDE] p-6 sm:p-8 lg:p-10 shadow-2xl hover:-translate-y-1 transition-all duration-300"
+            className="group relative rounded-2xl bg-[#18181B] light:bg-white text-white light:text-[#111827] border border-[#27272A] light:border-gray-200 hover:border-[#4ADEDE] p-6 sm:p-8 lg:p-10 shadow-2xl hover:-translate-y-1 transition-all duration-300"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               {/* Left Column: Flagship Details */}
@@ -52,25 +52,25 @@ export const Projects: React.FC = () => {
                     FLAGSHIP PROJECT // 01
                   </span>
 
-                  <span className="px-2.5 py-1 rounded text-xs font-mono bg-[#030712] text-[#60F1AD] border border-[#27272A]">
+                  <span className="px-2.5 py-1 rounded text-xs font-mono bg-[#030712] light:bg-[#F3F4F6] text-[#60F1AD] light:text-[#059669] border border-[#27272A] light:border-gray-200">
                     {flagshipProject.category}
                   </span>
                 </div>
 
                 {/* Title */}
-                <h3 className="text-2xl sm:text-3xl font-bold text-white font-sans tracking-tight">
+                <h3 className="text-2xl sm:text-3xl font-bold text-white light:text-[#111827] font-sans tracking-tight">
                   {flagshipProject.title}
                 </h3>
 
                 {/* 2-line Description */}
-                <p className="text-[#A1A1AA] text-sm sm:text-base leading-relaxed line-clamp-2">
+                <p className="text-[#A1A1AA] light:text-[#4B5563] text-sm sm:text-base leading-relaxed line-clamp-2 font-sans">
                   {flagshipProject.shortDescription}
                 </p>
 
                 {/* Metrics Banner */}
                 {flagshipProject.metrics && (
-                  <div className="p-3 rounded-lg bg-[#030712] border border-[#27272A] flex items-center gap-2.5 text-xs font-mono text-[#60F1AD] font-semibold">
-                    <Activity className="w-4 h-4 shrink-0 text-[#60F1AD]" />
+                  <div className="p-3 rounded-lg bg-[#030712] light:bg-[#F3F4F6] border border-[#27272A] light:border-gray-200 flex items-center gap-2.5 text-xs font-mono text-[#60F1AD] light:text-[#059669] font-semibold">
+                    <Activity className="w-4 h-4 shrink-0 text-[#60F1AD] light:text-[#059669]" />
                     <span>{flagshipProject.metrics}</span>
                   </div>
                 )}
@@ -80,7 +80,7 @@ export const Projects: React.FC = () => {
                   {flagshipProject.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-1 rounded text-xs font-mono bg-[#030712] text-[#A1A1AA] border border-[#27272A]"
+                      className="px-2.5 py-1 rounded text-xs font-mono bg-[#030712] light:bg-[#F3F4F6] text-[#A1A1AA] light:text-[#4B5563] border border-[#27272A] light:border-gray-200"
                     >
                       {tag}
                     </span>

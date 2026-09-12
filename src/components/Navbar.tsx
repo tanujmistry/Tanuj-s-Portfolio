@@ -6,7 +6,7 @@ import { navLinks, personalInfo } from '../data/portfolio';
 import { useTheme } from '../context/ThemeContext';
 
 export const Navbar: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('hero');
@@ -149,21 +149,45 @@ export const Navbar: React.FC = () => {
             </div>
 
             {/* Right Action: Theme Toggle + Resume Download + Mobile Trigger */}
-            <div className="flex items-center gap-2.5">
-              {/* Theme Toggle Button */}
-              <button
-                type="button"
-                onClick={toggleTheme}
-                className="p-2 rounded-lg bg-[#18181B] light:bg-[#F4F4F5] border border-[#27272A] light:border-[#D4D4D4] hover:border-[#4ADEDE] transition-all cursor-pointer focus:outline-none"
-                aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-                title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            <div className="flex items-center gap-2 sm:gap-2.5">
+              {/* Unambiguous Segmented Theme Switcher */}
+              <div
+                className="flex items-center p-0.5 rounded-lg bg-[#18181B] light:bg-[#E5E7EB] border border-[#27272A] light:border-[#D4D4D4] shadow-sm"
+                role="radiogroup"
+                aria-label="Theme switcher"
               >
-                {theme === 'dark' ? (
-                  <Sun className="w-4 h-4 text-[#4ADEDE] transition-transform duration-300 hover:rotate-90" />
-                ) : (
-                  <Moon className="w-4 h-4 text-[#0284C7] transition-transform duration-300 hover:-rotate-12" />
-                )}
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setTheme('dark')}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono transition-all duration-200 cursor-pointer ${
+                    theme === 'dark'
+                      ? 'bg-[#030712] text-[#4ADEDE] border border-[#4ADEDE]/40 shadow-sm font-bold'
+                      : 'text-[#A1A1AA] hover:text-white'
+                  }`}
+                  aria-checked={theme === 'dark'}
+                  role="radio"
+                  title="Activate Dark Mode"
+                >
+                  <Moon className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline text-[11px]">Dark</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setTheme('light')}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono transition-all duration-200 cursor-pointer ${
+                    theme === 'light'
+                      ? 'bg-white text-[#0284C7] border border-[#0284C7]/40 shadow-sm font-bold'
+                      : 'text-[#A1A1AA] light:text-[#6B7280] hover:text-[#111827]'
+                  }`}
+                  aria-checked={theme === 'light'}
+                  role="radio"
+                  title="Activate Light Mode"
+                >
+                  <Sun className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline text-[11px]">Light</span>
+                </button>
+              </div>
 
               <a
                 href="/Tanuj_Mistry_Resume.pdf"
@@ -221,14 +245,35 @@ export const Navbar: React.FC = () => {
                     <span className="font-mono text-xs text-[#4ADEDE] font-bold tracking-wider uppercase">// Navigation</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    {/* Mobile theme toggle */}
-                    <button
-                      type="button"
-                      onClick={toggleTheme}
-                      className="p-1.5 rounded-md bg-[#030712] light:bg-[#F4F4F5] border border-[#27272A] light:border-[#D4D4D4] text-[#4ADEDE] light:text-[#0284C7] focus:outline-none"
-                    >
-                      {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-                    </button>
+                    {/* Mobile segmented theme toggle */}
+                    <div className="flex items-center p-0.5 rounded-lg bg-[#030712] light:bg-[#E5E7EB] border border-[#27272A] light:border-[#D4D4D4]">
+                      <button
+                        type="button"
+                        onClick={() => setTheme('dark')}
+                        className={`flex items-center gap-1 px-2 py-1 rounded text-[11px] font-mono transition-all ${
+                          theme === 'dark'
+                            ? 'bg-[#18181B] text-[#4ADEDE] border border-[#4ADEDE]/40 font-bold'
+                            : 'text-[#A1A1AA]'
+                        }`}
+                        title="Dark Mode"
+                      >
+                        <Moon className="w-3 h-3" />
+                        <span>Dark</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setTheme('light')}
+                        className={`flex items-center gap-1 px-2 py-1 rounded text-[11px] font-mono transition-all ${
+                          theme === 'light'
+                            ? 'bg-white text-[#0284C7] border border-[#0284C7]/40 font-bold'
+                            : 'text-[#A1A1AA] light:text-[#6B7280]'
+                        }`}
+                        title="Light Mode"
+                      >
+                        <Sun className="w-3 h-3" />
+                        <span>Light</span>
+                      </button>
+                    </div>
                     <button
                       onClick={() => setMobileMenuOpen(false)}
                       className="p-1.5 rounded-md text-[#A1A1AA] hover:text-white hover:bg-[#27272A] focus:outline-none"
