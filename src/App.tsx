@@ -1,6 +1,7 @@
 import { Layout } from './components/Layout';
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
+import { GridScanSection } from './sections/GridScanSection';
 import { Skills } from './sections/Skills';
 import { Experience } from './sections/Experience';
 import { Projects } from './sections/Projects';
@@ -15,6 +16,9 @@ export default function App() {
 
       {/* Section 01: About */}
       <About />
+
+      {/* React Bits GridScan Feature Section */}
+      <GridScanSection />
 
       {/* Section 02: Skills */}
       <Skills />
