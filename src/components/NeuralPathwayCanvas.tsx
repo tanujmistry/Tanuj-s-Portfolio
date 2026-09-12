@@ -164,10 +164,10 @@ export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ classN
             const avgEnergy = (n1.energy + n2.energy) / 2;
 
             if (avgEnergy > 0.4) {
-              ctx.strokeStyle = `rgba(204, 128, 102, ${alpha + avgEnergy * 0.35})`;
+              ctx.strokeStyle = `rgba(74, 222, 222, ${alpha + avgEnergy * 0.35})`;
               ctx.lineWidth = 1.2;
             } else {
-              ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.6})`;
+              ctx.strokeStyle = `rgba(96, 241, 173, ${alpha * 0.6})`;
               ctx.lineWidth = 0.8;
             }
 
@@ -197,11 +197,11 @@ export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ classN
         const currentY = fromNode.y + (toNode.y - fromNode.y) * ap.progress;
 
         ctx.save();
-        ctx.fillStyle = '#CC8066';
-        ctx.shadowColor = '#CC8066';
+        ctx.fillStyle = '#60F1AD';
+        ctx.shadowColor = '#60F1AD';
         ctx.shadowBlur = 8;
         ctx.beginPath();
-        ctx.arc(currentX, currentY, 2, 0, Math.PI * 2);
+        ctx.arc(currentX, currentY, 2.5, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
       }
@@ -212,8 +212,8 @@ export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ classN
         const currentRadius = node.baseRadius + node.energy * 2.5;
 
         if (node.energy > 0.3) {
-          ctx.fillStyle = '#CC8066';
-          ctx.shadowColor = '#CC8066';
+          ctx.fillStyle = '#4ADEDE';
+          ctx.shadowColor = '#4ADEDE';
           ctx.shadowBlur = node.energy * 12;
         } else {
           ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
@@ -225,7 +225,7 @@ export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ classN
 
         // Subtle outer excitation ring
         if (node.energy > 0.4) {
-          ctx.strokeStyle = `rgba(204, 128, 102, ${node.energy * 0.6})`;
+          ctx.strokeStyle = `rgba(74, 222, 222, ${node.energy * 0.6})`;
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.arc(node.x, node.y, currentRadius + 3, 0, Math.PI * 2);

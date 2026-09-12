@@ -70,11 +70,11 @@ export const DitherCanvas: React.FC<DitherCanvasProps> = ({
         return;
       }
 
-      // Background canvas fill (#030303 in dark mode)
+      // Background canvas fill (#030712 in dark mode)
       if (inverse) {
         ctx.fillStyle = '#FFFFFF';
       } else {
-        ctx.fillStyle = '#030303';
+        ctx.fillStyle = '#030712';
       }
       ctx.fillRect(0, 0, width, height);
 
@@ -114,11 +114,11 @@ export const DitherCanvas: React.FC<DitherCanvasProps> = ({
 
             if (theme === 'emerald') {
               if (intensity > 0.65) {
-                // Primary #34D399 (Emerald)
-                ctx.fillStyle = `rgba(52, 211, 153, ${alpha * 0.95})`;
+                // Primary #4ADEDE (Cyber Cyan)
+                ctx.fillStyle = `rgba(74, 222, 222, ${alpha * 0.95})`;
               } else if (intensity > 0.38) {
-                // Secondary #60A5FA (Cyan/Blue)
-                ctx.fillStyle = `rgba(96, 165, 250, ${alpha * 0.85})`;
+                // Secondary #60F1AD (Electric Mint)
+                ctx.fillStyle = `rgba(96, 241, 173, ${alpha * 0.85})`;
               } else {
                 ctx.fillStyle = `rgba(161, 161, 170, ${alpha * 0.5})`;
               }
@@ -126,7 +126,7 @@ export const DitherCanvas: React.FC<DitherCanvasProps> = ({
               if (inverse) {
                 ctx.fillStyle = `rgba(5, 5, 5, ${alpha})`;
               } else {
-                ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                ctx.fillStyle = `rgba(74, 222, 222, ${alpha})`;
               }
             }
 

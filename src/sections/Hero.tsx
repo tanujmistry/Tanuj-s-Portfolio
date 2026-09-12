@@ -22,12 +22,12 @@ export const Hero: React.FC = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-[calc(100vh-5rem)] flex items-center justify-center overflow-hidden py-16 sm:py-20 lg:py-24 bg-white text-[#111827]"
+      className="relative min-h-[calc(100vh-5rem)] flex items-center justify-center overflow-hidden py-16 sm:py-20 lg:py-24 bg-[#030712] light:bg-white text-[#FFFFFF] light:text-[#111827] transition-colors duration-300"
     >
-      {/* Background Subtle Circuit Traces (SVG low-opacity vector graphics) */}
+      {/* Background Subtle Circuit Traces (SVG vector graphics in #4ADEDE / #60F1AD) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
         <svg
-          className="w-full h-full opacity-20"
+          className="w-full h-full opacity-25 light:opacity-10"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 900"
           fill="none"
@@ -35,40 +35,40 @@ export const Hero: React.FC = () => {
           {/* Circuit trace lines */}
           <path
             d="M-100 200 H 400 L 520 320 H 900 L 980 240 H 1540"
-            stroke="#050505"
+            stroke="#4ADEDE"
             strokeWidth="1.2"
             strokeDasharray="4 6"
           />
           <path
             d="M-50 480 H 320 L 400 560 H 820 L 920 460 H 1500"
-            stroke="#D4D4D4"
+            stroke="#60F1AD"
             strokeWidth="1.5"
             strokeDasharray="6 8"
           />
           <path
             d="M200 -50 V 250 L 300 350 V 750 L 400 850 V 950"
-            stroke="#050505"
+            stroke="#27272A"
             strokeWidth="1.2"
             strokeDasharray="3 5"
           />
           <path
             d="M1100 -50 V 300 L 1020 380 V 800"
-            stroke="#D4D4D4"
-            strokeWidth="1.5"
+            stroke="#4ADEDE"
+            strokeWidth="1.2"
             strokeDasharray="4 6"
           />
 
           {/* Electronic connection nodes */}
-          <circle cx="400" cy="200" r="3.5" fill="#050505" />
-          <circle cx="520" cy="320" r="3.5" fill="#050505" />
-          <circle cx="900" cy="320" r="3.5" fill="#050505" />
-          <circle cx="320" cy="480" r="3" fill="#D4D4D4" />
-          <circle cx="820" cy="560" r="3" fill="#050505" />
+          <circle cx="400" cy="200" r="3.5" fill="#4ADEDE" />
+          <circle cx="520" cy="320" r="3.5" fill="#60F1AD" />
+          <circle cx="900" cy="320" r="3.5" fill="#4ADEDE" />
+          <circle cx="320" cy="480" r="3" fill="#60F1AD" />
+          <circle cx="820" cy="560" r="3" fill="#4ADEDE" />
         </svg>
 
-        {/* Faint ambient backdrop highlights */}
-        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-black/[0.02] rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] bg-black/[0.015] rounded-full blur-3xl pointer-events-none" />
+        {/* Ambient backdrop glow in cyber cyan & electric mint */}
+        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-[#4ADEDE]/[0.05] light:bg-[#4ADEDE]/[0.03] rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] bg-[#60F1AD]/[0.04] light:bg-[#60F1AD]/[0.02] rounded-full blur-3xl pointer-events-none" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -81,50 +81,50 @@ export const Hero: React.FC = () => {
             className="lg:col-span-7 space-y-6"
           >
             {/* Status Pill Badge */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#F4F4F5] border border-[#D4D4D4] text-xs font-mono">
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#18181B] light:bg-[#F3F4F6] border border-[#27272A] light:border-gray-300 text-xs font-mono shadow-sm">
               <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#050505] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#050505]" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#60F1AD] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#60F1AD]" />
               </span>
-              <span className="text-[#111827] font-bold tracking-wide">
+              <span className="text-[#4ADEDE] light:text-[#0284C7] font-semibold tracking-wide">
                 NIELIT Project Intern // Real-Time FPGA + CNN
               </span>
             </div>
 
             {/* Name */}
             <div className="space-y-1.5">
-              <div className="font-mono text-xs sm:text-sm text-[#4B5563] tracking-wider uppercase">
+              <div className="font-mono text-xs sm:text-sm text-[#A1A1AA] light:text-[#4B5563] tracking-wider uppercase">
                 // Hello, World. I am
               </div>
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[#111827] font-sans">
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[#FFFFFF] light:text-[#111827] font-sans">
                 {personalInfo.name}
               </h1>
             </div>
 
             {/* Role Title */}
-            <div className="flex flex-wrap items-center gap-2 font-mono text-lg sm:text-xl lg:text-2xl text-[#050505] font-semibold">
+            <div className="flex flex-wrap items-center gap-2 font-mono text-lg sm:text-xl lg:text-2xl text-[#4ADEDE] light:text-[#0284C7] font-semibold">
               <span>{personalInfo.title}</span>
-              <span className="text-[#9CA3AF] hidden sm:inline">|</span>
-              <span className="text-[#4B5563] text-base sm:text-xl font-normal">AI/ML &amp; Embedded Systems</span>
+              <span className="text-[#27272A] light:text-gray-400 hidden sm:inline">|</span>
+              <span className="text-[#A1A1AA] light:text-[#4B5563] text-base sm:text-xl font-normal">AI/ML &amp; Embedded Systems</span>
             </div>
 
             {/* One-Sentence Value Proposition */}
-            <p className="text-[#374151] text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl font-sans font-normal">
-              Bridging the silicon-software divide by engineering custom <span className="text-[#111827] font-semibold">FPGA accelerators</span>, <span className="text-[#111827] font-semibold">real-time DSP pipelines</span>, and deploying <span className="text-[#050505] font-semibold underline decoration-[#D4D4D4] underline-offset-4">quantized deep learning models</span> directly onto resource-constrained embedded hardware.
+            <p className="text-[#A1A1AA] light:text-[#4B5563] text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl font-sans font-normal">
+              Bridging the silicon-software divide by engineering custom <span className="text-[#FFFFFF] light:text-[#111827] font-semibold">FPGA accelerators</span>, <span className="text-[#FFFFFF] light:text-[#111827] font-semibold">real-time DSP pipelines</span>, and deploying <span className="text-[#60F1AD] light:text-[#059669] font-semibold underline decoration-[#4ADEDE] underline-offset-4">quantized deep learning models</span> directly onto resource-constrained embedded hardware.
             </p>
 
             {/* Micro Hardware Specs Pill Row */}
             <div className="flex flex-wrap gap-2 pt-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#F4F4F5] border border-[#D4D4D4] text-xs font-mono text-[#111827]">
-                <Cpu className="w-3.5 h-3.5 text-[#050505]" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#18181B] light:bg-[#F3F4F6] border border-[#27272A] light:border-gray-300 text-xs font-mono text-[#FFFFFF] light:text-[#111827]">
+                <Cpu className="w-3.5 h-3.5 text-[#4ADEDE]" />
                 Xilinx Vivado &amp; Verilog
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#F4F4F5] border border-[#D4D4D4] text-xs font-mono text-[#111827]">
-                <Layers className="w-3.5 h-3.5 text-[#050505]" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#18181B] light:bg-[#F3F4F6] border border-[#27272A] light:border-gray-300 text-xs font-mono text-[#FFFFFF] light:text-[#111827]">
+                <Layers className="w-3.5 h-3.5 text-[#60F1AD]" />
                 Quantized CNN Inference
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#F4F4F5] border border-[#D4D4D4] text-xs font-mono text-[#111827]">
-                <Terminal className="w-3.5 h-3.5 text-[#050505]" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#18181B] light:bg-[#F3F4F6] border border-[#27272A] light:border-gray-300 text-xs font-mono text-[#FFFFFF] light:text-[#111827]">
+                <Terminal className="w-3.5 h-3.5 text-[#4ADEDE]" />
                 ARM / ESP32 &amp; CAN Bus
               </span>
             </div>
@@ -134,7 +134,7 @@ export const Hero: React.FC = () => {
               <button
                 type="button"
                 onClick={() => scrollTo('projects')}
-                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#050505] text-white font-mono text-sm font-semibold hover:bg-neutral-800 shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-black cursor-pointer"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#4ADEDE] text-[#030712] font-mono text-sm font-bold hover:bg-[#60F1AD] shadow-lg shadow-[#4ADEDE]/20 transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[#4ADEDE] cursor-pointer"
               >
                 <span>View My Work</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -143,19 +143,19 @@ export const Hero: React.FC = () => {
               <button
                 type="button"
                 onClick={() => scrollTo('contact')}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white hover:bg-[#F4F4F5] border border-[#D4D4D4] hover:border-[#050505] text-[#111827] font-mono text-sm transition-all duration-200 focus:outline-none cursor-pointer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#18181B] light:bg-[#F3F4F6] hover:bg-[#27272A] light:hover:bg-gray-200 border border-[#27272A] light:border-gray-300 hover:border-[#4ADEDE] text-[#FFFFFF] light:text-[#111827] font-mono text-sm transition-all duration-200 hover:-translate-y-0.5 focus:outline-none cursor-pointer"
               >
-                <Mail className="w-4 h-4 text-[#050505]" />
+                <Mail className="w-4 h-4 text-[#4ADEDE]" />
                 <span>Get in Touch</span>
               </button>
             </div>
 
             {/* Quick Education / CGPA Snippet */}
-            <div className="pt-4 border-t border-[#D4D4D4] text-xs font-mono text-[#4B5563] flex flex-wrap items-center gap-x-4 gap-y-1">
+            <div className="pt-4 border-t border-[#27272A] light:border-gray-300 text-xs font-mono text-[#A1A1AA] light:text-[#4B5563] flex flex-wrap items-center gap-x-4 gap-y-1">
               <span>B.Tech E&amp;TC @ GEC Aurangabad</span>
-              <span className="text-[#D4D4D4]">•</span>
-              <span className="text-[#111827] font-bold">CGPA: 8.65 / 10.0</span>
-              <span className="text-[#D4D4D4]">•</span>
+              <span className="text-[#27272A] light:text-gray-400">•</span>
+              <span className="text-[#60F1AD] light:text-[#059669] font-bold">CGPA: 8.65 / 10.0</span>
+              <span className="text-[#27272A] light:text-gray-400">•</span>
               <span>Nov 2022 – June 2026</span>
             </div>
           </motion.div>
@@ -169,13 +169,13 @@ export const Hero: React.FC = () => {
           >
             {/* Ambient decorative border accent */}
             <div className="relative">
-              {/* Interactive Real-Time Oscilloscope Canvas (Deep Black Phosphor Box) */}
+              {/* Interactive Real-Time Oscilloscope Canvas */}
               <OscilloscopeCanvas className="relative z-10" />
 
               {/* Decorative engineering label underneath */}
-              <div className="mt-3 flex items-center justify-between text-[11px] font-mono text-[#4B5563] px-2">
+              <div className="mt-3 flex items-center justify-between text-[11px] font-mono text-[#A1A1AA] light:text-[#4B5563] px-2">
                 <span>// SIGNAL TELEMETRY &amp; EDGE AI MONITOR</span>
-                <span className="text-[#111827] font-bold">LATENCY: &lt;10ms</span>
+                <span className="text-[#4ADEDE] font-bold">LATENCY: &lt;10ms</span>
               </div>
             </div>
           </motion.div>

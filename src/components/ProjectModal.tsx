@@ -38,7 +38,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
           onClick={onClose}
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm"
           aria-hidden="true"
         />
 
@@ -48,24 +48,24 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white border border-[#D4D4D4] rounded-2xl p-6 sm:p-8 shadow-2xl z-10 text-[#111827]"
+          className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-[#18181B] light:bg-white border border-[#27272A] light:border-gray-200 rounded-2xl p-6 sm:p-8 shadow-2xl z-10 text-[#FFFFFF] light:text-[#111827]"
         >
           {/* Header */}
-          <div className="flex items-start justify-between gap-4 pb-4 border-b border-[#D4D4D4]">
+          <div className="flex items-start justify-between gap-4 pb-4 border-b border-[#27272A] light:border-gray-200">
             <div className="space-y-1.5">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded text-[11px] font-mono bg-[#F4F4F5] text-[#111827] border border-[#D4D4D4]">
+                <span className="px-2.5 py-0.5 rounded text-[11px] font-mono bg-[#030712] light:bg-[#F3F4F6] text-[#4ADEDE] light:text-[#0284C7] border border-[#27272A] light:border-gray-200 font-semibold">
                   {project.category}
                 </span>
                 {project.isFlagship && (
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-mono bg-[#050505] text-white border border-[#050505] font-semibold">
-                    <Sparkles className="w-3 h-3 text-white" />
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-mono bg-[#4ADEDE] text-[#030712] font-bold shadow-sm">
+                    <Sparkles className="w-3 h-3 text-[#030712]" />
                     FLAGSHIP HERO PROJECT
                   </span>
                 )}
               </div>
 
-              <h2 className="text-xl sm:text-2xl font-bold text-[#111827] font-sans tracking-tight">
+              <h2 className="text-xl sm:text-2xl font-bold text-[#FFFFFF] light:text-[#111827] font-sans tracking-tight">
                 {project.title}
               </h2>
             </div>
@@ -73,7 +73,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-[#4B5563] hover:text-[#111827] hover:bg-[#F4F4F5] border border-transparent hover:border-[#D4D4D4] transition-colors focus:outline-none cursor-pointer"
+              className="p-1.5 rounded-lg text-[#A1A1AA] light:text-[#4B5563] hover:text-[#FFFFFF] light:hover:text-[#111827] hover:bg-[#27272A] light:hover:bg-[#F3F4F6] border border-transparent hover:border-[#27272A] transition-colors focus:outline-none cursor-pointer"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -82,32 +82,32 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
           {/* Performance Metric Banner */}
           {project.metrics && (
-            <div className="my-5 p-3 rounded-lg bg-[#F4F4F5] border border-[#D4D4D4] flex items-center gap-2.5 text-xs font-mono text-[#111827] font-medium">
-              <Activity className="w-4 h-4 shrink-0 text-[#050505]" />
+            <div className="my-5 p-3 rounded-lg bg-[#030712] light:bg-[#F3F4F6] border border-[#27272A] light:border-gray-200 flex items-center gap-2.5 text-xs font-mono text-[#60F1AD] light:text-[#059669] font-semibold">
+              <Activity className="w-4 h-4 shrink-0 text-[#60F1AD]" />
               <span>{project.metrics}</span>
             </div>
           )}
 
           {/* Full Engineering Description */}
           <div className="space-y-4 my-5">
-            <div className="text-xs font-mono text-[#4B5563] uppercase tracking-wider">
+            <div className="text-xs font-mono text-[#4ADEDE] light:text-[#0284C7] uppercase tracking-wider font-bold">
               // ARCHITECTURAL OVERVIEW
             </div>
-            <p className="text-sm sm:text-base text-[#374151] leading-relaxed font-sans">
+            <p className="text-sm sm:text-base text-[#A1A1AA] light:text-[#374151] leading-relaxed font-sans">
               {project.fullDescription}
             </p>
           </div>
 
           {/* Key Engineering Highlights */}
           {project.highlights && project.highlights.length > 0 && (
-            <div className="space-y-3 my-5 pt-4 border-t border-[#D4D4D4]">
-              <div className="text-xs font-mono text-[#4B5563] uppercase tracking-wider">
+            <div className="space-y-3 my-5 pt-4 border-t border-[#27272A] light:border-gray-200">
+              <div className="text-xs font-mono text-[#4ADEDE] light:text-[#0284C7] uppercase tracking-wider font-bold">
                 // KEY IMPLEMENTATION HIGHLIGHTS
               </div>
               <ul className="space-y-2">
                 {project.highlights.map((highlight, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#374151] leading-relaxed">
-                    <CheckCircle2 className="w-4 h-4 text-[#050505] shrink-0 mt-0.5" />
+                  <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#A1A1AA] light:text-[#374151] leading-relaxed">
+                    <CheckCircle2 className="w-4 h-4 text-[#60F1AD] light:text-[#059669] shrink-0 mt-0.5" />
                     <span>{highlight}</span>
                   </li>
                 ))}
@@ -116,16 +116,16 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           )}
 
           {/* Tools & Frameworks */}
-          <div className="my-5 pt-4 border-t border-[#D4D4D4] space-y-2">
-            <div className="flex items-center gap-1.5 text-xs font-mono text-[#4B5563] uppercase tracking-wider">
-              <Wrench className="w-3.5 h-3.5 text-[#050505]" />
+          <div className="my-5 pt-4 border-t border-[#27272A] light:border-gray-200 space-y-2">
+            <div className="flex items-center gap-1.5 text-xs font-mono text-[#A1A1AA] light:text-[#4B5563] uppercase tracking-wider">
+              <Wrench className="w-3.5 h-3.5 text-[#4ADEDE]" />
               <span>TOOLS &amp; HARDWARE ENVIRONMENT</span>
             </div>
             <div className="flex flex-wrap gap-2 pt-1">
               {project.tools.map((tool) => (
                 <span
                   key={tool}
-                  className="px-2.5 py-1 rounded-md text-xs font-mono bg-[#F4F4F5] text-[#111827] border border-[#D4D4D4]"
+                  className="px-2.5 py-1 rounded-md text-xs font-mono bg-[#030712] light:bg-[#F3F4F6] text-[#FFFFFF] light:text-[#111827] border border-[#27272A] light:border-gray-200"
                 >
                   {tool}
                 </span>
@@ -134,7 +134,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           </div>
 
           {/* Action Footer */}
-          <div className="pt-6 border-t border-[#D4D4D4] flex flex-wrap items-center justify-between gap-4">
+          <div className="pt-6 border-t border-[#27272A] light:border-gray-200 flex flex-wrap items-center justify-between gap-4">
             <a
               href="#contact"
               onClick={() => {
@@ -144,7 +144,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                   element.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
-              className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#050505] hover:underline"
+              className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#4ADEDE] light:text-[#0284C7] hover:underline"
             >
               <span>Discuss this implementation</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -153,7 +153,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg bg-[#F4F4F5] hover:bg-[#E5E7EB] border border-[#D4D4D4] text-[#111827] text-xs font-mono transition-colors cursor-pointer"
+              className="px-4 py-2 rounded-lg bg-[#030712] light:bg-[#F3F4F6] hover:bg-[#27272A] light:hover:bg-gray-200 border border-[#27272A] light:border-gray-300 text-[#FFFFFF] light:text-[#111827] text-xs font-mono transition-colors cursor-pointer"
             >
               Close Details
             </button>

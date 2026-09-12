@@ -51,7 +51,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       velocity: '7.6 km/s',
       rssi: '-78 dBm',
       status: 'active',
-      color: '#A69DB9', // Tertiary accent
+      color: '#4ADEDE', // Primary cyber cyan
     },
     {
       id: 'uav_01',
@@ -75,7 +75,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       velocity: '82 km/h',
       rssi: '-64 dBm',
       status: 'routing',
-      color: '#9CA3AF', // Primary accent
+      color: '#60F1AD', // Secondary electric mint
     },
     {
       id: 'ground_hq',
@@ -87,7 +87,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       velocity: '0 km/h',
       rssi: '-42 dBm',
       status: 'active',
-      color: '#FFFFFF',
+      color: '#4ADEDE',
     },
     {
       id: 'racecar_daq',
@@ -99,7 +99,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       velocity: '118 km/h',
       rssi: '-52 dBm',
       status: 'syncing',
-      color: '#A69DB9', // Tertiary accent
+      color: '#60F1AD',
     },
   ];
 
@@ -136,12 +136,12 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
 
     // Packet links defined by indices in nodes array
     const links = [
-      { from: 0, to: 1, color: '#A69DB9', dash: [4, 4] }, // Sat -> UAV Alpha
-      { from: 0, to: 2, color: '#6B7280', dash: [2, 4] }, // Sat -> UAV Beta
-      { from: 1, to: 2, color: '#9CA3AF', dash: [] },     // UAV Alpha <-> Beta mesh
+      { from: 0, to: 1, color: '#4ADEDE', dash: [4, 4] }, // Sat -> UAV Alpha
+      { from: 0, to: 2, color: '#60F1AD', dash: [2, 4] }, // Sat -> UAV Beta
+      { from: 1, to: 2, color: '#4ADEDE', dash: [] },     // UAV Alpha <-> Beta mesh
       { from: 1, to: 3, color: '#FFFFFF', dash: [] },     // UAV Alpha -> Ground HQ
-      { from: 2, to: 4, color: '#A69DB9', dash: [3, 3] }, // UAV Beta -> Racecar DAQ
-      { from: 3, to: 4, color: '#6B7280', dash: [6, 4] }, // Ground HQ -> Racecar DAQ
+      { from: 2, to: 4, color: '#60F1AD', dash: [3, 3] }, // UAV Beta -> Racecar DAQ
+      { from: 3, to: 4, color: '#4ADEDE', dash: [6, 4] }, // Ground HQ -> Racecar DAQ
     ];
 
     // Initialize flowing packets along links
@@ -217,7 +217,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // 1. Dark Glass Canvas Base (#000000 with subtle depth gradient)
+      // 1. Dark Void Canvas Base (#030712 with subtle depth radial)
       const bgGradient = ctx.createRadialGradient(
         width * 0.5,
         height * 0.45,
@@ -226,8 +226,8 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
         height * 0.45,
         Math.max(width, height) * 0.7
       );
-      bgGradient.addColorStop(0, '#0a0a0c');
-      bgGradient.addColorStop(1, '#000000');
+      bgGradient.addColorStop(0, '#071322');
+      bgGradient.addColorStop(1, '#030712');
       ctx.fillStyle = bgGradient;
       ctx.fillRect(0, 0, width, height);
 
@@ -237,7 +237,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       const baseRadius = Math.min(width, height) * 0.42;
 
       ctx.save();
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+      ctx.strokeStyle = 'rgba(74, 222, 222, 0.08)';
       ctx.lineWidth = 1;
 
       // Range concentric circles
@@ -248,7 +248,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       });
 
       // Axis crosshairs
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+      ctx.strokeStyle = 'rgba(74, 222, 222, 0.06)';
       ctx.beginPath();
       ctx.moveTo(centerX, 16);
       ctx.lineTo(centerX, height - 16);
@@ -258,7 +258,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
 
       // Heading labels in Inter
       ctx.font = '9px "Inter", sans-serif';
-      ctx.fillStyle = '#6B7280';
+      ctx.fillStyle = '#A1A1AA';
       ctx.textAlign = 'center';
       ctx.fillText('000° N', centerX, centerY - baseRadius - 8);
       ctx.fillText('180° S', centerX, centerY + baseRadius + 16);
@@ -277,9 +277,9 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
         centerY,
         baseRadius * 1.05
       );
-      sweepGradient.addColorStop(0, 'rgba(166, 157, 185, 0.12)'); // tertiary #A69DB9
-      sweepGradient.addColorStop(0.8, 'rgba(156, 163, 175, 0.04)');
-      sweepGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      sweepGradient.addColorStop(0, 'rgba(74, 222, 222, 0.18)'); // Primary #4ADEDE
+      sweepGradient.addColorStop(0.7, 'rgba(96, 241, 173, 0.05)'); // Secondary #60F1AD
+      sweepGradient.addColorStop(1, 'rgba(3, 7, 18, 0)');
 
       ctx.fillStyle = sweepGradient;
       ctx.beginPath();
@@ -289,7 +289,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       ctx.fill();
 
       // Leading beam ray
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+      ctx.strokeStyle = 'rgba(74, 222, 222, 0.5)';
       ctx.lineWidth = 1.2;
       ctx.beginPath();
       ctx.moveTo(centerX, centerY);
@@ -325,14 +325,14 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
 
       ctx.save();
       // Ground HQ pulse
-      ctx.strokeStyle = `rgba(166, 157, 185, ${waveAlpha * 0.35})`;
+      ctx.strokeStyle = `rgba(96, 241, 173, ${waveAlpha * 0.4})`;
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.arc(hqNode.cx, hqNode.cy, waveRadius, 0, Math.PI * 2);
       ctx.stroke();
 
       // Satellite downlink pulse
-      ctx.strokeStyle = `rgba(255, 255, 255, ${waveAlpha * 0.25})`;
+      ctx.strokeStyle = `rgba(74, 222, 222, ${waveAlpha * 0.35})`;
       ctx.beginPath();
       ctx.arc(satNode.cx, satNode.cy, waveRadius * 0.8, 0, Math.PI * 2);
       ctx.stroke();
@@ -403,7 +403,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
 
         // Outer glow on hover or active selection
         if (isSelected || isHovered) {
-          ctx.strokeStyle = isSelected ? '#FFFFFF' : '#A69DB9';
+          ctx.strokeStyle = isSelected ? '#4ADEDE' : '#60F1AD';
           ctx.lineWidth = 1.2;
           ctx.setLineDash([3, 3]);
           ctx.beginPath();
@@ -413,7 +413,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
           // Reticle corner brackets
           const bSize = 6;
           ctx.setLineDash([]);
-          ctx.strokeStyle = '#FFFFFF';
+          ctx.strokeStyle = isSelected ? '#4ADEDE' : '#60F1AD';
           ctx.lineWidth = 1.5;
 
           // Top-left bracket

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, FileDown, ArrowUpRight, Mail, Terminal } from 'lucide-react';
+import { Menu, X, FileDown, ArrowUpRight, Mail, Terminal, Sun, Moon } from 'lucide-react';
 import { LinkedinIcon } from './Icons';
 import { navLinks, personalInfo } from '../data/portfolio';
+import { useTheme } from '../context/ThemeContext';
 
 export const Navbar: React.FC = () => {
+  const { theme, toggleTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('hero');
@@ -63,7 +65,6 @@ export const Navbar: React.FC = () => {
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    setMobileMenuOpen(false);
     const targetId = href.replace('#', '');
     const element = document.getElementById(targetId);
     if (element) {
@@ -75,6 +76,8 @@ export const Navbar: React.FC = () => {
         top: offsetPosition,
         behavior: 'smooth',
       });
+      setActiveSection(targetId);
+      setMobileMenuOpen(false);
     }
   };
 
@@ -83,7 +86,7 @@ export const Navbar: React.FC = () => {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-white/90 backdrop-blur-md border-b border-[#D4D4D4] shadow-sm py-3'
+            ? 'bg-[#030712]/85 light:bg-white/90 backdrop-blur-md border-b border-[#27272A] light:border-[#D4D4D4] shadow-md py-3'
             : 'bg-transparent border-b border-transparent py-5'
         }`}
       >
@@ -93,22 +96,22 @@ export const Navbar: React.FC = () => {
             <a
               href="#hero"
               onClick={(e) => scrollToSection(e, '#hero')}
-              className="group flex items-center gap-2.5 text-[#111827] focus:outline-none"
+              className="group flex items-center gap-2.5 text-white light:text-[#111827] focus:outline-none"
               aria-label="Tanuj Mistry - Home"
             >
-              <div className="relative flex items-center justify-center w-9 h-9 rounded-lg bg-[#050505] text-white border border-[#050505] group-hover:bg-neutral-800 transition-colors">
-                <span className="font-mono font-bold text-sm tracking-wider text-white">
+              <div className="relative flex items-center justify-center w-9 h-9 rounded-lg bg-[#18181B] light:bg-[#050505] text-[#4ADEDE] border border-[#27272A] light:border-[#050505] group-hover:border-[#4ADEDE] transition-all">
+                <span className="font-mono font-bold text-sm tracking-wider text-[#4ADEDE] light:text-white">
                   TM
                 </span>
-                {/* Micro algorithmic trace dot */}
-                <span className="absolute -bottom-1 -right-1 w-2 h-2 rounded-full bg-[#050505] border border-white" />
+                {/* Micro algorithmic trace dot in #60F1AD */}
+                <span className="absolute -bottom-1 -right-1 w-2 h-2 rounded-full bg-[#60F1AD] border border-[#030712]" />
               </div>
 
               <div className="flex flex-col">
-                <span className="font-sans font-semibold text-sm tracking-tight text-[#111827] group-hover:text-black transition-colors">
+                <span className="font-sans font-semibold text-sm tracking-tight text-white light:text-[#111827] group-hover:text-[#4ADEDE] transition-colors">
                   {personalInfo.name}
                 </span>
-                <span className="font-mono text-[10px] text-[#4B5563] tracking-wider hidden sm:block">
+                <span className="font-mono text-[10px] text-[#A1A1AA] light:text-[#4B5563] tracking-wider hidden sm:block">
                   E&amp;TC // HARDWARE+AI
                 </span>
               </div>
@@ -125,18 +128,18 @@ export const Navbar: React.FC = () => {
                     onClick={(e) => scrollToSection(e, link.href)}
                     className={`relative px-3 py-1.5 text-xs font-mono transition-all duration-200 rounded-md group ${
                       isActive
-                        ? 'text-[#050505] font-semibold'
-                        : 'text-[#4B5563] hover:text-[#111827] hover:bg-[#F4F4F5]'
+                        ? 'text-[#4ADEDE] light:text-[#050505] font-semibold'
+                        : 'text-[#A1A1AA] light:text-[#4B5563] hover:text-white light:hover:text-[#111827] hover:bg-[#18181B] light:hover:bg-[#F4F4F5]'
                     }`}
                   >
-                    <span className="text-[#9CA3AF] mr-1 text-[10px]">
+                    <span className="text-[#60F1AD] light:text-[#9CA3AF] mr-1 text-[10px]">
                       0{idx + 1}.
                     </span>
                     {link.name}
                     {isActive && (
                       <motion.div
                         layoutId="activeNavIndicator"
-                        className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#050505] rounded-full"
+                        className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#4ADEDE] light:bg-[#050505] rounded-full"
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -145,15 +148,30 @@ export const Navbar: React.FC = () => {
               })}
             </div>
 
-            {/* Right Action: Resume Download Button + Mobile Menu Trigger */}
-            <div className="flex items-center gap-3">
+            {/* Right Action: Theme Toggle + Resume Download + Mobile Trigger */}
+            <div className="flex items-center gap-2.5">
+              {/* Theme Toggle Button */}
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="p-2 rounded-lg bg-[#18181B] light:bg-[#F4F4F5] border border-[#27272A] light:border-[#D4D4D4] hover:border-[#4ADEDE] transition-all cursor-pointer focus:outline-none"
+                aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+              >
+                {theme === 'dark' ? (
+                  <Sun className="w-4 h-4 text-[#4ADEDE] transition-transform duration-300 hover:rotate-90" />
+                ) : (
+                  <Moon className="w-4 h-4 text-[#0284C7] transition-transform duration-300 hover:-rotate-12" />
+                )}
+              </button>
+
               <a
                 href="/Tanuj_Mistry_Resume.pdf"
                 download="Tanuj_Mistry_Resume.pdf"
-                className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md text-xs font-mono tracking-wide text-white bg-[#050505] hover:bg-neutral-800 border border-[#050505] shadow-sm transition-all duration-200"
+                className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-mono tracking-wide text-[#030712] font-bold bg-[#4ADEDE] hover:bg-[#3bc4c4] border border-[#4ADEDE] shadow-md transition-all duration-200"
                 aria-label="Download Resume"
               >
-                <FileDown className="w-3.5 h-3.5 text-white" />
+                <FileDown className="w-3.5 h-3.5 text-[#030712]" />
                 <span>Resume</span>
               </a>
 
@@ -161,11 +179,11 @@ export const Navbar: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 rounded-lg text-[#111827] hover:bg-[#F4F4F5] border border-transparent hover:border-[#D4D4D4] focus:outline-none transition-colors"
+                className="md:hidden p-2 rounded-lg text-white light:text-[#111827] hover:bg-[#18181B] light:hover:bg-[#F4F4F5] border border-[#27272A] light:border-[#D4D4D4] focus:outline-none transition-colors"
                 aria-expanded={mobileMenuOpen}
                 aria-label="Toggle mobile menu"
               >
-                {mobileMenuOpen ? <X className="w-5 h-5 text-[#050505]" /> : <Menu className="w-5 h-5" />}
+                {mobileMenuOpen ? <X className="w-5 h-5 text-[#4ADEDE]" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
           </nav>
@@ -183,7 +201,7 @@ export const Navbar: React.FC = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 md:hidden"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 md:hidden"
               aria-hidden="true"
             />
 
@@ -193,22 +211,32 @@ export const Navbar: React.FC = () => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-              className="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white border-l border-[#D4D4D4] z-50 p-6 flex flex-col justify-between shadow-2xl md:hidden overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-[#18181B] light:bg-white border-l border-[#27272A] light:border-[#D4D4D4] z-50 p-6 flex flex-col justify-between shadow-2xl md:hidden overflow-y-auto"
             >
               {/* Drawer Header */}
               <div>
-                <div className="flex items-center justify-between pb-6 border-b border-[#D4D4D4]">
+                <div className="flex items-center justify-between pb-6 border-b border-[#27272A] light:border-[#D4D4D4]">
                   <div className="flex items-center gap-2">
-                    <Terminal className="w-4 h-4 text-[#050505]" />
-                    <span className="font-mono text-xs text-[#050505] font-bold tracking-wider uppercase">// Navigation</span>
+                    <Terminal className="w-4 h-4 text-[#4ADEDE]" />
+                    <span className="font-mono text-xs text-[#4ADEDE] font-bold tracking-wider uppercase">// Navigation</span>
                   </div>
-                  <button
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="p-1.5 rounded-md text-[#4B5563] hover:text-[#111827] hover:bg-[#F4F4F5] focus:outline-none"
-                    aria-label="Close menu"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    {/* Mobile theme toggle */}
+                    <button
+                      type="button"
+                      onClick={toggleTheme}
+                      className="p-1.5 rounded-md bg-[#030712] light:bg-[#F4F4F5] border border-[#27272A] light:border-[#D4D4D4] text-[#4ADEDE] light:text-[#0284C7] focus:outline-none"
+                    >
+                      {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                    </button>
+                    <button
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="p-1.5 rounded-md text-[#A1A1AA] hover:text-white hover:bg-[#27272A] focus:outline-none"
+                      aria-label="Close menu"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
 
                 {/* Mobile Navigation Links */}
@@ -222,12 +250,12 @@ export const Navbar: React.FC = () => {
                         onClick={(e) => scrollToSection(e, link.href)}
                         className={`flex items-center justify-between px-3.5 py-3 rounded-lg text-sm font-mono transition-all ${
                           isActive
-                            ? 'text-[#050505] bg-[#F4F4F5] border border-[#D4D4D4] font-semibold'
-                            : 'text-[#4B5563] hover:text-[#111827] hover:bg-[#F4F4F5]'
+                            ? 'text-[#4ADEDE] bg-[#030712] border border-[#4ADEDE]/40 font-semibold'
+                            : 'text-[#A1A1AA] hover:text-white hover:bg-[#27272A]/50'
                         }`}
                       >
                         <div className="flex items-center gap-3">
-                          <span className="text-xs text-[#9CA3AF]">0{idx + 1}.</span>
+                          <span className="text-xs text-[#60F1AD]">0{idx + 1}.</span>
                           <span>{link.name}</span>
                         </div>
                         <ArrowUpRight className="w-3.5 h-3.5 opacity-50" />
@@ -238,31 +266,31 @@ export const Navbar: React.FC = () => {
               </div>
 
               {/* Drawer Footer Actions */}
-              <div className="pt-6 border-t border-[#D4D4D4] space-y-4">
+              <div className="pt-6 border-t border-[#27272A] light:border-[#D4D4D4] space-y-4">
                 <a
                   href="/Tanuj_Mistry_Resume.pdf"
                   download="Tanuj_Mistry_Resume.pdf"
-                  className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-xs font-mono font-medium text-white bg-[#050505] hover:bg-neutral-800 transition-all shadow-sm"
+                  className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-xs font-mono font-bold text-[#030712] bg-[#4ADEDE] hover:bg-[#3bc4c4] transition-all shadow-md"
                 >
-                  <FileDown className="w-4 h-4 text-white" />
+                  <FileDown className="w-4 h-4 text-[#030712]" />
                   <span>Download Resume (PDF)</span>
                 </a>
 
                 {/* Direct quick contact links */}
-                <div className="flex items-center justify-around pt-2 text-[#4B5563] text-xs">
+                <div className="flex items-center justify-around pt-2 text-[#A1A1AA] text-xs">
                   <a
                     href={`mailto:${personalInfo.email}`}
-                    className="flex items-center gap-1.5 hover:text-[#050505] transition-colors"
+                    className="flex items-center gap-1.5 hover:text-[#4ADEDE] transition-colors"
                   >
                     <Mail className="w-3.5 h-3.5" />
                     <span>Email</span>
                   </a>
-                  <span className="text-[#D4D4D4]">•</span>
+                  <span className="text-[#27272A]">•</span>
                   <a
                     href={personalInfo.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 hover:text-[#050505] transition-colors"
+                    className="flex items-center gap-1.5 hover:text-[#4ADEDE] transition-colors"
                   >
                     <LinkedinIcon className="w-3.5 h-3.5" />
                     <span>LinkedIn</span>

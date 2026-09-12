@@ -100,13 +100,13 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
         return;
       }
 
-      // Phosphor persistence decay (subtle CRT fade on deep black)
-      ctx.fillStyle = 'rgba(5, 5, 5, 0.24)';
+      // Phosphor persistence decay (subtle CRT fade on deep space void)
+      ctx.fillStyle = 'rgba(3, 7, 18, 0.25)';
       ctx.fillRect(0, 0, width, height);
 
       // Draw Oscilloscope Graticule (Grid)
       ctx.save();
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.07)';
+      ctx.strokeStyle = 'rgba(74, 222, 222, 0.08)';
       ctx.lineWidth = 1;
 
       const gridCols = 10;
@@ -128,7 +128,7 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
       ctx.stroke();
 
       // Center crosshairs with tick marks
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
+      ctx.strokeStyle = 'rgba(74, 222, 222, 0.2)';
       ctx.beginPath();
       const centerY = height / 2;
       ctx.moveTo(0, centerY);
@@ -139,11 +139,11 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
       ctx.stroke();
       ctx.restore();
 
-      // Signal Waveform Trace (Pure Monochromatic White Beam)
+      // Signal Waveform Trace (Cyan phosphor beam)
       ctx.save();
       ctx.lineWidth = 2;
-      ctx.strokeStyle = '#FFFFFF';
-      ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+      ctx.strokeStyle = '#4ADEDE';
+      ctx.shadowColor = 'rgba(74, 222, 222, 0.8)';
       ctx.shadowBlur = 8;
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
@@ -186,10 +186,10 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
       }
       ctx.stroke();
 
-      // Scanning sweep head dot (stark white phosphor beam)
+      // Scanning sweep head dot (Electric mint phosphor beam)
       const leadY = centerY - getEcgSample((scanX / width) * 2 - time * 1.15) * (height * 0.34);
-      ctx.fillStyle = '#FFFFFF';
-      ctx.shadowColor = '#FFFFFF';
+      ctx.fillStyle = '#60F1AD';
+      ctx.shadowColor = '#60F1AD';
       ctx.shadowBlur = 14;
       ctx.beginPath();
       ctx.arc(scanX, leadY, 3, 0, Math.PI * 2);
@@ -212,47 +212,47 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
   return (
     <div
       ref={containerRef}
-      className={`relative w-full rounded-2xl bg-[#050505] border border-[#D4D4D4] p-3 sm:p-4 shadow-card overflow-hidden text-white ${className}`}
+      className={`relative w-full rounded-2xl bg-[#18181B] border border-[#27272A] p-3 sm:p-4 shadow-card overflow-hidden text-white ${className}`}
     >
       {/* Top telemetry bar */}
-      <div className="flex items-center justify-between pb-3 border-b border-neutral-800 text-[11px] font-mono">
+      <div className="flex items-center justify-between pb-3 border-b border-[#27272A] text-[11px] font-mono">
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4ADEDE] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4ADEDE]"></span>
           </span>
-          <span className="text-white font-bold">OSCILLOSCOPE // CH1</span>
+          <span className="text-[#4ADEDE] font-bold">OSCILLOSCOPE // CH1</span>
           <span className="hidden sm:inline text-neutral-600">|</span>
-          <span className="hidden sm:inline text-neutral-400">CLK: {sampleRate}</span>
+          <span className="hidden sm:inline text-[#A1A1AA]">CLK: {sampleRate}</span>
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3 text-neutral-300">
-          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-neutral-900 border border-neutral-750 text-[10px] text-white">
-            <Activity className="w-3 h-3 text-white" />
+          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#030712] border border-[#27272A] text-[10px] text-[#60F1AD]">
+            <Activity className="w-3 h-3 text-[#60F1AD]" />
             <span>{bpm} BPM</span>
           </div>
 
-          <div className="hidden sm:flex items-center gap-1 px-2 py-0.5 rounded bg-neutral-900 border border-neutral-750 text-[10px] text-neutral-300">
+          <div className="hidden sm:flex items-center gap-1 px-2 py-0.5 rounded bg-[#030712] border border-[#27272A] text-[10px] text-[#A1A1AA]">
             <span>200mV / DIV</span>
           </div>
         </div>
       </div>
 
       {/* Canvas Display */}
-      <div className="relative w-full h-[220px] sm:h-[280px] lg:h-[320px] rounded-lg overflow-hidden my-3 bg-[#050505] border border-neutral-800">
+      <div className="relative w-full h-[220px] sm:h-[280px] lg:h-[320px] rounded-lg overflow-hidden my-3 bg-[#030712] border border-[#27272A]">
         <canvas ref={canvasRef} className="w-full h-full block" />
 
         {/* Oscilloscope Corner Overlay Labels */}
-        <div className="absolute top-2 left-2 text-[10px] font-mono text-neutral-400 pointer-events-none select-none">
+        <div className="absolute top-2 left-2 text-[10px] font-mono text-[#A1A1AA] pointer-events-none select-none">
           TRIG: AUTO [CH1]
         </div>
-        <div className="absolute top-2 right-2 text-[10px] font-mono text-white/80 pointer-events-none select-none">
+        <div className="absolute top-2 right-2 text-[10px] font-mono text-[#4ADEDE] pointer-events-none select-none">
           VPP: 1.22V
         </div>
-        <div className="absolute bottom-2 left-2 text-[9px] font-mono text-neutral-500 pointer-events-none select-none">
+        <div className="absolute bottom-2 left-2 text-[9px] font-mono text-[#A1A1AA] pointer-events-none select-none">
           MODEL: XILINX VIVADO CNN AFE
         </div>
-        <div className="absolute bottom-2 right-2 text-[9px] font-mono text-neutral-500 pointer-events-none select-none">
+        <div className="absolute bottom-2 right-2 text-[9px] font-mono text-[#60F1AD] pointer-events-none select-none">
           FPGA 50MHz SAMPLING
         </div>
       </div>
@@ -260,13 +260,13 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
       {/* Bottom Mode Switchers & Hardware Signals */}
       <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-[11px] font-mono">
         <div className="flex items-center gap-1.5">
-          <span className="text-neutral-400 text-[10px] mr-1">SIGNAL SOURCE:</span>
+          <span className="text-[#A1A1AA] text-[10px] mr-1">SIGNAL SOURCE:</span>
           <button
             onClick={() => setSignalMode('ecg')}
             className={`px-2.5 py-1 rounded text-[10px] font-medium transition-all cursor-pointer ${
               signalMode === 'ecg'
-                ? 'bg-white text-[#050505] font-bold shadow-sm'
-                : 'text-neutral-400 hover:text-white bg-neutral-900 border border-neutral-800'
+                ? 'bg-[#4ADEDE] text-[#030712] font-bold shadow-sm'
+                : 'text-[#A1A1AA] hover:text-[#FFFFFF] bg-[#030712] border border-[#27272A]'
             }`}
           >
             ECG Biopotential
@@ -275,8 +275,8 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
             onClick={() => setSignalMode('dsp')}
             className={`px-2.5 py-1 rounded text-[10px] font-medium transition-all cursor-pointer ${
               signalMode === 'dsp'
-                ? 'bg-white text-[#050505] font-bold shadow-sm'
-                : 'text-neutral-400 hover:text-white bg-neutral-900 border border-neutral-800'
+                ? 'bg-[#4ADEDE] text-[#030712] font-bold shadow-sm'
+                : 'text-[#A1A1AA] hover:text-[#FFFFFF] bg-[#030712] border border-[#27272A]'
             }`}
           >
             DSP Filtered
@@ -285,17 +285,17 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
             onClick={() => setSignalMode('telemetry')}
             className={`hidden sm:inline-flex px-2.5 py-1 rounded text-[10px] font-medium transition-all cursor-pointer ${
               signalMode === 'telemetry'
-                ? 'bg-white text-[#050505] font-bold shadow-sm'
-                : 'text-neutral-400 hover:text-white bg-neutral-900 border border-neutral-800'
+                ? 'bg-[#4ADEDE] text-[#030712] font-bold shadow-sm'
+                : 'text-[#A1A1AA] hover:text-[#FFFFFF] bg-[#030712] border border-[#27272A]'
             }`}
           >
             CAN Telemetry
           </button>
         </div>
 
-        <div className="flex items-center gap-2 text-[10px] text-neutral-400">
-          <span className="w-1.5 h-1.5 rounded-full bg-white inline-block animate-pulse" />
-          <span>REAL-TIME INFERENCE: ACTIVE</span>
+        <div className="flex items-center gap-2 text-[10px] text-[#A1A1AA]">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#60F1AD] inline-block animate-pulse" />
+          <span>REAL-TIME INFERENCE: <span className="text-[#60F1AD]">ACTIVE</span></span>
         </div>
       </div>
     </div>

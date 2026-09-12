@@ -75,7 +75,7 @@ export const DynamicSignalCanvas: React.FC<DynamicSignalCanvasProps> = ({
     // Initialize particles flowing along harmonic stream lines
     const particleCount = 75;
     const particles: Particle[] = [];
-    const colors = ['#8EE7D8', '#57D8A4', '#8EE7D8', '#57D8A4', '#FFFFFF'];
+    const colors = ['#4ADEDE', '#60F1AD', '#4ADEDE', '#60F1AD', '#FFFFFF'];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
@@ -92,15 +92,15 @@ export const DynamicSignalCanvas: React.FC<DynamicSignalCanvasProps> = ({
     }
 
     const render = () => {
-      // 1. Dark Void Base (#030305)
-      ctx.fillStyle = '#030305';
+      // 1. Dark Void Base (#030712)
+      ctx.fillStyle = '#030712';
       ctx.fillRect(0, 0, width, height);
 
       time += 0.024 * activeSpeed;
 
       // 2. Subtle Coordinate Grid Lines
       ctx.save();
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.035)';
+      ctx.strokeStyle = 'rgba(74, 222, 222, 0.04)';
       ctx.lineWidth = 1;
       const gridSize = 40;
 
@@ -136,7 +136,7 @@ export const DynamicSignalCanvas: React.FC<DynamicSignalCanvasProps> = ({
       for (let w = 0; w < waveCount; w++) {
         ctx.save();
         const isPrimary = w % 2 === 0;
-        const waveColor = isPrimary ? '#8EE7D8' : '#57D8A4';
+        const waveColor = isPrimary ? '#4ADEDE' : '#60F1AD';
         const waveAlpha = 0.25 - w * 0.04;
 
         ctx.strokeStyle = waveColor;
@@ -223,15 +223,15 @@ export const DynamicSignalCanvas: React.FC<DynamicSignalCanvasProps> = ({
 
       ctx.save();
       // Scope background circle
-      ctx.strokeStyle = 'rgba(142, 231, 216, 0.2)';
+      ctx.strokeStyle = 'rgba(74, 222, 222, 0.2)';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.arc(scopeX, scopeY, scopeR, 0, Math.PI * 2);
       ctx.stroke();
 
       // Lissajous curve
-      ctx.strokeStyle = '#57D8A4';
-      ctx.shadowColor = '#57D8A4';
+      ctx.strokeStyle = '#60F1AD';
+      ctx.shadowColor = '#60F1AD';
       ctx.shadowBlur = 5;
       ctx.lineWidth = 1.5;
       ctx.beginPath();
@@ -247,7 +247,7 @@ export const DynamicSignalCanvas: React.FC<DynamicSignalCanvasProps> = ({
       ctx.stroke();
 
       ctx.font = '8px "JetBrains Mono", monospace';
-      ctx.fillStyle = '#8EE7D8';
+      ctx.fillStyle = '#4ADEDE';
       ctx.textAlign = 'center';
       ctx.fillText('PHASE_XY', scopeX, scopeY + scopeR + 12);
       ctx.restore();
@@ -260,7 +260,7 @@ export const DynamicSignalCanvas: React.FC<DynamicSignalCanvasProps> = ({
       ctx.fillText(`HARMONIC: ${harmonicMode.toUpperCase()} // SYS.50MHZ_STREAM`, 16, height - 16);
 
       ctx.textAlign = 'right';
-      ctx.fillStyle = '#57D8A4';
+      ctx.fillStyle = '#60F1AD';
       ctx.fillText('JITTER: 0.04ps // ORCHESTRATION LOCKED', width - 16, height - 16);
       ctx.restore();
 

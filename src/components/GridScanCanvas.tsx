@@ -16,8 +16,8 @@ interface DetectedPoint {
 
 export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
   className = '',
-  scanColor = '#34D399',
-  gridColor = 'rgba(52, 211, 153, 0.08)',
+  scanColor = '#4ADEDE',
+  gridColor = 'rgba(74, 222, 222, 0.08)',
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -38,19 +38,22 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
     let mouseX = -1;
     let mouseY = -1;
 
-    const resizeCanvas = () => {
+    const resize = () => {
       const rect = container.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       width = rect.width;
       height = rect.height;
 
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
       ctx.scale(dpr, dpr);
     };
 
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    resize();
+    window.addEventListener('resize', resize);
 
     // Track mouse for interactive radar ping
     const handleMouseMove = (e: MouseEvent) => {
@@ -67,13 +70,13 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
 
-    // Virtual telemetry target nodes to scan and illuminate in emerald / cyan
+    // Virtual telemetry target nodes in #4ADEDE and #60F1AD
     const targetNodes: DetectedPoint[] = [
-      { x: 0.18, y: 0.32, label: 'FPGA_VIVADO', intensity: 0, color: '#34D399' },
-      { x: 0.82, y: 0.28, label: 'ECG_AFE_CH1', intensity: 0, color: '#60A5FA' },
-      { x: 0.25, y: 0.74, label: 'CAN_BUS_12S', intensity: 0, color: '#60A5FA' },
-      { x: 0.75, y: 0.68, label: 'CNN_QUANT_8B', intensity: 0, color: '#34D399' },
-      { x: 0.5, y: 0.5, label: 'MAIN_CORE_DSP', intensity: 0, color: '#34D399' },
+      { x: 0.18, y: 0.32, label: 'FPGA_VIVADO', intensity: 0, color: '#4ADEDE' },
+      { x: 0.82, y: 0.28, label: 'ECG_AFE_CH1', intensity: 0, color: '#60F1AD' },
+      { x: 0.25, y: 0.74, label: 'CAN_BUS_12S', intensity: 0, color: '#60F1AD' },
+      { x: 0.75, y: 0.68, label: 'CNN_QUANT_8B', intensity: 0, color: '#4ADEDE' },
+      { x: 0.5, y: 0.5, label: 'MAIN_CORE_DSP', intensity: 0, color: '#4ADEDE' },
     ];
 
     const cellSize = 36;
@@ -127,9 +130,9 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
         scanY
       );
 
-      gradient.addColorStop(0, 'rgba(52, 211, 153, 0)');
-      gradient.addColorStop(0.65, 'rgba(96, 165, 250, 0.15)'); // secondary cyan accent
-      gradient.addColorStop(1, 'rgba(52, 211, 153, 0.35)'); // primary emerald accent
+      gradient.addColorStop(0, 'rgba(74, 222, 222, 0)');
+      gradient.addColorStop(0.65, 'rgba(96, 241, 173, 0.15)'); // secondary mint accent
+      gradient.addColorStop(1, 'rgba(74, 222, 222, 0.35)'); // primary cyan accent
 
       ctx.fillStyle = gradient;
       if (scanDirection === 1) {
@@ -156,7 +159,7 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
           const distToScan = Math.abs(y - scanY);
           if (distToScan < 45) {
             const opacity = (1 - distToScan / 45) * 0.8;
-            ctx.fillStyle = `rgba(52, 211, 153, ${opacity})`;
+            ctx.fillStyle = `rgba(74, 222, 222, ${opacity})`;
             ctx.fillRect(x - 1.5, y - 1.5, 3, 3);
           }
         }
@@ -202,14 +205,14 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
       // 6. Interactive Mouse Cursor Pulse
       if (mouseX >= 0 && mouseY >= 0) {
         ctx.save();
-        ctx.strokeStyle = '#60A5FA';
+        ctx.strokeStyle = '#60F1AD';
         ctx.lineWidth = 1;
         ctx.setLineDash([4, 4]);
         ctx.beginPath();
         ctx.arc(mouseX, mouseY, 28, 0, Math.PI * 2);
         ctx.stroke();
 
-        ctx.fillStyle = '#34D399';
+        ctx.fillStyle = '#4ADEDE';
         ctx.beginPath();
         ctx.arc(mouseX, mouseY, 2.5, 0, Math.PI * 2);
         ctx.fill();
@@ -223,7 +226,7 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('resize', resize);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
     };

@@ -4,25 +4,42 @@
 
 @layer base {
   :root {
+    color-scheme: dark;
+    --color-primary: #4ADEDE;
+    --color-secondary: #60F1AD;
+    --color-accent: #60F1AD;
+    --color-bg: #030712;
+    --color-surface: #18181B;
+    --color-text-primary: #FFFFFF;
+    --color-text-secondary: #A1A1AA;
+    --color-border: #27272A;
+  }
+
+  html.light {
     color-scheme: light;
+    --color-primary: #0284C7;
+    --color-secondary: #059669;
+    --color-accent: #059669;
     --color-bg: #FFFFFF;
-    --color-surface: #D4D4D4;
+    --color-surface: #F3F4F6;
     --color-text-primary: #111827;
     --color-text-secondary: #4B5563;
+    --color-border: #E5E7EB;
   }
 
   html {
     scroll-behavior: smooth;
-    background-color: #FFFFFF;
-    color: #111827;
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 
   body {
-    background-color: #FFFFFF;
-    color: #111827;
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -39,15 +56,22 @@
     width: 8px;
   }
   ::-webkit-scrollbar-track {
+    background: #030712;
+  }
+  html.light ::-webkit-scrollbar-track {
     background: #FFFFFF;
   }
   ::-webkit-scrollbar-thumb {
-    background: #D4D4D4;
+    background: #27272A;
     border-radius: 4px;
+    border: 2px solid #030712;
+  }
+  html.light ::-webkit-scrollbar-thumb {
+    background: #D4D4D4;
     border: 2px solid #FFFFFF;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #050505;
+    background: #4ADEDE;
   }
 }
 
