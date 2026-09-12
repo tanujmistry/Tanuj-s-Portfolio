@@ -47,6 +47,14 @@ export default {
           border: 'rgba(255, 255, 255, 0.1)',
           glow: 'rgba(204, 128, 102, 0.25)',
         },
+        telemetry: {
+          primary: '#34D399',
+          secondary: '#60A5FA',
+          accent: '#60A5FA',
+          bg: '#030303',
+          surface: '#18181B',
+          border: '#27272A',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],

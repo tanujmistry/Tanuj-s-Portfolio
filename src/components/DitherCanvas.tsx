@@ -2,10 +2,15 @@ import React, { useEffect, useRef } from 'react';
 
 interface DitherCanvasProps {
   className?: string;
+  theme?: 'emerald' | 'monochrome';
   inverse?: boolean;
 }
 
-export const DitherCanvas: React.FC<DitherCanvasProps> = ({ className = '', inverse = false }) => {
+export const DitherCanvas: React.FC<DitherCanvasProps> = ({
+  className = '',
+  theme = 'emerald',
+  inverse = false,
+}) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -65,8 +70,12 @@ export const DitherCanvas: React.FC<DitherCanvasProps> = ({ className = '', inve
         return;
       }
 
-      // High-contrast monochromatic canvas background
-      ctx.fillStyle = inverse ? '#FFFFFF' : '#050505';
+      // Background canvas fill (#030303 in dark mode)
+      if (inverse) {
+        ctx.fillStyle = '#FFFFFF';
+      } else {
+        ctx.fillStyle = '#030303';
+      }
       ctx.fillRect(0, 0, width, height);
 
       time += 0.022;
@@ -101,12 +110,24 @@ export const DitherCanvas: React.FC<DitherCanvasProps> = ({ className = '', inve
           const bayerValue = bayer4x4[r % 4][c % 4] / 16;
 
           if (intensity > bayerValue) {
-            // Dither pixel active in pure monochrome
             const alpha = 0.35 + (intensity - bayerValue) * 0.65;
-            if (inverse) {
-              ctx.fillStyle = `rgba(5, 5, 5, ${alpha})`;
+
+            if (theme === 'emerald') {
+              if (intensity > 0.65) {
+                // Primary #34D399 (Emerald)
+                ctx.fillStyle = `rgba(52, 211, 153, ${alpha * 0.95})`;
+              } else if (intensity > 0.38) {
+                // Secondary #60A5FA (Cyan/Blue)
+                ctx.fillStyle = `rgba(96, 165, 250, ${alpha * 0.85})`;
+              } else {
+                ctx.fillStyle = `rgba(161, 161, 170, ${alpha * 0.5})`;
+              }
             } else {
-              ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+              if (inverse) {
+                ctx.fillStyle = `rgba(5, 5, 5, ${alpha})`;
+              } else {
+                ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+              }
             }
 
             ctx.fillRect(x, y, step - 1, step - 1);
@@ -125,7 +146,7 @@ export const DitherCanvas: React.FC<DitherCanvasProps> = ({ className = '', inve
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [inverse]);
+  }, [theme, inverse]);
 
   return (
     <div ref={containerRef} className={`relative w-full h-full overflow-hidden ${className}`}>
