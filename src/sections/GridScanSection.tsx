@@ -44,7 +44,7 @@ export const GridScanSection: React.FC = () => {
   };
 
   return (
-    <section id="gridscan" className="relative py-20 sm:py-28 border-t border-[#D4D4D4] bg-white overflow-hidden">
+    <section id="gridscan" className="relative py-20 sm:py-24 lg:py-28 border-t border-[#D4D4D4] bg-white overflow-hidden">
       {/* Main Content Container inside Dark Algorithmic Matrix Box */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative rounded-[15px] bg-[#050505] border border-[#D4D4D4] p-6 sm:p-10 lg:p-12 shadow-2xl overflow-hidden text-white">

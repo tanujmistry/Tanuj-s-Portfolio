@@ -5,7 +5,7 @@ import { certifications, type CertificationItem } from '../data/portfolio';
 
 export const Certifications: React.FC = () => {
   return (
-    <section id="certifications" className="relative py-24 border-t border-[#D4D4D4] bg-white text-[#111827] overflow-hidden">
+    <section id="certifications" className="relative py-20 sm:py-24 lg:py-28 border-t border-[#D4D4D4] bg-white text-[#111827] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="space-y-2 mb-14 max-w-2xl">

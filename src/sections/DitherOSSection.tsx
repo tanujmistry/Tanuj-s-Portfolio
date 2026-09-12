@@ -24,7 +24,7 @@ export const DitherOSSection: React.FC = () => {
   };
 
   return (
-    <section id="algorithmic-interfaces" className="relative py-20 sm:py-28 border-t border-[#D4D4D4] bg-white text-[#111827] overflow-hidden">
+    <section id="algorithmic-interfaces" className="relative py-20 sm:py-24 lg:py-28 border-t border-[#D4D4D4] bg-white text-[#111827] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header (Meng To DitherOS Style) */}
         <div className="space-y-4 mb-14 max-w-3xl">

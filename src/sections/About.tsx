@@ -7,7 +7,7 @@ export const About: React.FC = () => {
   const { education } = personalInfo;
 
   return (
-    <section id="about" className="relative py-24 border-t border-[#D4D4D4] bg-white overflow-hidden text-[#111827]">
+    <section id="about" className="relative py-20 sm:py-24 lg:py-28 border-t border-[#D4D4D4] bg-white overflow-hidden text-[#111827]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header Marker */}
         <div className="space-y-2 mb-12">
