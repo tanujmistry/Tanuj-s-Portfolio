@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#0a0e17"/>
+  <rect x="2" y="2" width="60" height="60" rx="12" stroke="#00e5c7" stroke-width="1.5" stroke-opacity="0.3"/>
+  
+  <!-- Silicon Chip Body -->
+  <rect x="18" y="18" width="28" height="28" rx="5" fill="#131b2e" stroke="#00e5c7" stroke-width="2"/>
+  
+  <!-- Circuit Pin Connectors -->
+  <path d="M12 24h6M12 32h6M12 40h6" stroke="#22d3ee" stroke-width="2" stroke-linecap="round"/>
+  <path d="M46 24h6M46 32h6M46 40h6" stroke="#22d3ee" stroke-width="2" stroke-linecap="round"/>
+  <path d="M24 12v6M32 12v6M40 12v6" stroke="#00e5c7" stroke-width="2" stroke-linecap="round"/>
+  <path d="M24 46v6M32 46v6M40 46v6" stroke="#00e5c7" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Central Glowing Monogram / Pulse Core -->
+  <circle cx="32" cy="32" r="6" fill="#00e5c7" fill-opacity="0.2" stroke="#00e5c7" stroke-width="1.5"/>
+  <circle cx="32" cy="32" r="2.5" fill="#00e5c7"/>
+</svg>
