@@ -4,6 +4,7 @@ import { About } from './sections/About';
 import { GridScanSection } from './sections/GridScanSection';
 import { Skills } from './sections/Skills';
 import { DitherOSSection } from './sections/DitherOSSection';
+import { NeuroSyncSection } from './sections/NeuroSyncSection';
 import { Experience } from './sections/Experience';
 import { Projects } from './sections/Projects';
 import { Certifications } from './sections/Certifications';
@@ -26,6 +27,9 @@ export default function App() {
 
       {/* DitherOS Algorithmic Interfaces Section */}
       <DitherOSSection />
+
+      {/* NeuroSync Master Feature Section */}
+      <NeuroSyncSection />
 
       {/* Section 03: Experience */}
       <Experience />

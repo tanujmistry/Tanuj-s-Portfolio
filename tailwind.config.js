@@ -40,6 +40,13 @@ export default {
           'border-active': '#050505',
           glow: 'rgba(5, 5, 5, 0.08)',
         },
+        neuro: {
+          primary: '#CC8066',
+          surface: '#191C21',
+          accent: '#334155',
+          border: 'rgba(255, 255, 255, 0.1)',
+          glow: 'rgba(204, 128, 102, 0.25)',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
