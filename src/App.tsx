@@ -3,6 +3,7 @@ import { Hero } from './sections/Hero';
 import { About } from './sections/About';
 import { GridScanSection } from './sections/GridScanSection';
 import { Skills } from './sections/Skills';
+import { DitherOSSection } from './sections/DitherOSSection';
 import { Experience } from './sections/Experience';
 import { Projects } from './sections/Projects';
 import { Certifications } from './sections/Certifications';
@@ -22,6 +23,9 @@ export default function App() {
 
       {/* Section 02: Skills */}
       <Skills />
+
+      {/* DitherOS Algorithmic Interfaces Section */}
+      <DitherOSSection />
 
       {/* Section 03: Experience */}
       <Experience />
