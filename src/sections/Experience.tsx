@@ -80,7 +80,7 @@ export const Experience: React.FC = () => {
                       <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, margin: '-60px' }}
+                        viewport={{ once: true, amount: 0.1 }}
                         transition={{ duration: 0.5 }}
                         className="space-y-1.5 pr-6"
                       >
@@ -110,7 +110,7 @@ export const Experience: React.FC = () => {
                       <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, margin: '-60px' }}
+                        viewport={{ once: true, amount: 0.1 }}
                         transition={{ duration: 0.5 }}
                         className="space-y-1.5 pl-6"
                       >
@@ -147,7 +147,7 @@ const ExperienceCard: React.FC<{ exp: ExperienceItem }> = ({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className={`group relative rounded-2xl bg-[#18181B] light:bg-[#191C21] border ${
         exp.isCurrent

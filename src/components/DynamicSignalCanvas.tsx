@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import { useInViewAnimation } from '../hooks/useInViewAnimation';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 interface DynamicSignalCanvasProps {
   className?: string;
@@ -23,8 +25,9 @@ export const DynamicSignalCanvas: React.FC<DynamicSignalCanvasProps> = ({
   harmonicMode = 'fundamental',
   activeSpeed = 1,
 }) => {
+  const isMobile = useIsMobile();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [containerRef, isInView] = useInViewAnimation<HTMLDivElement>({ rootMargin: '250px 0px' });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -43,7 +46,7 @@ export const DynamicSignalCanvas: React.FC<DynamicSignalCanvasProps> = ({
 
     const resize = () => {
       const rect = container.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
       width = rect.width;
       height = rect.height;
 
@@ -52,11 +55,12 @@ export const DynamicSignalCanvas: React.FC<DynamicSignalCanvasProps> = ({
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
 
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
     };
 
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', resize, { passive: true });
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
@@ -72,8 +76,8 @@ export const DynamicSignalCanvas: React.FC<DynamicSignalCanvasProps> = ({
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
 
-    // Initialize particles flowing along harmonic stream lines
-    const particleCount = 75;
+    // Initialize particles: 28 on mobile for silky 60fps performance, 75 on desktop
+    const particleCount = isMobile ? 28 : 75;
     const particles: Particle[] = [];
     const colors = ['#4ADEDE', '#60F1AD', '#4ADEDE', '#60F1AD', '#FFFFFF'];
 
@@ -92,6 +96,10 @@ export const DynamicSignalCanvas: React.FC<DynamicSignalCanvasProps> = ({
     }
 
     const render = () => {
+      if (!isInView) {
+        return;
+      }
+
       const isLight = document.documentElement.classList.contains('light');
       const primaryCol = isLight ? '#EA580C' : '#4ADEDE';
       const accentCol = isLight ? '#FDBA74' : '#60F1AD';
@@ -274,7 +282,9 @@ export const DynamicSignalCanvas: React.FC<DynamicSignalCanvasProps> = ({
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    if (isInView) {
+      animationFrameId = requestAnimationFrame(render);
+    }
 
     return () => {
       cancelAnimationFrame(animationFrameId);
@@ -282,7 +292,7 @@ export const DynamicSignalCanvas: React.FC<DynamicSignalCanvasProps> = ({
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [harmonicMode, activeSpeed]);
+  }, [harmonicMode, activeSpeed, isInView]);
 
   return (
     <div

@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useInViewAnimation } from '../hooks/useInViewAnimation';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 export interface AeroNode {
   id: string;
@@ -12,6 +14,69 @@ export interface AeroNode {
   status: 'active' | 'syncing' | 'routing';
   color: string;
 }
+
+const STATIC_AERO_NODES: AeroNode[] = [
+  {
+    id: 'sat_07',
+    name: 'LEO_SAT_07',
+    type: 'satellite',
+    x: 0.5,
+    y: 0.18,
+    altitude: '540 km',
+    velocity: '7.6 km/s',
+    rssi: '-78 dBm',
+    status: 'active',
+    color: '#4ADEDE', // Primary cyber cyan
+  },
+  {
+    id: 'uav_01',
+    name: 'UAV_SWARM_ALPHA',
+    type: 'uav',
+    x: 0.32,
+    y: 0.44,
+    altitude: '1,240 m',
+    velocity: '84 km/h',
+    rssi: '-58 dBm',
+    status: 'active',
+    color: '#FFFFFF', // Neutral foundation
+  },
+  {
+    id: 'uav_02',
+    name: 'UAV_SWARM_BETA',
+    type: 'uav',
+    x: 0.68,
+    y: 0.48,
+    altitude: '1,190 m',
+    velocity: '82 km/h',
+    rssi: '-64 dBm',
+    status: 'routing',
+    color: '#60F1AD', // Secondary electric mint
+  },
+  {
+    id: 'ground_hq',
+    name: 'GROUND_GATEWAY_01',
+    type: 'gateway',
+    x: 0.28,
+    y: 0.82,
+    altitude: '48 m MSL',
+    velocity: '0 km/h',
+    rssi: '-42 dBm',
+    status: 'active',
+    color: '#4ADEDE',
+  },
+  {
+    id: 'racecar_daq',
+    name: 'FORMULA_TELEMETRY',
+    type: 'vehicle',
+    x: 0.76,
+    y: 0.78,
+    altitude: '52 m MSL',
+    velocity: '118 km/h',
+    rssi: '-52 dBm',
+    status: 'syncing',
+    color: '#60F1AD',
+  },
+];
 
 interface Packet {
   fromIndex: number;
@@ -35,73 +100,13 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
   onSelectNode,
   frequencyBand = '2.4 GHz FHSS',
 }) => {
+  const isMobile = useIsMobile();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [containerRef, isInView] = useInViewAnimation<HTMLDivElement>({ rootMargin: '250px 0px' });
   const [internalSelectedId, setInternalSelectedId] = useState<string>(selectedNodeId || 'uav_01');
 
   // Node telemetry topology
-  const nodes: AeroNode[] = [
-    {
-      id: 'sat_07',
-      name: 'LEO_SAT_07',
-      type: 'satellite',
-      x: 0.5,
-      y: 0.18,
-      altitude: '540 km',
-      velocity: '7.6 km/s',
-      rssi: '-78 dBm',
-      status: 'active',
-      color: '#4ADEDE', // Primary cyber cyan
-    },
-    {
-      id: 'uav_01',
-      name: 'UAV_SWARM_ALPHA',
-      type: 'uav',
-      x: 0.32,
-      y: 0.44,
-      altitude: '1,240 m',
-      velocity: '84 km/h',
-      rssi: '-58 dBm',
-      status: 'active',
-      color: '#FFFFFF', // Neutral foundation
-    },
-    {
-      id: 'uav_02',
-      name: 'UAV_SWARM_BETA',
-      type: 'uav',
-      x: 0.68,
-      y: 0.48,
-      altitude: '1,190 m',
-      velocity: '82 km/h',
-      rssi: '-64 dBm',
-      status: 'routing',
-      color: '#60F1AD', // Secondary electric mint
-    },
-    {
-      id: 'ground_hq',
-      name: 'GROUND_GATEWAY_01',
-      type: 'gateway',
-      x: 0.28,
-      y: 0.82,
-      altitude: '48 m MSL',
-      velocity: '0 km/h',
-      rssi: '-42 dBm',
-      status: 'active',
-      color: '#4ADEDE',
-    },
-    {
-      id: 'racecar_daq',
-      name: 'FORMULA_TELEMETRY',
-      type: 'vehicle',
-      x: 0.76,
-      y: 0.78,
-      altitude: '52 m MSL',
-      velocity: '118 km/h',
-      rssi: '-52 dBm',
-      status: 'syncing',
-      color: '#60F1AD',
-    },
-  ];
+  const nodes = STATIC_AERO_NODES;
 
   const handleNodeClick = useCallback(
     (node: AeroNode) => {
@@ -160,7 +165,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
 
     const resize = () => {
       const rect = container.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
       width = rect.width;
       height = rect.height;
 
@@ -169,11 +174,12 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
 
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
     };
 
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', resize, { passive: true });
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
@@ -210,11 +216,14 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       }
     };
 
-    container.addEventListener('mousemove', handleMouseMove);
-    container.addEventListener('mouseleave', handleMouseLeave);
+    container.addEventListener('mousemove', handleMouseMove, { passive: true });
+    container.addEventListener('mouseleave', handleMouseLeave, { passive: true });
     container.addEventListener('click', handleClick);
 
     const render = () => {
+      if (!isInView) {
+        return;
+      }
       ctx.clearRect(0, 0, width, height);
 
       const isLight = document.documentElement.classList.contains('light');
@@ -489,7 +498,9 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    if (isInView) {
+      animationFrameId = requestAnimationFrame(render);
+    }
 
     return () => {
       cancelAnimationFrame(animationFrameId);
@@ -498,7 +509,7 @@ export const AeroNetCanvas: React.FC<AeroNetCanvasProps> = ({
       container.removeEventListener('mouseleave', handleMouseLeave);
       container.removeEventListener('click', handleClick);
     };
-  }, [handleNodeClick, internalSelectedId, frequencyBand]);
+  }, [handleNodeClick, internalSelectedId, frequencyBand, isInView]);
 
   return (
     <div

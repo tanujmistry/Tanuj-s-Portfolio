@@ -119,7 +119,7 @@ export const Contact: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5 }}
             className="lg:col-span-5 space-y-6"
           >
@@ -261,7 +261,7 @@ export const Contact: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5 }}
             className="lg:col-span-7"
           >
@@ -311,7 +311,7 @@ export const Contact: React.FC = () => {
                       placeholder="e.g. Alex Johnson"
                       className={`w-full px-3.5 py-2.5 rounded-lg bg-[#030712] light:bg-[#0E1013] border ${
                         errors.name ? 'border-red-500' : 'border-[#27272A] light:border-[#2E353F]'
-                      } focus:border-[#4ADEDE] light:focus:border-[#EA580C] focus:ring-1 focus:ring-[#4ADEDE] light:focus:ring-[#EA580C] text-[#FFFFFF] light:text-white font-sans text-sm outline-none transition-colors placeholder:text-[#6B7280]`}
+                      } focus:border-[#4ADEDE] light:focus:border-[#EA580C] focus:ring-1 focus:ring-[#4ADEDE] light:focus:ring-[#EA580C] text-[#FFFFFF] light:text-white font-sans text-base sm:text-sm min-h-[44px] outline-none transition-colors placeholder:text-[#6B7280]`}
                     />
                     {errors.name && (
                       <p className="text-[11px] font-mono text-red-400 flex items-center gap-1">
@@ -337,7 +337,7 @@ export const Contact: React.FC = () => {
                       placeholder="alex@organization.com"
                       className={`w-full px-3.5 py-2.5 rounded-lg bg-[#030712] light:bg-[#0E1013] border ${
                         errors.email ? 'border-red-500' : 'border-[#27272A] light:border-[#2E353F]'
-                      } focus:border-[#4ADEDE] light:focus:border-[#EA580C] focus:ring-1 focus:ring-[#4ADEDE] light:focus:ring-[#EA580C] text-[#FFFFFF] light:text-white font-sans text-sm outline-none transition-colors placeholder:text-[#6B7280]`}
+                      } focus:border-[#4ADEDE] light:focus:border-[#EA580C] focus:ring-1 focus:ring-[#4ADEDE] light:focus:ring-[#EA580C] text-[#FFFFFF] light:text-white font-sans text-base sm:text-sm min-h-[44px] outline-none transition-colors placeholder:text-[#6B7280]`}
                     />
                     {errors.email && (
                       <p className="text-[11px] font-mono text-red-400 flex items-center gap-1">
@@ -357,7 +357,7 @@ export const Contact: React.FC = () => {
                     id="subject"
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-lg bg-[#030712] light:bg-[#0E1013] border border-[#27272A] light:border-[#2E353F] focus:border-[#4ADEDE] light:focus:border-[#EA580C] focus:ring-1 focus:ring-[#4ADEDE] light:focus:ring-[#EA580C] text-[#FFFFFF] light:text-white font-sans text-sm outline-none transition-colors"
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-[#030712] light:bg-[#0E1013] border border-[#27272A] light:border-[#2E353F] focus:border-[#4ADEDE] light:focus:border-[#EA580C] focus:ring-1 focus:ring-[#4ADEDE] light:focus:ring-[#EA580C] text-[#FFFFFF] light:text-white font-sans text-base sm:text-sm min-h-[44px] outline-none transition-colors"
                   >
                     <option value="FPGA / Hardware Architecture Inquiry">FPGA / Hardware Architecture Inquiry</option>
                     <option value="Edge AI / Deep Learning Deployment">Edge AI / Deep Learning Deployment</option>
@@ -383,7 +383,7 @@ export const Contact: React.FC = () => {
                     placeholder="Describe your project, team opportunity, or engineering inquiry..."
                     className={`w-full px-3.5 py-2.5 rounded-lg bg-[#030712] light:bg-[#0E1013] border ${
                       errors.message ? 'border-red-500' : 'border-[#27272A] light:border-[#2E353F]'
-                    } focus:border-[#4ADEDE] light:focus:border-[#EA580C] focus:ring-1 focus:ring-[#4ADEDE] light:focus:ring-[#EA580C] text-[#FFFFFF] light:text-white font-sans text-sm outline-none transition-colors placeholder:text-[#6B7280] resize-y`}
+                    } focus:border-[#4ADEDE] light:focus:border-[#EA580C] focus:ring-1 focus:ring-[#4ADEDE] light:focus:ring-[#EA580C] text-[#FFFFFF] light:text-white font-sans text-base sm:text-sm outline-none transition-colors placeholder:text-[#6B7280] resize-y`}
                   />
                   {errors.message && (
                     <p className="text-[11px] font-mono text-red-400 flex items-center gap-1">

@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import { useInViewAnimation } from '../hooks/useInViewAnimation';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 interface GridScanCanvasProps {
   className?: string;
@@ -19,8 +21,9 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
   scanColor = '#4ADEDE',
   gridColor = 'rgba(74, 222, 222, 0.08)',
 }) => {
+  const isMobile = useIsMobile();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [containerRef, isInView] = useInViewAnimation<HTMLDivElement>({ rootMargin: '250px 0px' });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -40,7 +43,7 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
 
     const resize = () => {
       const rect = container.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
       width = rect.width;
       height = rect.height;
 
@@ -49,11 +52,12 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
 
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
     };
 
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', resize, { passive: true });
 
     // Track mouse for interactive radar ping
     const handleMouseMove = (e: MouseEvent) => {
@@ -82,6 +86,10 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
     const cellSize = 36;
 
     const render = () => {
+      if (!isInView) {
+        return;
+      }
+
       if (!ctx || width === 0 || height === 0) {
         animationFrameId = requestAnimationFrame(render);
         return;
@@ -222,7 +230,9 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    if (isInView) {
+      animationFrameId = requestAnimationFrame(render);
+    }
 
     return () => {
       cancelAnimationFrame(animationFrameId);
@@ -230,7 +240,7 @@ export const GridScanCanvas: React.FC<GridScanCanvasProps> = ({
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [scanColor, gridColor]);
+  }, [scanColor, gridColor, isInView]);
 
   return (
     <div ref={containerRef} className={`relative w-full h-full overflow-hidden ${className}`}>

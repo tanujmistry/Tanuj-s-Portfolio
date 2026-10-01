@@ -1,21 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Mail, Terminal, Cpu, Layers } from 'lucide-react';
-import { personalInfo } from '../data/portfolio';
+import { ArrowRight, Mail, Terminal, Cpu, Layers, Camera, ArrowUpRight, Globe, Activity } from 'lucide-react';
+import { personalInfo, GOOGLE_PHOTOS_PROJECTS_URL } from '../data/portfolio';
 import { OscilloscopeCanvas } from '../components/OscilloscopeCanvas';
+import { EarthGlobeCanvas } from '../components/EarthGlobeCanvas';
 
 export const Hero: React.FC = () => {
+  const [heroVisual, setHeroVisual] = useState<'earth' | 'oscilloscope'>('earth');
   const scrollTo = (targetId: string) => {
     const element = document.getElementById(targetId);
     if (element) {
-      const navOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+      if ((window as any).__lenis) {
+        (window as any).__lenis.scrollTo(element, { offset: -70 });
+      } else {
+        const navOffset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - navOffset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        });
+      }
     }
   };
 
@@ -66,9 +72,9 @@ export const Hero: React.FC = () => {
           <circle cx="820" cy="560" r="3" fill="#4ADEDE" />
         </svg>
 
-        {/* Ambient backdrop glow in cyber cyan & electric mint */}
-        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-[#4ADEDE]/[0.05] light:bg-[#4ADEDE]/[0.03] rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] bg-[#60F1AD]/[0.04] light:bg-[#60F1AD]/[0.02] rounded-full blur-3xl pointer-events-none" />
+        {/* Ambient backdrop glow - reduced on mobile */}
+        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] md:w-[550px] md:h-[550px] bg-[#4ADEDE]/[0.05] light:bg-[#4ADEDE]/[0.03] rounded-full blur-2xl md:blur-3xl pointer-events-none" />
+        <div className="absolute bottom-1/3 right-1/4 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-[#60F1AD]/[0.04] light:bg-[#60F1AD]/[0.02] rounded-full blur-2xl md:blur-3xl pointer-events-none" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -148,6 +154,18 @@ export const Hero: React.FC = () => {
                 <Mail className="w-4 h-4 text-[#4ADEDE] light:text-[#EA580C]" />
                 <span>Get in Touch</span>
               </button>
+
+              <a
+                href={GOOGLE_PHOTOS_PROJECTS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-[#18181B] light:bg-[#191C21] hover:bg-[#27272A] light:hover:bg-[#272a30] border border-[#4ADEDE]/40 light:border-[#EA580C]/40 hover:border-[#4ADEDE] light:hover:border-[#EA580C] text-[#FFFFFF] light:text-white font-mono text-sm transition-all duration-200 hover:-translate-y-0.5 focus:outline-none"
+                title="View verified hardware breadboards, schematics, and video demos"
+              >
+                <Camera className="w-4 h-4 text-[#4ADEDE] light:text-[#EA580C]" />
+                <span>Lab Photos</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#4ADEDE] light:text-[#EA580C] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
             </div>
 
             {/* Quick Education / CGPA Snippet */}
@@ -160,21 +178,66 @@ export const Hero: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Right Column: Interactive Oscilloscope & Hardware Signal Monitor */}
+          {/* Right Column: 3D Earth Globe & Hardware Telemetry Monitor */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 relative"
           >
-            {/* Ambient decorative border accent */}
-            <div className="relative">
-              {/* Interactive Real-Time Oscilloscope Canvas */}
-              <OscilloscopeCanvas className="relative z-10" />
+            {/* Ambient decorative container */}
+            <div className="relative rounded-2xl bg-[#121214] border border-[#27272A] p-4 shadow-2xl">
+              {/* Mode Toggle Header */}
+              <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#27272A] text-xs font-mono">
+                <div className="flex items-center gap-1.5 p-1 rounded-lg bg-[#030712] border border-[#27272A]">
+                  <button
+                    type="button"
+                    onClick={() => setHeroVisual('earth')}
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs transition-all cursor-pointer ${
+                      heroVisual === 'earth'
+                        ? 'bg-[#18181B] text-[#4ADEDE] font-bold shadow-sm'
+                        : 'text-[#A1A1AA] hover:text-white'
+                    }`}
+                  >
+                    <Globe className="w-3.5 h-3.5" />
+                    <span>3D Earth</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setHeroVisual('oscilloscope')}
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs transition-all cursor-pointer ${
+                      heroVisual === 'oscilloscope'
+                        ? 'bg-[#18181B] text-[#60F1AD] font-bold shadow-sm'
+                        : 'text-[#A1A1AA] hover:text-white'
+                    }`}
+                  >
+                    <Activity className="w-3.5 h-3.5" />
+                    <span>Oscilloscope</span>
+                  </button>
+                </div>
+
+                <div className="text-[10px] text-[#60F1AD] flex items-center gap-1 font-semibold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#60F1AD] animate-ping" />
+                  <span>{heroVisual === 'earth' ? 'AETHER MESH' : 'LIVE ECG/DSP'}</span>
+                </div>
+              </div>
+
+              {/* Visual Display */}
+              {heroVisual === 'earth' ? (
+                <div className="h-[360px] flex items-center justify-center">
+                  <EarthGlobeCanvas size="hero" />
+                </div>
+              ) : (
+                <OscilloscopeCanvas className="relative z-10" />
+              )}
 
               {/* Decorative engineering label underneath */}
-              <div className="mt-3 flex items-center justify-between text-[11px] font-mono text-[#A1A1AA] light:text-[#4B5563] px-2">
-                <span>// SIGNAL TELEMETRY &amp; EDGE AI MONITOR</span>
+              <div className="mt-3 pt-2.5 border-t border-[#27272A] flex items-center justify-between text-[11px] font-mono text-[#A1A1AA] light:text-[#4B5563] px-1">
+                <span>
+                  {heroVisual === 'earth'
+                    ? '// TERRESTRIAL MESH & GLOBAL EVENT MATRIX'
+                    : '// SIGNAL TELEMETRY & EDGE AI MONITOR'}
+                </span>
                 <span className="text-[#4ADEDE] font-bold">LATENCY: &lt;10ms</span>
               </div>
             </div>

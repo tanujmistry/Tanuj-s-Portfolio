@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import { useInViewAnimation } from '../hooks/useInViewAnimation';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 interface DitherCanvasProps {
   className?: string;
@@ -11,15 +13,18 @@ export const DitherCanvas: React.FC<DitherCanvasProps> = ({
   theme = 'emerald',
   inverse = false,
 }) => {
+  const isMobile = useIsMobile();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [containerRef, isInView] = useInViewAnimation<HTMLDivElement>({
+    rootMargin: '200px 0px',
+  });
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) return;
 
     let animationFrameId: number;
@@ -46,7 +51,7 @@ export const DitherCanvas: React.FC<DitherCanvasProps> = ({
     };
 
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', resize, { passive: true });
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
@@ -59,12 +64,32 @@ export const DitherCanvas: React.FC<DitherCanvasProps> = ({
       mouseY = -1;
     };
 
-    container.addEventListener('mousemove', handleMouseMove);
-    container.addEventListener('mouseleave', handleMouseLeave);
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const rect = container.getBoundingClientRect();
+        mouseX = e.touches[0].clientX - rect.left;
+        mouseY = e.touches[0].clientY - rect.top;
+      }
+    };
 
-    const step = 5; // Grid pixel step size for crisp Bayer dither aesthetic
+    const handleTouchEnd = () => {
+      mouseX = -1;
+      mouseY = -1;
+    };
+
+    container.addEventListener('mousemove', handleMouseMove, { passive: true });
+    container.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+    container.addEventListener('touchmove', handleTouchMove, { passive: true });
+    container.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    // Step size: 10px on mobile for silky 60fps performance, 6px on desktop
+    const step = isMobile ? 10 : 6;
 
     const render = () => {
+      if (!isInView) {
+        return; // Suspend render loop when offscreen
+      }
+
       if (!ctx || width === 0 || height === 0) {
         animationFrameId = requestAnimationFrame(render);
         return;
@@ -138,15 +163,19 @@ export const DitherCanvas: React.FC<DitherCanvasProps> = ({
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    if (isInView) {
+      animationFrameId = requestAnimationFrame(render);
+    }
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', resize);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('touchmove', handleTouchMove);
+      container.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [theme, inverse]);
+  }, [theme, inverse, isInView]);
 
   return (
     <div ref={containerRef} className={`relative w-full h-full overflow-hidden ${className}`}>

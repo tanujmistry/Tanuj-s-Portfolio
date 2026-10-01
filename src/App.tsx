@@ -6,6 +6,7 @@ import { Skills } from './sections/Skills';
 import { DitherOSSection } from './sections/DitherOSSection';
 import { NeuroSyncSection } from './sections/NeuroSyncSection';
 import { AeroNetSection } from './sections/AeroNetSection';
+import { AetherNodeSection } from './sections/AetherNodeSection';
 import { DynamicSignalSection } from './sections/DynamicSignalSection';
 import { Experience } from './sections/Experience';
 import { Projects } from './sections/Projects';
@@ -35,6 +36,9 @@ export default function App() {
 
       {/* AeroNet Visualization Telemetry & Interface Hierarchy Section */}
       <AeroNetSection />
+
+      {/* Aether Node Dashboard Section (Global Event Matrix) */}
+      <AetherNodeSection />
 
       {/* Dynamic Signal Orchestration Section */}
       <DynamicSignalSection />

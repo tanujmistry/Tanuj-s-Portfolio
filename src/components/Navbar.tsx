@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, FileDown, ArrowUpRight, Mail, Terminal, Sun, Moon } from 'lucide-react';
+import { Menu, X, FileDown, ArrowUpRight, Mail, Sun, Moon } from 'lucide-react';
 import { LinkedinIcon } from './Icons';
 import { navLinks, personalInfo } from '../data/portfolio';
 import { useTheme } from '../context/ThemeContext';
@@ -11,33 +11,53 @@ export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('hero');
 
-  // Monitor scroll for subtle background blur and active section tracking
+  // Monitor scroll for subtle background blur and active section tracking without layout thrashing
   useEffect(() => {
+    let lastScrolled = false;
+    let ticking = false;
+
     const handleScroll = () => {
-      // Toggle sticky background blur
-      if (window.scrollY > 24) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-
-      // Track active section
-      const sections = ['hero', ...navLinks.map((link) => link.href.replace('#', ''))];
-      const scrollPosition = window.scrollY + 180;
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const sectionId = sections[i];
-        const element = document.getElementById(sectionId);
-        if (element && element.offsetTop <= scrollPosition) {
-          setActiveSection(sectionId);
-          break;
-        }
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrolled = window.scrollY > 24;
+          if (scrolled !== lastScrolled) {
+            lastScrolled = scrolled;
+            setIsScrolled(scrolled);
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // Use IntersectionObserver for buttery-smooth active section tracking (zero DOM queries during scroll)
+    const sectionIds = ['hero', ...navLinks.map((link) => link.href.replace('#', ''))];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-70px 0px -55% 0px',
+        threshold: 0,
+      }
+    );
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   // Close mobile drawer on Escape key
@@ -68,14 +88,18 @@ export const Navbar: React.FC = () => {
     const targetId = href.replace('#', '');
     const element = document.getElementById(targetId);
     if (element) {
-      const navOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+      if ((window as any).__lenis) {
+        (window as any).__lenis.scrollTo(element, { offset: -70 });
+      } else {
+        const navOffset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - navOffset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        });
+      }
       setActiveSection(targetId);
       setMobileMenuOpen(false);
     }
@@ -86,29 +110,31 @@ export const Navbar: React.FC = () => {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-[#030712]/85 light:bg-white/90 backdrop-blur-md border-b border-[#27272A] light:border-[#D4D4D4] shadow-md py-3'
-            : 'bg-transparent border-b border-transparent py-5'
+            ? 'glass-macos-scrolled py-3'
+            : 'glass-macos py-4 sm:py-4.5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex items-center justify-between">
-            {/* Logo / Initials */}
+            {/* Logo / Atom Icon */}
             <a
               href="#hero"
               onClick={(e) => scrollToSection(e, '#hero')}
               className="group flex items-center gap-2.5 text-white light:text-[#111827] focus:outline-none"
               aria-label="Tanuj Mistry - Home"
             >
-              <div className="relative flex items-center justify-center w-9 h-9 rounded-lg bg-[#18181B] light:bg-[#050505] text-[#4ADEDE] border border-[#27272A] light:border-[#050505] group-hover:border-[#4ADEDE] transition-all">
-                <span className="font-mono font-bold text-sm tracking-wider text-[#4ADEDE] light:text-white">
-                  TM
-                </span>
+              <div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-white/[0.08] light:bg-black/[0.04] backdrop-blur-md border border-white/15 light:border-black/10 group-hover:border-[#4ADEDE] light:group-hover:border-[#EA580C] shadow-sm transition-all overflow-visible p-1">
+                <img
+                  src="/assets/atom-logo.png"
+                  alt="Tanuj Mistry Atom Logo"
+                  className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(74,222,222,0.4)] light:drop-shadow-[0_0_6px_rgba(234,88,12,0.3)] animate-atom-spin group-hover:drop-shadow-[0_0_14px_rgba(74,222,222,0.8)] light:group-hover:drop-shadow-[0_0_12px_rgba(234,88,12,0.6)] group-hover:scale-110 transition-all duration-300"
+                />
                 {/* Micro algorithmic trace dot in #60F1AD */}
-                <span className="absolute -bottom-1 -right-1 w-2 h-2 rounded-full bg-[#60F1AD] border border-[#030712]" />
+                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-[#60F1AD] light:bg-[#EA580C] border-2 border-[#030712] light:border-white shadow-sm" />
               </div>
 
               <div className="flex flex-col">
-                <span className="font-sans font-semibold text-sm tracking-tight text-white light:text-[#111827] group-hover:text-[#4ADEDE] transition-colors">
+                <span className="font-sans font-semibold text-sm tracking-tight text-white light:text-[#111827] group-hover:text-[#4ADEDE] light:group-hover:text-[#EA580C] transition-colors">
                   {personalInfo.name}
                 </span>
                 <span className="font-mono text-[10px] text-[#A1A1AA] light:text-[#4B5563] tracking-wider hidden sm:block">
@@ -117,8 +143,8 @@ export const Navbar: React.FC = () => {
               </div>
             </a>
 
-            {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
+            {/* Desktop Navigation Links (macOS style translucent glass pill group) */}
+            <div className="hidden lg:flex items-center space-x-1 xl:space-x-1.5 p-1 rounded-full bg-white/[0.05] light:bg-black/[0.04] border border-white/[0.08] light:border-black/[0.06] backdrop-blur-md shadow-inner">
               {navLinks.map((link, idx) => {
                 const isActive = activeSection === link.href.replace('#', '');
                 return (
@@ -126,10 +152,10 @@ export const Navbar: React.FC = () => {
                     key={link.name}
                     href={link.href}
                     onClick={(e) => scrollToSection(e, link.href)}
-                    className={`relative px-3 py-1.5 text-xs font-mono transition-all duration-200 rounded-md group ${
+                    className={`relative px-3.5 py-1.5 text-xs font-mono transition-all duration-200 rounded-full group ${
                       isActive
                         ? 'text-[#4ADEDE] light:text-[#EA580C] font-semibold'
-                        : 'text-[#A1A1AA] light:text-[#4B5563] hover:text-white light:hover:text-[#111827] hover:bg-[#18181B] light:hover:bg-[#FFF7ED]'
+                        : 'text-[#A1A1AA] light:text-[#4B5563] hover:text-white light:hover:text-[#111827] hover:bg-white/[0.08] light:hover:bg-black/[0.05]'
                     }`}
                   >
                     <span className="text-[#60F1AD] light:text-[#EA580C] mr-1 text-[10px]">
@@ -139,7 +165,7 @@ export const Navbar: React.FC = () => {
                     {isActive && (
                       <motion.div
                         layoutId="activeNavIndicator"
-                        className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#4ADEDE] light:bg-[#EA580C] rounded-full"
+                        className="absolute inset-0 bg-white/10 light:bg-black/5 rounded-full border border-white/10 light:border-black/10 -z-10 shadow-sm"
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -148,21 +174,21 @@ export const Navbar: React.FC = () => {
               })}
             </div>
 
-            {/* Right Action: Theme Toggle + Resume Download + Mobile Trigger */}
+            {/* Right Action: Theme Toggle + Resume Download + Mobile/Tablet Trigger */}
             <div className="flex items-center gap-2 sm:gap-2.5">
-              {/* Unambiguous Segmented Theme Switcher */}
+              {/* macOS Segmented Theme Switcher */}
               <div
-                className="flex items-center p-0.5 rounded-lg bg-[#18181B] light:bg-[#E5E7EB] border border-[#27272A] light:border-[#D4D4D4] shadow-sm"
+                className="flex items-center p-0.5 rounded-full bg-white/[0.08] light:bg-black/[0.04] backdrop-blur-md border border-white/15 light:border-black/10 shadow-inner"
                 role="radiogroup"
                 aria-label="Theme switcher"
               >
                 <button
                   type="button"
                   onClick={() => setTheme('dark')}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono transition-all duration-200 cursor-pointer ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono transition-all duration-200 cursor-pointer min-h-[32px] ${
                     theme === 'dark'
-                      ? 'bg-[#030712] text-[#4ADEDE] border border-[#4ADEDE]/40 shadow-sm font-bold'
-                      : 'text-[#A1A1AA] hover:text-white'
+                      ? 'bg-[#030712]/90 text-[#4ADEDE] border border-white/15 shadow-sm font-bold'
+                      : 'text-[#A1A1AA] hover:text-white hover:bg-white/5'
                   }`}
                   aria-checked={theme === 'dark'}
                   role="radio"
@@ -175,10 +201,10 @@ export const Navbar: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setTheme('light')}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono transition-all duration-200 cursor-pointer ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono transition-all duration-200 cursor-pointer min-h-[32px] ${
                     theme === 'light'
-                      ? 'bg-white text-[#EA580C] border border-[#EA580C]/40 shadow-sm font-bold'
-                      : 'text-[#A1A1AA] light:text-[#6B7280] hover:text-[#111827]'
+                      ? 'bg-white text-[#EA580C] border border-black/10 shadow-sm font-bold'
+                      : 'text-[#A1A1AA] light:text-[#6B7280] hover:text-[#111827] hover:bg-black/5'
                   }`}
                   aria-checked={theme === 'light'}
                   role="radio"
@@ -192,20 +218,20 @@ export const Navbar: React.FC = () => {
               <a
                 href="/Tanuj_Mistry_Resume.pdf"
                 download="Tanuj_Mistry_Resume.pdf"
-                className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-mono tracking-wide text-[#030712] light:text-white font-bold bg-[#4ADEDE] light:bg-[#EA580C] hover:bg-[#3bc4c4] light:hover:bg-[#C2410C] border border-[#4ADEDE] light:border-[#EA580C] shadow-md transition-all duration-200"
+                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono tracking-wide text-[#030712] light:text-white font-bold bg-[#4ADEDE] light:bg-[#EA580C] hover:brightness-110 active:scale-95 shadow-[0_2px_14px_rgba(74,222,222,0.35)] light:shadow-[0_2px_14px_rgba(234,88,12,0.35)] transition-all duration-200 min-h-[34px]"
                 aria-label="Download Resume"
               >
                 <FileDown className="w-3.5 h-3.5 text-[#030712] light:text-white" />
                 <span>Resume</span>
               </a>
 
-              {/* Mobile Hamburger Button */}
+              {/* Mobile / Tablet Hamburger Button */}
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 rounded-lg text-white light:text-[#111827] hover:bg-[#18181B] light:hover:bg-[#F4F4F5] border border-[#27272A] light:border-[#D4D4D4] focus:outline-none transition-colors"
+                className="lg:hidden min-w-[42px] min-h-[42px] p-2.5 rounded-full text-white light:text-[#111827] bg-white/[0.08] light:bg-black/[0.04] backdrop-blur-md border border-white/15 light:border-black/10 hover:bg-white/[0.14] light:hover:bg-black/[0.08] focus:outline-none transition-colors flex items-center justify-center cursor-pointer shadow-sm"
                 aria-expanded={mobileMenuOpen}
-                aria-label="Toggle mobile menu"
+                aria-label="Toggle mobile navigation menu"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5 text-[#4ADEDE]" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -214,7 +240,7 @@ export const Navbar: React.FC = () => {
         </div>
       </header>
 
-      {/* Mobile Slide-in Drawer */}
+      {/* Mobile & Tablet Slide-in Drawer */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
@@ -225,7 +251,7 @@ export const Navbar: React.FC = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 md:hidden"
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 lg:hidden"
               aria-hidden="true"
             />
 
@@ -235,24 +261,26 @@ export const Navbar: React.FC = () => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-              className="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-[#18181B] light:bg-white border-l border-[#27272A] light:border-[#D4D4D4] z-50 p-6 flex flex-col justify-between shadow-2xl md:hidden overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 w-80 sm:w-96 max-w-[88vw] bg-[#030712]/85 light:bg-white/85 backdrop-blur-2xl backdrop-saturate-[190%] border-l border-white/10 light:border-black/10 z-50 p-6 flex flex-col justify-between shadow-2xl lg:hidden overflow-y-auto pt-[calc(1.5rem+env(safe-area-inset-top,0px))] pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] pr-[calc(1.5rem+env(safe-area-inset-right,0px))] overscroll-contain"
             >
               {/* Drawer Header */}
               <div>
-                <div className="flex items-center justify-between pb-6 border-b border-[#27272A] light:border-[#D4D4D4]">
+                <div className="flex items-center justify-between pb-6 border-b border-white/10 light:border-black/10">
                   <div className="flex items-center gap-2">
-                    <Terminal className="w-4 h-4 text-[#4ADEDE]" />
+                    <div className="w-7 h-7 rounded-full bg-white/10 light:bg-black/5 backdrop-blur-md border border-white/15 light:border-black/10 p-0.5 flex items-center justify-center">
+                      <img src="/assets/atom-logo.png" alt="Atom Logo" className="w-full h-full object-contain animate-atom-spin" />
+                    </div>
                     <span className="font-mono text-xs text-[#4ADEDE] font-bold tracking-wider uppercase">// Navigation</span>
                   </div>
                   <div className="flex items-center gap-2">
                     {/* Mobile segmented theme toggle */}
-                    <div className="flex items-center p-0.5 rounded-lg bg-[#030712] light:bg-[#E5E7EB] border border-[#27272A] light:border-[#D4D4D4]">
+                    <div className="flex items-center p-0.5 rounded-full bg-white/10 light:bg-black/5 border border-white/15 light:border-black/10">
                       <button
                         type="button"
                         onClick={() => setTheme('dark')}
-                        className={`flex items-center gap-1 px-2 py-1 rounded text-[11px] font-mono transition-all ${
+                        className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-mono transition-all ${
                           theme === 'dark'
-                            ? 'bg-[#18181B] text-[#4ADEDE] border border-[#4ADEDE]/40 font-bold'
+                            ? 'bg-[#18181B] text-[#4ADEDE] border border-[#4ADEDE]/40 font-bold shadow-sm'
                             : 'text-[#A1A1AA]'
                         }`}
                         title="Dark Mode"
@@ -263,9 +291,9 @@ export const Navbar: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setTheme('light')}
-                        className={`flex items-center gap-1 px-2 py-1 rounded text-[11px] font-mono transition-all ${
+                        className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-mono transition-all ${
                           theme === 'light'
-                            ? 'bg-white text-[#EA580C] border border-[#EA580C]/40 font-bold'
+                            ? 'bg-white text-[#EA580C] border border-[#EA580C]/40 font-bold shadow-sm'
                             : 'text-[#A1A1AA] light:text-[#6B7280]'
                         }`}
                         title="Light Mode"
@@ -276,7 +304,7 @@ export const Navbar: React.FC = () => {
                     </div>
                     <button
                       onClick={() => setMobileMenuOpen(false)}
-                      className="p-1.5 rounded-md text-[#A1A1AA] hover:text-white hover:bg-[#27272A] focus:outline-none"
+                      className="p-1.5 rounded-full text-[#A1A1AA] hover:text-white hover:bg-white/10 focus:outline-none"
                       aria-label="Close menu"
                     >
                       <X className="w-5 h-5" />
@@ -293,10 +321,10 @@ export const Navbar: React.FC = () => {
                         key={link.name}
                         href={link.href}
                         onClick={(e) => scrollToSection(e, link.href)}
-                        className={`flex items-center justify-between px-3.5 py-3 rounded-lg text-sm font-mono transition-all ${
+                        className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-mono transition-all ${
                           isActive
-                            ? 'text-[#4ADEDE] bg-[#030712] border border-[#4ADEDE]/40 font-semibold'
-                            : 'text-[#A1A1AA] hover:text-white hover:bg-[#27272A]/50'
+                            ? 'text-[#4ADEDE] bg-white/10 border border-[#4ADEDE]/40 font-semibold shadow-sm'
+                            : 'text-[#A1A1AA] hover:text-white hover:bg-white/5'
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -311,11 +339,11 @@ export const Navbar: React.FC = () => {
               </div>
 
               {/* Drawer Footer Actions */}
-              <div className="pt-6 border-t border-[#27272A] light:border-[#D4D4D4] space-y-4">
+              <div className="pt-6 border-t border-white/10 light:border-black/10 space-y-4">
                 <a
                   href="/Tanuj_Mistry_Resume.pdf"
                   download="Tanuj_Mistry_Resume.pdf"
-                  className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-xs font-mono font-bold text-[#030712] bg-[#4ADEDE] hover:bg-[#3bc4c4] transition-all shadow-md"
+                  className="flex items-center justify-center gap-2 w-full py-2.5 rounded-full text-xs font-mono font-bold text-[#030712] bg-[#4ADEDE] hover:brightness-110 transition-all shadow-md"
                 >
                   <FileDown className="w-4 h-4 text-[#030712]" />
                   <span>Download Resume (PDF)</span>
@@ -330,7 +358,7 @@ export const Navbar: React.FC = () => {
                     <Mail className="w-3.5 h-3.5" />
                     <span>Email</span>
                   </a>
-                  <span className="text-[#27272A]">•</span>
+                  <span className="text-white/20">•</span>
                   <a
                     href={personalInfo.linkedin}
                     target="_blank"

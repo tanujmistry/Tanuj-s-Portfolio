@@ -45,9 +45,9 @@ export const GridScanSection: React.FC = () => {
 
   return (
     <section id="gridscan" className="relative py-20 sm:py-24 lg:py-28 border-t border-[#27272A] light:border-gray-200 bg-[#030712] light:bg-white text-[#FFFFFF] light:text-[#111827] overflow-hidden transition-colors duration-300">
-      {/* Background ambient lighting in cyber cyan & electric mint */}
-      <div className="absolute top-1/4 -right-40 w-[500px] h-[500px] bg-[#4ADEDE]/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -left-40 w-[500px] h-[500px] bg-[#60F1AD]/5 rounded-full blur-[140px] pointer-events-none" />
+      {/* Background ambient lighting - reduced on mobile */}
+      <div className="absolute top-1/4 -right-40 w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-[#4ADEDE]/5 rounded-full blur-[60px] md:blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-40 w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-[#60F1AD]/5 rounded-full blur-[60px] md:blur-[140px] pointer-events-none" />
 
       {/* Main Content Container */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

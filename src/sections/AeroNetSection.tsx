@@ -89,8 +89,8 @@ export const AeroNetSection: React.FC = () => {
       style={{ paddingLeft: '24px', paddingRight: '24px' }}
     >
       {/* Ambient glow backdrop */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-[#4ADEDE]/5 light:bg-[#EA580C]/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[400px] h-[300px] bg-[#60F1AD]/5 light:bg-[#FDBA74]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[250px] md:w-[850px] md:h-[450px] bg-[#4ADEDE]/5 light:bg-[#EA580C]/5 rounded-full blur-[60px] md:blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[200px] h-[150px] md:w-[400px] md:h-[300px] bg-[#60F1AD]/5 light:bg-[#FDBA74]/5 rounded-full blur-[60px] md:blur-[120px] pointer-events-none" />
 
       {/* Main Container */}
       <div className="max-w-7xl mx-auto relative z-10">

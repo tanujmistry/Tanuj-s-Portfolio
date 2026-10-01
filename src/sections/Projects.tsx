@@ -6,9 +6,11 @@ import {
   Activity,
   Cpu,
   Zap,
+  Camera,
 } from 'lucide-react';
 import { projects, type ProjectItem } from '../data/portfolio';
 import { ProjectModal } from '../components/ProjectModal';
+import { HardwareGallery } from '../components/HardwareGallery';
 
 export const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
@@ -38,7 +40,7 @@ export const Projects: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5 }}
             className="group relative rounded-2xl bg-[#18181B] light:bg-[#191C21] text-white border border-[#27272A] light:border-[#374151] hover:border-[#4ADEDE] light:hover:border-[#EA580C] p-6 sm:p-8 lg:p-10 shadow-2xl hover:-translate-y-1 transition-all duration-300"
           >
@@ -69,9 +71,9 @@ export const Projects: React.FC = () => {
 
                 {/* Metrics Banner */}
                 {flagshipProject.metrics && (
-                  <div className="p-3 rounded-lg bg-[#030712] light:bg-[#0E1013] border border-[#27272A] light:border-[#2E353F] flex items-center gap-2.5 text-xs font-mono text-[#60F1AD] light:text-[#FDBA74] font-semibold">
+                  <div className="p-3 rounded-lg bg-[#030712] light:bg-[#0E1013] border border-[#27272A] light:border-[#2E353F] flex items-center gap-2.5 text-xs font-mono text-[#60F1AD] light:text-[#FDBA74] font-semibold min-w-0 max-w-full">
                     <Activity className="w-4 h-4 shrink-0 text-[#60F1AD] light:text-[#FDBA74]" />
-                    <span>{flagshipProject.metrics}</span>
+                    <span className="break-words">{flagshipProject.metrics}</span>
                   </div>
                 )}
 
@@ -155,11 +157,11 @@ export const Projects: React.FC = () => {
                 key={project.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.45, delay: index * 0.08 }}
-                className="group relative rounded-2xl bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] hover:border-[#4ADEDE] light:hover:border-[#EA580C] hover:shadow-card hover:-translate-y-1 transition-all duration-300 p-6 flex flex-col justify-between shadow-card text-[#FFFFFF] light:text-white"
+                className="group relative rounded-2xl bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] hover:border-[#4ADEDE] light:hover:border-[#EA580C] hover:shadow-card hover:-translate-y-1 transition-all duration-300 p-6 flex flex-col justify-between shadow-card text-[#FFFFFF] light:text-white overflow-hidden max-w-full"
               >
-                <div className="space-y-4">
+                <div className="space-y-4 min-w-0 max-w-full">
                   {/* Category + Index Marker */}
                   <div className="flex items-center justify-between gap-2 text-xs font-mono">
                     <span className="px-2.5 py-0.5 rounded text-[10px] bg-[#030712] light:bg-[#0E1013] text-[#4ADEDE] light:text-[#EA580C] border border-[#27272A] light:border-[#2E353F] font-semibold">
@@ -171,20 +173,27 @@ export const Projects: React.FC = () => {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-lg font-bold text-[#FFFFFF] light:text-white font-sans tracking-tight group-hover:text-[#4ADEDE] light:group-hover:text-[#EA580C] transition-colors">
+                  <h3 className="text-lg font-bold text-[#FFFFFF] light:text-white font-sans tracking-tight group-hover:text-[#4ADEDE] light:group-hover:text-[#EA580C] transition-colors break-words">
                     {project.title}
                   </h3>
 
                   {/* Short 2-line Description */}
-                  <p className="text-[#A1A1AA] light:text-gray-300 text-xs sm:text-sm leading-relaxed line-clamp-2 font-sans">
+                  <p className="text-[#A1A1AA] light:text-gray-300 text-xs sm:text-sm leading-relaxed line-clamp-2 font-sans break-words">
                     {project.shortDescription}
                   </p>
 
                   {/* Metric Tag */}
                   {project.metrics && (
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#030712] light:bg-[#0E1013] text-[11px] font-mono text-[#60F1AD] light:text-[#FDBA74] border border-[#27272A] light:border-[#2E353F] font-medium">
-                      <Zap className="w-3 h-3 text-[#60F1AD] light:text-[#FDBA74] shrink-0" />
-                      <span className="truncate">{project.metrics}</span>
+                    <div className="flex flex-wrap items-center gap-1.5 max-w-full">
+                      {project.metrics.split(' | ').map((metricItem, mIdx) => (
+                        <div
+                          key={mIdx}
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#030712] light:bg-[#0E1013] text-[11px] font-mono text-[#60F1AD] light:text-[#FDBA74] border border-[#27272A] light:border-[#2E353F] font-medium max-w-full"
+                        >
+                          <Zap className="w-3 h-3 text-[#60F1AD] light:text-[#FDBA74] shrink-0" />
+                          <span className="break-words leading-tight">{metricItem}</span>
+                        </div>
+                      ))}
                     </div>
                   )}
 
@@ -208,14 +217,29 @@ export const Projects: React.FC = () => {
 
                 {/* Card Action Footer */}
                 <div className="pt-6 mt-4 border-t border-[#27272A] light:border-[#2E353F] flex items-center justify-between">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedProject(project)}
-                    className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#4ADEDE] light:text-[#EA580C] hover:text-[#60F1AD] light:hover:text-[#FDBA74] transition-colors group-hover:translate-x-0.5 cursor-pointer"
-                  >
-                    <span>View Details</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedProject(project)}
+                      className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#4ADEDE] light:text-[#EA580C] hover:text-[#60F1AD] light:hover:text-[#FDBA74] transition-colors group-hover:translate-x-0.5 cursor-pointer"
+                    >
+                      <span>View Details</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </button>
+
+                    {project.galleryUrl && (
+                      <a
+                        href={project.galleryUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[11px] font-mono text-[#60F1AD] light:text-[#EA580C] hover:underline"
+                        title="View hardware prototype photos on Google Photos"
+                      >
+                        <Camera className="w-3 h-3" />
+                        <span>Lab Photos</span>
+                      </a>
+                    )}
+                  </div>
 
                   <span className="text-[10px] font-mono text-[#A1A1AA] light:text-gray-400">
                     {project.tools[0]}
@@ -225,6 +249,9 @@ export const Projects: React.FC = () => {
             );
           })}
         </div>
+
+        {/* Physical Hardware Prototypes & Verification Gallery */}
+        <HardwareGallery />
       </div>
 
       {/* Detail Modal Component */}

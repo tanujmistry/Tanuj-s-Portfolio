@@ -27,9 +27,9 @@ export const NeuroSyncSection: React.FC = () => {
 
   return (
     <section id="neurosync" className="relative py-20 sm:py-24 lg:py-28 border-t border-[#27272A] light:border-[#E5E7EB] bg-[#030712] light:bg-white text-[#FFFFFF] light:text-[#111827] overflow-hidden transition-colors duration-300">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/4 -right-48 w-[500px] h-[500px] bg-[#4ADEDE]/5 light:bg-[#EA580C]/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -left-48 w-[500px] h-[500px] bg-[#60F1AD]/5 light:bg-[#FDBA74]/5 rounded-full blur-[140px] pointer-events-none" />
+      {/* Background ambient lighting - reduced on mobile */}
+      <div className="absolute top-1/4 -right-48 w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-[#4ADEDE]/5 light:bg-[#EA580C]/5 rounded-full blur-[60px] md:blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-48 w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-[#60F1AD]/5 light:bg-[#FDBA74]/5 rounded-full blur-[60px] md:blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -55,7 +55,7 @@ export const NeuroSyncSection: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5 }}
             className="md:col-span-8 rounded-2xl bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] hover:border-[#4ADEDE] light:hover:border-[#EA580C] transition-all p-6 sm:p-8 flex flex-col justify-between shadow-card relative overflow-hidden group"
           >
@@ -93,7 +93,7 @@ export const NeuroSyncSection: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             className="md:col-span-4 rounded-2xl bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] hover:border-[#60F1AD] light:hover:border-[#FDBA74] transition-all p-6 sm:p-8 flex flex-col justify-between shadow-card"
           >
@@ -185,7 +185,7 @@ export const NeuroSyncSection: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5, delay: 0.15 }}
             className="md:col-span-6 rounded-2xl bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] hover:border-[#4ADEDE] light:hover:border-[#EA580C] transition-all p-6 sm:p-8 flex flex-col justify-between shadow-card"
           >
@@ -233,7 +233,7 @@ export const NeuroSyncSection: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="md:col-span-6 rounded-2xl bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] hover:border-[#60F1AD] light:hover:border-[#FDBA74] transition-all p-6 sm:p-8 flex flex-col justify-between shadow-card"
           >

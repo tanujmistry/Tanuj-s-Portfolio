@@ -27,11 +27,16 @@
     --color-border: #E5E7EB;
   }
 
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   html {
-    scroll-behavior: smooth;
     background-color: var(--color-bg);
     color: var(--color-text-primary);
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
@@ -39,7 +44,15 @@
     color: var(--color-text-primary);
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
     transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Prevent iOS Safari auto-zoom on input focus while preserving desktop styling */
+  @media screen and (max-width: 767px) {
+    input, select, textarea {
+      font-size: 16px !important;
+    }
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -143,5 +156,64 @@
     background: linear-gradient(135deg, #EA580C 0%, #FDBA74 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  /* Atomic Logo Continuous Rotation */
+  @keyframes atom-rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-atom-spin {
+    animation: atom-rotate 12s linear infinite;
+    transform-origin: center center;
+    will-change: transform;
+  }
+
+  .group:hover .animate-atom-spin {
+    animation-duration: 3.5s;
+  }
+
+  /* Hardware GPU Layer Compositing */
+  .transform-gpu {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+  }
+
+  /* macOS Ultra-Refined Frosted Glass (Vibrant Translucent Blur with Specular Bevel) */
+  .glass-macos {
+    background-color: rgba(3, 7, 18, 0.58);
+    backdrop-filter: blur(24px) saturate(190%);
+    -webkit-backdrop-filter: blur(24px) saturate(190%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.25), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  }
+
+  html.light .glass-macos {
+    background-color: rgba(255, 255, 255, 0.68);
+    backdrop-filter: blur(24px) saturate(190%);
+    -webkit-backdrop-filter: blur(24px) saturate(190%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.05), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+  }
+
+  .glass-macos-scrolled {
+    background-color: rgba(3, 7, 18, 0.76);
+    backdrop-filter: blur(28px) saturate(200%);
+    -webkit-backdrop-filter: blur(28px) saturate(200%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
+  }
+
+  html.light .glass-macos-scrolled {
+    background-color: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(28px) saturate(200%);
+    -webkit-backdrop-filter: blur(28px) saturate(200%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 0.95);
   }
 }

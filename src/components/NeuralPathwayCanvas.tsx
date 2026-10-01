@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import { useInViewAnimation } from '../hooks/useInViewAnimation';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 interface NeuralPathwayCanvasProps {
   className?: string;
@@ -23,8 +25,9 @@ interface ActionPotential {
 }
 
 export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ className = '' }) => {
+  const isMobile = useIsMobile();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [containerRef, isInView] = useInViewAnimation<HTMLDivElement>({ rootMargin: '250px 0px' });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -42,16 +45,17 @@ export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ classN
 
     const resize = () => {
       const rect = container.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
       width = rect.width;
       height = rect.height;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
     };
 
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', resize, { passive: true });
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
@@ -67,8 +71,8 @@ export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ classN
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
 
-    // Generate Neurons Network
-    const nodeCount = 38;
+    // Generate Neurons Network: lightweight 18 nodes on mobile, 38 on desktop
+    const nodeCount = isMobile ? 18 : 38;
     const nodes: NeuronNode[] = [];
     for (let i = 0; i < nodeCount; i++) {
       nodes.push({
@@ -84,7 +88,7 @@ export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ classN
     }
 
     // Connect nodes by proximity
-    const maxConnectionDist = 130;
+    const maxConnectionDist = isMobile ? 100 : 130;
     for (let i = 0; i < nodeCount; i++) {
       for (let j = i + 1; j < nodeCount; j++) {
         const dx = nodes[i].x - nodes[j].x;
@@ -116,6 +120,10 @@ export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ classN
     };
 
     const render = () => {
+      if (!isInView) {
+        return;
+      }
+
       if (!ctx || width === 0 || height === 0) {
         animationFrameId = requestAnimationFrame(render);
         return;
@@ -247,7 +255,9 @@ export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ classN
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    if (isInView) {
+      animationFrameId = requestAnimationFrame(render);
+    }
 
     return () => {
       cancelAnimationFrame(animationFrameId);
@@ -255,7 +265,7 @@ export const NeuralPathwayCanvas: React.FC<NeuralPathwayCanvasProps> = ({ classN
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, []);
+  }, [isInView]);
 
   return (
     <div ref={containerRef} className={`relative w-full h-full overflow-hidden ${className}`}>

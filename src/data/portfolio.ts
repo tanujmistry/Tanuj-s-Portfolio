@@ -9,6 +9,7 @@ export interface PersonalInfo {
   location: string;
   linkedin: string;
   github?: string;
+  hardwareGalleryUrl?: string;
   education: {
     degree: string;
     major: string;
@@ -52,16 +53,38 @@ export interface ProjectItem {
   tools: string[];
   githubUrl?: string;
   demoUrl?: string;
+  galleryUrl?: string;
+  image?: string;
+  schematicImage?: string;
+  hardwareTags?: string[];
+}
+
+export interface HardwarePrototypeItem {
+  id: string;
+  title: string;
+  badge: string;
+  category: string;
+  description: string;
+  primaryImage: string;
+  schematicImage?: string;
+  secondaryImage?: string;
+  components: string[];
+  metrics: string;
+  galleryUrl: string;
 }
 
 export interface CertificationItem {
   id: string;
   title: string;
   issuer: string;
+  partner?: string;
   date?: string;
-  credentialUrl?: string;
+  credentialUrl: string;
+  credentialId?: string;
   badgeAccent: string;
+  badgeImage?: string;
   description: string;
+  skills: string[];
 }
 
 export const personalInfo: PersonalInfo = {
@@ -75,6 +98,7 @@ export const personalInfo: PersonalInfo = {
   location: "Chandrapur, Maharashtra, India",
   linkedin: "https://linkedin.com/in/tanuj-mistry",
   github: "https://github.com",
+  hardwareGalleryUrl: "https://photos.app.goo.gl/p37gJr7YaJqDeQi16",
   education: {
     degree: "B.Tech in Electronics & Telecommunication Engineering",
     major: "Electronics & Telecommunication",
@@ -355,42 +379,142 @@ export const projects: ProjectItem[] = [
     id: "smart-energy-meter",
     title: "Smart Energy Meter with Cloud IoT Telemetry",
     shortDescription:
-      "IoT energy monitoring system with CT/PT sensors, real-time power factor calculation, MQTT cloud streaming, and mobile dashboard.",
+      "IoT energy monitoring system with PZEM-004T AC sensor, real-time power calculation, automatic relay cutoff, and cloud telemetry.",
     fullDescription:
-      "An automated smart electrical metering solution powered by ESP8266 and micro-sensing hardware. Measures AC voltage, RMS current, active power, reactive power, and power factor in real-time, streaming telemetry over MQTT to a secure cloud dashboard with overcurrent alerts.",
-    tags: ["IoT", "ESP8266", "Embedded C", "MQTT", "Power Electronics", "Cloud"],
+      "An automated smart electrical metering solution powered by ESP8266 NodeMCU and micro-sensing hardware. Measures AC mains voltage, RMS current, active power, and energy consumption in real-time using a PZEM-004T v3.0 module, featuring an LCD 1602 I2C display, 5V relay overload cutoff, and cloud MQTT telemetry with overcurrent protection.",
+    tags: ["IoT", "ESP8266", "PZEM-004T", "Relay Cutoff", "Embedded C", "Cloud"],
     category: "Embedded & IoT",
     metrics: "Real-time RMS metering | Automated Overload Cut-Off",
     highlights: [
-      "Interfaced non-invasive current transformers (CT) and voltage potential transformers (PT) with analog filtering.",
-      "Programmed real-time phase angle detection for accurate power factor computation in firmware.",
-      "Published telemetry packets via MQTT protocol to cloud brokers with instant alert thresholds.",
+      "Interfaced PZEM-004T v3.0 sensor and LCD 1602 display via I2C with ESP8266 NodeMCU.",
+      "Programmed real-time RMS voltage (245V), current (mA/A), and cumulative kilowatt-hour monitoring.",
+      "Engineered automated safety cut-off driving a 5V relay module and RCCB residual breaker under surge conditions.",
+      "Validated through physical AC benchtop testing with active electrical load and serial diagnostics.",
     ],
-    tools: ["ESP8266", "Arduino IDE", "MQTT", "Blynk / Cloud Dashboard", "Proteus", "Eagle CAD"],
+    tools: ["ESP8266 NodeMCU", "PZEM-004T v3.0", "LCD 1602 I2C", "5V Relay Module", "RCCB", "Embedded C"],
+    galleryUrl: "https://photos.app.goo.gl/p37gJr7YaJqDeQi16",
+    image: "/assets/projects/photo_1.jpg",
+    schematicImage: "/assets/projects/photo_12.jpg",
+    hardwareTags: ["ESP8266", "PZEM-004T", "LCD 1602", "5V Relay", "230V AC Bench"],
+  },
+  {
+    id: "vehicle-alcohol-interlock",
+    title: "Vehicle Alcohol Interlock & Safety Telemetry",
+    shortDescription:
+      "Automotive safety system combining MQ-3 breathalyzer sensing with Arduino UNO, dual H-bridge motor cutoff, and GPS emergency telemetry.",
+    fullDescription:
+      "An embedded automotive safety prototype designed to prevent drunk driving. Built around an Arduino UNO interfacing an MQ-3 alcohol vapor sensor with calibrated analog threshold detection. Upon detecting elevated alcohol concentration, the controller activates an emergency lockout via an L298N dual H-bridge motor driver—shutting down the DC motor powertrain while streaming GPS coordinates and alerting emergency dispatch.",
+    tags: ["Arduino UNO", "MQ-3 Sensor", "L298N Driver", "GPS Telemetry", "Vehicle Safety", "Embedded C"],
+    category: "Embedded & IoT",
+    metrics: "Instant Ignition Interlock | Real-Time GPS Alert",
+    highlights: [
+      "Calibrated MQ-3 analog sensor for driver breath alcohol concentration thresholding in real-time.",
+      "Implemented automatic DC motor ignition cutoff using an L298N dual H-bridge motor driver.",
+      "Integrated GPS antenna module and GSM modem for emergency location broadcasting.",
+      "Validated with physical breadboard test bench, serial monitor diagnostics, and active aerosol testing.",
+    ],
+    tools: ["Arduino UNO", "MQ-3 Gas Sensor", "L298N H-Bridge", "GPS Antenna", "LCD 1602", "Embedded C"],
+    galleryUrl: "https://photos.app.goo.gl/p37gJr7YaJqDeQi16",
+    image: "/assets/projects/photo_8.jpg",
+    schematicImage: "/assets/projects/photo_5.jpg",
+    hardwareTags: ["Arduino UNO", "MQ-3 Sensor", "L298N H-Bridge", "GPS Antenna", "DC Motor"],
+  },
+];
+
+export const GOOGLE_PHOTOS_PROJECTS_URL = "https://photos.app.goo.gl/p37gJr7YaJqDeQi16";
+
+export const hardwarePrototypes: HardwarePrototypeItem[] = [
+  {
+    id: "smart-energy-meter-bench",
+    title: "Smart AC Energy Meter & Protection Hub",
+    badge: "LIVE 230V AC BENCH",
+    category: "Power Electronics & IoT",
+    description: "ESP8266 + PZEM-004T v3.0 module measuring RMS Voltage (107V/245V), Current (3150mA), Active Power (340W), and Energy (1.43kWh) with 5V relay overload cutoff and 1602 LCD readout.",
+    primaryImage: "/assets/projects/photo_1.jpg",
+    schematicImage: "/assets/projects/photo_12.jpg",
+    secondaryImage: "/assets/projects/photo_13.jpg",
+    components: ["ESP8266 NodeMCU", "PZEM-004T v3.0", "LCD 1602 I2C", "5V Relay Module", "RCCB Breaker", "AC Load"],
+    metrics: "Real-time RMS Metering & Relay Cutoff",
+    galleryUrl: GOOGLE_PHOTOS_PROJECTS_URL,
+  },
+  {
+    id: "alcohol-interlock-bench",
+    title: "Automotive Alcohol Detection & Ignition Interlock",
+    badge: "SAFETY INTERLOCK BENCH",
+    category: "Automotive & Sensor Telemetry",
+    description: "Arduino UNO interfacing MQ-3 breathalyzer sensor with live Serial Monitor diagnostics, emergency GPS location broadcast, and L298N dual H-bridge motor driver engine shutdown.",
+    primaryImage: "/assets/projects/photo_8.jpg",
+    schematicImage: "/assets/projects/photo_5.jpg",
+    secondaryImage: "/assets/projects/photo_6.jpg",
+    components: ["Arduino UNO", "MQ-3 Alcohol Sensor", "L298N H-Bridge", "GPS Antenna", "DC Motor", "LCD 1602"],
+    metrics: "Sub-second Ignition Lock & GPS Broadcast",
+    galleryUrl: GOOGLE_PHOTOS_PROJECTS_URL,
+  },
+  {
+    id: "thingspeak-iot-bench",
+    title: "Cloud IoT Environmental Telemetry & ThingSpeak Analytics",
+    badge: "CLOUD TELEMETRY BENCH",
+    category: "IoT & Environmental Sensing",
+    description: "Benchtop prototype featuring 0.96\" I2C OLED display (33.0°C, 23.3% RH) and DHT sensor wired to ESP32 streaming live telemetry channels to ThingSpeak with MATLAB visualizations.",
+    primaryImage: "/assets/projects/photo_10.jpg",
+    schematicImage: "/assets/projects/photo_9.jpg",
+    secondaryImage: "/assets/projects/photo_11.jpg",
+    components: ["ESP32 Dev Board", "0.96\" I2C OLED", "DHT Sensor", "ThingSpeak Cloud API", "MATLAB Analytics"],
+    metrics: "Live Multi-channel Cloud Telemetry",
+    galleryUrl: GOOGLE_PHOTOS_PROJECTS_URL,
+  },
+  {
+    id: "sensor-test-rig",
+    title: "Gas Sensing, Acoustic Alarm & Multi-Sensor Rig",
+    badge: "SENSOR CALIBRATION BENCH",
+    category: "Signal Conditioning & Actuation",
+    description: "Arduino UNO breadboard test rig validating MQ-4 gas detection, spray aerosol triggering, acoustic piezo buzzer thresholds, and DC motor load characterization with 9V battery power.",
+    primaryImage: "/assets/projects/photo_7.jpg",
+    schematicImage: "/assets/projects/photo_2.jpg",
+    secondaryImage: "/assets/projects/photo_4.jpg",
+    components: ["Arduino UNO", "MQ-4 Gas Sensor", "Piezo Buzzer", "DC Motor Bench", "9V Hi-Watt Rail"],
+    metrics: "Hardware Threshold & Actuation Verification",
+    galleryUrl: GOOGLE_PHOTOS_PROJECTS_URL,
   },
 ];
 
 export const certifications: CertificationItem[] = [
   {
-    id: "cert-ml",
-    title: "Machine Learning Specialization",
-    issuer: "Stanford University & DeepLearning.AI",
+    id: "cisco-networking",
+    title: "Networking Devices and Initial Configuration",
+    issuer: "Cisco",
+    partner: "Credly Digital Credential",
+    credentialUrl: "https://www.credly.com/badges/3f0c72e5-a3de-4a82-a8e8-54bc758e086a/public_url",
+    credentialId: "3f0c72e5-a3de-4a82-a8e8-54bc758e086a",
+    badgeAccent: "#00bceb",
+    badgeImage: "/assets/cisco_networking_badge.png",
+    description:
+      "Cisco-verified credential demonstrating competency in network architectures, IPv4 and IPv6 address calculation, switch and router initial configuration, virtualization, and network troubleshooting across 7 hands-on labs and 12 Cisco Packet Tracer network simulation topologies.",
+    skills: ["Cisco Packet Tracer", "IPv4 & IPv6 Subnetting", "Router & Switch Config", "Virtualization", "Network Diagnostics"],
+  },
+  {
+    id: "deeplearning-supervised-ml",
+    title: "Supervised Machine Learning: Regression and Classification",
+    issuer: "DeepLearning.AI & Stanford Online",
+    partner: "Taught by Andrew Ng",
+    credentialUrl: "https://coursera.org/share/382d6bbb928c325913dcfeee7ec87697",
+    credentialId: "Q2VPQH4HTCVU",
     badgeAccent: "#00e5c7",
-    description: "Supervised Machine Learning, Advanced Learning Algorithms, Unsupervised Learning, Recommenders, and Reinforcement Learning taught by Andrew Ng.",
+    description:
+      "Authorized by Stanford Online and DeepLearning.AI. Rigorous foundation in machine learning theory and mathematical implementations: multivariable linear regression, gradient descent optimization, cost function derivation, logistic classification, feature scaling, and L1/L2 regularization implemented in Python and NumPy.",
+    skills: ["Linear Regression", "Logistic Regression", "Gradient Descent", "L1/L2 Regularization", "Cost Optimization", "NumPy"],
   },
   {
-    id: "cert-dl",
-    title: "Deep Learning Specialization",
-    issuer: "DeepLearning.AI",
-    badgeAccent: "#22d3ee",
-    description: "Neural Networks & Deep Learning, Hyperparameter Tuning, Structuring ML Projects, Convolutional Neural Networks, and Sequence Models.",
-  },
-  {
-    id: "cert-tf",
-    title: "TensorFlow Developer Certificate",
-    issuer: "Google",
-    badgeAccent: "#10b981",
-    description: "Hands-on competency in building, training, and deploying TensorFlow models for computer vision, time-series forecasting, and natural language processing.",
+    id: "deeplearning-unsupervised-rl",
+    title: "Unsupervised Learning, Recommenders, Reinforcement Learning",
+    issuer: "DeepLearning.AI & Stanford Online",
+    partner: "Taught by Andrew Ng",
+    credentialUrl: "https://coursera.org/share/32d5a12143edf6bcfe6075de316ecd70",
+    credentialId: "IN0GPIB6O0C5",
+    badgeAccent: "#a855f7",
+    description:
+      "Authorized by Stanford Online and DeepLearning.AI. Advanced machine learning algorithms: unsupervised K-means clustering, anomaly detection with multi-dimensional Gaussian probability distributions, collaborative filtering and content-based recommendation systems, and reinforcement learning with Deep Q-Networks.",
+    skills: ["K-Means Clustering", "Anomaly Detection", "Recommender Systems", "Deep Q-Learning", "Reinforcement Learning"],
   },
 ];
 

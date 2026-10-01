@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Activity } from 'lucide-react';
+import { useInViewAnimation } from '../hooks/useInViewAnimation';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 interface OscilloscopeCanvasProps {
   className?: string;
@@ -8,11 +10,14 @@ interface OscilloscopeCanvasProps {
 type SignalMode = 'ecg' | 'dsp' | 'telemetry';
 
 export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ className = '' }) => {
+  const isMobile = useIsMobile();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [containerRef, isInView] = useInViewAnimation<HTMLDivElement>({ rootMargin: '250px 0px' });
   const [signalMode, setSignalMode] = useState<SignalMode>('ecg');
   const [sampleRate] = useState('50.0 MHz');
   const [bpm, setBpm] = useState(74);
+
+
 
   // Generate an authentic synthetic ECG signal point
   const getEcgSample = (t: number): number => {
@@ -77,24 +82,31 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
     // Buffer for simulated persistence phosphor
     const resizeCanvas = () => {
       const rect = container.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
       width = rect.width;
       height = rect.height;
 
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
     };
 
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('resize', resizeCanvas, { passive: true });
 
-    // Minor fluctuating BPM for authentic bio-telemetry realism
-    const bpmInterval = setInterval(() => {
-      setBpm(73 + Math.floor(Math.sin(Date.now() / 3000) * 3));
-    }, 2000);
+    // Minor fluctuating BPM for authentic bio-telemetry realism (only when in view)
+    const bpmInterval = isInView
+      ? setInterval(() => {
+          setBpm(73 + Math.floor(Math.sin(Date.now() / 3000) * 3));
+        }, 2500)
+      : null;
 
     const render = () => {
+      if (!isInView) {
+        return;
+      }
+
       if (!ctx || width === 0 || height === 0) {
         animationFrameId = requestAnimationFrame(render);
         return;
@@ -200,14 +212,16 @@ export const OscilloscopeCanvas: React.FC<OscilloscopeCanvasProps> = ({ classNam
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    if (isInView) {
+      animationFrameId = requestAnimationFrame(render);
+    }
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', resizeCanvas);
-      clearInterval(bpmInterval);
+      if (bpmInterval) clearInterval(bpmInterval);
     };
-  }, [signalMode]);
+  }, [signalMode, isInView]);
 
   return (
     <div

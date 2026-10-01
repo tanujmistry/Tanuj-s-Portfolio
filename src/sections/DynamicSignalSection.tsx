@@ -33,9 +33,9 @@ export const DynamicSignalSection: React.FC = () => {
       id="dynamic-signal"
       className="relative py-20 sm:py-24 border-t border-[#27272A] light:border-[#E5E7EB] bg-[#030712] light:bg-white text-[#FFFFFF] light:text-[#111827] overflow-hidden transition-colors duration-300"
     >
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/4 -left-48 w-[500px] h-[500px] bg-[#4ADEDE]/5 light:bg-[#EA580C]/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-48 w-[500px] h-[500px] bg-[#60F1AD]/5 light:bg-[#FDBA74]/5 rounded-full blur-[140px] pointer-events-none" />
+      {/* Background ambient lighting - reduced on mobile */}
+      <div className="absolute top-1/4 -left-48 w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-[#4ADEDE]/5 light:bg-[#EA580C]/5 rounded-full blur-[60px] md:blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-48 w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-[#60F1AD]/5 light:bg-[#FDBA74]/5 rounded-full blur-[60px] md:blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}

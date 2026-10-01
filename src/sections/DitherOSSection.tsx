@@ -25,9 +25,9 @@ export const DitherOSSection: React.FC = () => {
 
   return (
     <section id="algorithmic-interfaces" className="relative py-20 sm:py-24 lg:py-28 border-t border-[#27272A] light:border-gray-200 bg-[#030712] light:bg-white text-[#FFFFFF] light:text-[#111827] overflow-hidden transition-colors duration-300">
-      {/* Background ambient lighting in cyber cyan & electric mint */}
-      <div className="absolute top-1/4 -right-40 w-[600px] h-[600px] bg-[#4ADEDE]/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -left-40 w-[600px] h-[600px] bg-[#60F1AD]/5 rounded-full blur-[140px] pointer-events-none" />
+      {/* Background ambient lighting - reduced on mobile */}
+      <div className="absolute top-1/4 -right-40 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-[#4ADEDE]/5 rounded-full blur-[60px] md:blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-40 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-[#60F1AD]/5 rounded-full blur-[60px] md:blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -53,7 +53,7 @@ export const DitherOSSection: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5 }}
             className="md:col-span-8 rounded-2xl bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] hover:border-[#4ADEDE] light:hover:border-[#EA580C] transition-all p-6 sm:p-8 flex flex-col justify-between shadow-card relative overflow-hidden group"
           >
@@ -90,7 +90,7 @@ export const DitherOSSection: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             className="md:col-span-4 rounded-2xl bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] hover:border-[#60F1AD] light:hover:border-[#FDBA74] transition-all p-6 sm:p-8 flex flex-col justify-between shadow-card"
           >
@@ -138,7 +138,7 @@ export const DitherOSSection: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5, delay: 0.15 }}
             className="md:col-span-6 rounded-2xl bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] hover:border-[#4ADEDE] light:hover:border-[#EA580C] transition-all p-6 sm:p-8 flex flex-col justify-between shadow-card"
           >
@@ -178,7 +178,7 @@ export const DitherOSSection: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="md:col-span-6 rounded-2xl bg-[#18181B] light:bg-[#191C21] border border-[#27272A] light:border-[#374151] hover:border-[#60F1AD] light:hover:border-[#FDBA74] transition-all p-6 sm:p-8 flex flex-col justify-between shadow-card"
           >
