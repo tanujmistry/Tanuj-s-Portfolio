@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumina — Autonomous Financial Intelligence</title>
+  <meta name="description" content="Lumina delivers autonomous financial intelligence, real-time telemetry, and high-throughput execution at planetary scale." />
+
+  <!-- Google Fonts: Geist & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Geist', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              dark: '#09090b',
+              surface: '#0e0e11',
+              card: '#131316',
+            }
+          },
+          transitionTimingFunction: {
+            'lumina': 'cubic-bezier(0.15, 0.83, 0.66, 1)',
+          },
+          transitionDuration: {
+            '1000': '1000ms',
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Iconify-Icon (Solar icon set) -->
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- UnicornStudio.js (v1.4.29) -->
+  <script src="https://cdn.jsdelivr.net/gh/unicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js"></script>
+
+  <style>.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}.no-scrollbar::-webkit-scrollbar{display:none}.glass-card{-webkit-backdrop-filter:blur(20px);background:#ffffff08;border:1px solid #ffffff14;transition:transform .4s cubic-bezier(.15,.83,.66,1),z-index,border-color .4s,box-shadow .4s;box-shadow:0 8px 32px #0000005e,inset 0 1px #ffffff1a}.glass-card:hover{border-color:#ffffff38;box-shadow:0 12px 48px #00000080,inset 0 1px #fff3;z-index:100!important}.glass-highlight{pointer-events:none;background:linear-gradient(135deg,#ffffff1f 0%,#0000 60%);position:absolute;inset:0}.btn-double-text{justify-content:center;align-items:center;display:inline-flex;position:relative;overflow:hidden}.btn-double-text .text-primary-layer{align-items:center;gap:.5rem;transition:transform .5s cubic-bezier(.15,.83,.66,1);display:inline-flex;transform:translateY(0%)}.btn-double-text .text-clone-layer{justify-content:center;align-items:center;gap:.5rem;transition:transform .5s cubic-bezier(.15,.83,.66,1);display:inline-flex;position:absolute;inset:0;transform:translateY(-100%)}.btn-double-text:hover .text-primary-layer{transform:translateY(100%)}.btn-double-text:hover .text-clone-layer{transform:translateY(0%)}.animate-on-scroll{opacity:0;transition:opacity .85s cubic-bezier(.15,.83,.66,1),transform .85s cubic-bezier(.15,.83,.66,1);transform:translateY(30px)}.animate-on-scroll.is-visible{opacity:1;transform:translateY(0)}@keyframes animationIn{0%{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes lumina-float{0%,to{transform:translateY(0)}50%{transform:translateY(-8px)}}@keyframes lumina-pulse{0%,to{opacity:.35;transform:scale(1)}50%{opacity:.95;transform:scale(1.05)}}@keyframes lumina-scan{0%{opacity:0;transform:translateY(-100%)}20%{opacity:.9}80%{opacity:.9}to{opacity:0;transform:translateY(100%)}}@keyframes lumina-shine{0%{transform:translate(-120%)rotate(45deg)}to{transform:translate(240%)rotate(45deg)}}@keyframes lumina-highlight{0%,to{opacity:.3}50%{opacity:.8}}@keyframes lumina-scale{0%,to{transform:scale(1)}50%{transform:scale(1.04)}}@keyframes lumina-blink{0%,to{opacity:1}50%{opacity:.2}}@keyframes lumina-load{0%{width:0%}35%{width:45%}70%{width:82%}to{width:100%}}.animate-lumina-float{animation:4.5s ease-in-out infinite lumina-float}.animate-lumina-pulse{animation:3s ease-in-out infinite lumina-pulse}.animate-lumina-scan{animation:2.8s cubic-bezier(.4,0,.2,1) infinite lumina-scan}.animate-lumina-shine{animation:4s ease-in-out infinite lumina-shine}.animate-lumina-highlight{animation:3s ease-in-out infinite lumina-highlight}.animate-lumina-scale{animation:5s ease-in-out infinite lumina-scale}.animate-lumina-blink{animation:1.2s ease-in-out infinite lumina-blink}.animate-lumina-load{animation:3s cubic-bezier(.4,0,.2,1) infinite lumina-load}.testimonial-giant-metric{background:linear-gradient(#fff 0%,#ffffff59 45%,#ffffff08 100%);-webkit-text-fill-color:transparent;letter-spacing:-.05em;-webkit-background-clip:text;font-family:Geist,sans-serif;font-size:clamp(8rem,16vw,15rem);font-weight:800;line-height:.85}</style>
+</head>
+<body class="bg-[#09090b] text-white selection:bg-white/10 font-sans antialiased overflow-x-hidden min-h-screen">
+
+  <!-- ========================================================================= -->
+  <!-- LAYER 1: BACKGROUND LAYER (z: -10)                                        -->
+  <!-- ========================================================================= -->
+  <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden" id="aura-background-container">
+    <div class="aura-background-component w-full h-full" data-us-project="aura-background-component">
+      <!-- Fallback canvas / ambient generative mesh gradient -->
+      <canvas id="fallback-aura-canvas" class="w-full h-full block opacity-70"></canvas>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- LAYER 2: GLOW LAYER (z: 0)                                                -->
+  <!-- ========================================================================= -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <!-- Center vertical line -->
+    <div class="absolute left-1/2 top-0 bottom-0 w-[1px] -translate-x-1/2 bg-gradient-to-b from-transparent via-zinc-500/5 to-transparent"></div>
+
+    <!-- Top blur circle -->
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[650px] h-[350px] bg-white/[0.04] rounded-full blur-[120px]"></div>
+
+    <!-- Massive overlapping elliptical borders (150vw and 120vw) -->
+    <div class="absolute -top-[45vw] left-1/2 -translate-x-1/2 w-[150vw] h-[90vw] rounded-[100%] border border-white/[0.06] pointer-events-none"></div>
+    <div class="absolute -top-[32vw] left-1/2 -translate-x-1/2 w-[120vw] h-[75vw] rounded-[100%] border border-white/[0.04] pointer-events-none"></div>
+    <div class="absolute -top-[20vw] left-1/2 -translate-x-1/2 w-[90vw] h-[60vw] rounded-[100%] border border-white/[0.025] pointer-events-none"></div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- LAYER 3: NAVIGATION HEADER (z: 50)                                        -->
+  <!-- ========================================================================= -->
+  <header class="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#09090b]/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Logo: Solar icon rotated 90deg -->
+      <a href="#hero" class="flex items-center gap-2.5 group">
+        <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+          <iconify-icon icon="solar:widget-6-bold" class="text-white text-lg rotate-90 transform"></iconify-icon>
+        </div>
+        <span class="font-heading font-semibold text-lg tracking-tight text-white">Lumina</span>
+        <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-white/5 text-zinc-400 border border-white/5 ml-1">V.2.4</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
+        <a href="#features" class="hover:text-white transition-colors duration-150">Features</a>
+        <a href="#dashboard" class="hover:text-white transition-colors duration-150">Dashboard</a>
+        <a href="#integrations" class="hover:text-white transition-colors duration-150">Integrations</a>
+        <a href="#pricing" class="hover:text-white transition-colors duration-150">Pricing</a>
+        <a href="#testimonials" class="hover:text-white transition-colors duration-150">Enterprise</a>
+      </nav>
+
+      <!-- Nav CTA Group -->
+      <div class="flex items-center gap-3">
+        <a href="#dashboard" class="hidden sm:inline-flex text-xs font-medium text-zinc-400 hover:text-white px-3 py-1.5 transition-colors">
+          Sign In
+        </a>
+        <a href="#pricing" class="btn-double-text h-9 px-4 rounded-full bg-white text-black text-xs font-semibold hover:bg-zinc-200 transition-all duration-1000 ease-lumina shadow-[0_0_20px_rgba(255,255,255,0.15)]">
+          <span class="text-primary-layer">
+            <span>Get Started</span>
+            <iconify-icon icon="solar:arrow-right-linear" class="text-sm"></iconify-icon>
+          </span>
+          <span class="text-clone-layer">
+            <span>Get Started</span>
+            <iconify-icon icon="solar:arrow-right-linear" class="text-sm"></iconify-icon>
+          </span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- LAYER 4: MAIN CONTENT (z: 20)                                             -->
+  <!-- ========================================================================= -->
+  <main class="relative z-20 pt-28 sm:pt-36">
+
+    <!-- ======================================================================= -->
+    <!-- SECTION 1: HERO                                                         -->
+    <!-- ======================================================================= -->
+    <section id="hero" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 sm:pb-36">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+
+        <!-- Left Column: Copy & CTAs -->
+        <div class="lg:col-span-6 space-y-8 animate-on-scroll">
+          <!-- Announcement Pill -->
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md text-xs font-mono text-zinc-300">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-lumina-pulse"></span>
+            <span class="text-white font-medium">Lumina 2.4</span>
+            <span class="text-zinc-500">//</span>
+            <span>Autonomous Intelligence</span>
+          </div>
+
+          <!-- Editorial H1 -->
+          <h1 class="font-heading text-4xl sm:text-6xl lg:text-[68px] font-medium leading-[1.03] tracking-[-0.035em] text-white">
+            Autonomous financial intelligence at <span class="bg-gradient-to-r from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent">planetary scale.</span>
+          </h1>
+
+          <p class="text-zinc-400 text-base sm:text-lg leading-relaxed max-w-xl font-normal">
+            Consolidate fragmented financial rails, automate multi-currency treasury pipelines, and execute algorithmic liquidity rebalancing with microsecond determinism.
+          </p>
+
+          <!-- Button Group with Double-Text Animation -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="#pricing" class="btn-double-text h-12 px-7 rounded-full bg-white text-black font-heading font-medium text-sm hover:bg-zinc-200 transition-all duration-1000 ease-lumina shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+              <span class="text-primary-layer">
+                <span>Start Free Trial</span>
+                <iconify-icon icon="solar:alt-arrow-right-linear" class="text-base"></iconify-icon>
+              </span>
+              <span class="text-clone-layer">
+                <span>Start Free Trial</span>
+                <iconify-icon icon="solar:alt-arrow-right-linear" class="text-base"></iconify-icon>
+              </span>
+            </a>
+
+            <a href="#dashboard" class="btn-double-text h-12 px-6 rounded-full glass-card text-white font-heading font-normal text-sm hover:border-white/30 transition-all duration-1000 ease-lumina">
+              <span class="text-primary-layer">
+                <iconify-icon icon="solar:play-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
+                <span>Live Interactive Demo</span>
+              </span>
+              <span class="text-clone-layer">
+                <iconify-icon icon="solar:play-circle-linear" class="text-lg text-white"></iconify-icon>
+                <span>Live Interactive Demo</span>
+              </span>
+            </a>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="pt-6 border-t border-white/5 flex items-center gap-6 text-xs text-zinc-500 font-mono">
+            <div class="flex items-center gap-2">
+              <iconify-icon icon="solar:shield-check-linear" class="text-zinc-400 text-base"></iconify-icon>
+              <span>SOC2 TYPE II COMPLIANT</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <iconify-icon icon="solar:lock-password-linear" class="text-zinc-400 text-base"></iconify-icon>
+              <span>AIR-GAPPED READY</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Staggered Cluster of 6 Floating Images -->
+        <div class="lg:col-span-6 relative h-[480px] sm:h-[580px] w-full flex items-center justify-center animate-on-scroll">
+          <div class="relative w-full h-full max-w-[540px]">
+
+            <!-- Hero Image 1: Top Left (Rotate -3deg) -->
+            <div class="glass-card rounded-2xl p-2 absolute top-2 left-0 w-44 sm:w-56 rotate-[-3deg] hover:rotate-0 hover:scale-105 transition-all duration-500 shadow-2xl z-20 group cursor-pointer [animation:animationIn_0.8s_ease-out_0.1s_backwards]">
+              <div class="glass-highlight rounded-xl"></div>
+              <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/5b2b94ae-4a0b-458d-b838-58b0fb5fadfd_800w.webp" alt="Lumina Telemetry" class="w-full h-32 sm:h-40 object-cover rounded-xl" loading="lazy" />
+              <div class="p-2 flex items-center justify-between text-[10px] font-mono text-zinc-400">
+                <span>SYS_INGEST</span>
+                <span class="text-emerald-400">99.99%</span>
+              </div>
+            </div>
+
+            <!-- Hero Image 2: Center Elevated (Rotate 2deg) -->
+            <div class="glass-card rounded-2xl p-2 absolute top-12 left-32 sm:left-44 w-52 sm:w-64 rotate-[2deg] hover:rotate-0 hover:scale-105 transition-all duration-500 shadow-2xl z-30 group cursor-pointer [animation:animationIn_0.8s_ease-out_0.2s_backwards]">
+              <div class="glass-highlight rounded-xl"></div>
+              <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/98ceb9e8-e614-438f-b0b6-6ea9a4cd962a_800w.jpg" alt="Lumina Core" class="w-full h-36 sm:h-44 object-cover rounded-xl" loading="lazy" />
+              <div class="p-2 flex items-center justify-between text-[10px] font-mono text-zinc-400">
+                <span>ALGO_ROUTE</span>
+                <span class="text-white font-bold">&lt;0.4ms</span>
+              </div>
+            </div>
+
+            <!-- Hero Image 3: Top Right Pill (Rotate 4deg) -->
+            <div class="glass-card rounded-2xl p-2 absolute top-0 right-0 w-36 sm:w-44 rotate-[4deg] hover:rotate-0 hover:scale-105 transition-all duration-500 shadow-2xl z-20 group cursor-pointer [animation:animationIn_0.8s_ease-out_0.3s_backwards]">
+              <div class="glass-highlight rounded-xl"></div>
+              <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/cce9b24e-35c2-4401-966f-6862ca3cbe67_320w.webp" alt="Lumina Terminal" class="w-full h-24 sm:h-28 object-cover rounded-xl" loading="lazy" />
+              <div class="p-1.5 text-[9px] font-mono text-zinc-400 text-center truncate">
+                CLUSTER_SYNC_OK
+              </div>
+            </div>
+
+            <!-- Hero Image 4: Bottom Left (Rotate -4deg) -->
+            <div class="glass-card rounded-2xl p-2 absolute bottom-8 left-4 w-44 sm:w-52 rotate-[-4deg] hover:rotate-0 hover:scale-105 transition-all duration-500 shadow-2xl z-20 group cursor-pointer [animation:animationIn_0.8s_ease-out_0.4s_backwards]">
+              <div class="glass-highlight rounded-xl"></div>
+              <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/84c1c812-11be-4bbf-980f-9c90b7a0d779_800w.webp" alt="Lumina Neural" class="w-full h-28 sm:h-36 object-cover rounded-xl" loading="lazy" />
+              <div class="p-2 flex items-center justify-between text-[10px] font-mono text-zinc-400">
+                <span>TREASURY</span>
+                <span class="text-emerald-400">$48.2M</span>
+              </div>
+            </div>
+
+            <!-- Hero Image 5: Center Foreground Large (Rotate -1deg) -->
+            <div class="glass-card rounded-2xl p-2.5 absolute bottom-14 left-28 sm:left-36 w-56 sm:w-68 rotate-[-1deg] hover:rotate-0 hover:scale-105 transition-all duration-500 shadow-2xl z-40 group cursor-pointer [animation:animationIn_0.8s_ease-out_0.5s_backwards]">
+              <div class="glass-highlight rounded-xl"></div>
+              <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/7f606005-ba8e-4906-8403-5200e9723d9f_800w.webp" alt="Lumina Ledger" class="w-full h-36 sm:h-44 object-cover rounded-xl" loading="lazy" />
+              <div class="p-2 flex items-center justify-between text-[10px] font-mono">
+                <span class="text-zinc-400">LEDGER_STATE</span>
+                <span class="text-white font-medium">DISPATCHED</span>
+              </div>
+            </div>
+
+            <!-- Hero Image 6: Bottom Right (Rotate 3deg) -->
+            <div class="glass-card rounded-2xl p-2 absolute bottom-2 right-2 w-40 sm:w-48 rotate-[3deg] hover:rotate-0 hover:scale-105 transition-all duration-500 shadow-2xl z-20 group cursor-pointer [animation:animationIn_0.8s_ease-out_0.6s_backwards]">
+              <div class="glass-highlight rounded-xl"></div>
+              <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/6d1c6740-1f50-4f43-bbb0-8bfb2f9620bd_320w.webp" alt="Lumina Nodes" class="w-full h-28 sm:h-32 object-cover rounded-xl" loading="lazy" />
+              <div class="p-1.5 text-[10px] font-mono text-zinc-400 text-right">
+                128 NODES
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- SECTION 2: ENTERPRISE FEATURES (3-column grid)                          -->
+    <!-- ======================================================================= -->
+    <section id="features" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 border-t border-white/5">
+      <div class="max-w-3xl mb-16 animate-on-scroll">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-zinc-400 mb-4">
+          <iconify-icon icon="solar:cpu-bolt-linear" class="text-white"></iconify-icon>
+          <span>CORE CAPABILITIES</span>
+        </div>
+        <h2 class="font-heading text-3xl sm:text-5xl font-medium tracking-tight text-white mb-4">
+          Engineered for zero tolerance environments.
+        </h2>
+        <p class="text-zinc-400 text-base leading-relaxed">
+          Six foundational architectural pillars guaranteeing transactional finality, verifiable privacy, and global multi-region resilience.
+        </p>
+      </div>
+
+      <!-- 3-Column Features Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Feature 1: Dynamic Data Encryption (lumina-scan) -->
+        <div class="rounded-2xl bg-[#0e0e11] border border-white/5 p-6 flex flex-col justify-between hover:border-white/20 transition-all duration-300 animate-on-scroll group">
+          <!-- Graphic Area (h-64) -->
+          <div class="h-64 rounded-xl bg-[#09090b] border border-white/5 relative overflow-hidden flex items-center justify-center p-6 animate-lumina-float">
+            <!-- Background grid pattern -->
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:1.5rem_1.5rem]"></div>
+
+            <!-- Scanning laser beam line -->
+            <div class="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent shadow-[0_0_15px_#ffffff] animate-lumina-scan"></div>
+
+            <!-- Encryption Core Graphic -->
+            <div class="relative z-10 w-28 h-28 rounded-2xl bg-white/[0.04] border border-white/10 flex flex-col items-center justify-center p-3 text-center">
+              <iconify-icon icon="solar:shield-keyhole-minimalistic-linear" class="text-4xl text-white mb-2"></iconify-icon>
+              <span class="text-[9px] font-mono text-zinc-400">AES-256-GCM</span>
+              <span class="text-[8px] font-mono text-emerald-400 mt-0.5">ENCRYPTED</span>
+            </div>
+          </div>
+          <!-- Text Area -->
+          <div class="pt-6 space-y-2">
+            <div class="flex items-center justify-between font-mono text-xs text-zinc-500">
+              <span>SECURITY</span>
+              <span>// 01</span>
+            </div>
+            <h3 class="font-heading text-xl font-medium text-white">Quantum-Resistant Encryption</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">
+              Continuous payload obfuscation with ephemeral session handshakes and post-quantum cryptographic primitives.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature 2: Real-Time Multi-Region Sync (lumina-pulse) -->
+        <div class="rounded-2xl bg-[#0e0e11] border border-white/5 p-6 flex flex-col justify-between hover:border-white/20 transition-all duration-300 animate-on-scroll group">
+          <!-- Graphic Area (h-64) -->
+          <div class="h-64 rounded-xl bg-[#09090b] border border-white/5 relative overflow-hidden flex items-center justify-center p-6 animate-lumina-float">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.06),transparent_70%)]"></div>
+
+            <!-- Radial Pulsing Nodes -->
+            <div class="relative flex items-center justify-center">
+              <div class="w-36 h-36 rounded-full border border-white/10 animate-lumina-pulse"></div>
+              <div class="absolute w-24 h-24 rounded-full border border-white/20 animate-lumina-pulse" style="animation-delay: 0.5s;"></div>
+              <div class="absolute w-12 h-12 rounded-full bg-white/10 border border-white/30 flex items-center justify-center">
+                <iconify-icon icon="solar:global-linear" class="text-xl text-white"></iconify-icon>
+              </div>
+
+              <!-- Satellite Nodes -->
+              <span class="absolute -top-3 left-6 px-2 py-0.5 rounded-full bg-white/5 text-[9px] font-mono text-zinc-300 border border-white/10">US-EAST-1</span>
+              <span class="absolute -bottom-3 right-6 px-2 py-0.5 rounded-full bg-white/5 text-[9px] font-mono text-zinc-300 border border-white/10">EU-CENTRAL-1</span>
+            </div>
+          </div>
+          <!-- Text Area -->
+          <div class="pt-6 space-y-2">
+            <div class="flex items-center justify-between font-mono text-xs text-zinc-500">
+              <span>NETWORKING</span>
+              <span>// 02</span>
+            </div>
+            <h3 class="font-heading text-xl font-medium text-white">Sub-Millisecond Sync</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">
+              Global BGP routing and distributed Paxos state synchronization delivering verifiable ledger consistency.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature 3: Anomaly Detection Engine (lumina-shine) -->
+        <div class="rounded-2xl bg-[#0e0e11] border border-white/5 p-6 flex flex-col justify-between hover:border-white/20 transition-all duration-300 animate-on-scroll group">
+          <!-- Graphic Area (h-64) -->
+          <div class="h-64 rounded-xl bg-[#09090b] border border-white/5 relative overflow-hidden flex items-center justify-center p-6 animate-lumina-float">
+            <!-- Shimmer Light Angle -->
+            <div class="absolute -inset-x-20 top-0 bottom-0 w-32 bg-gradient-to-r from-transparent via-white/10 to-transparent transform rotate-45 animate-lumina-shine"></div>
+
+            <!-- Radar Target Scope -->
+            <div class="w-full max-w-[200px] p-3 rounded-xl bg-white/[0.02] border border-white/10 font-mono text-xs space-y-2">
+              <div class="flex justify-between text-zinc-400 text-[10px]">
+                <span>ANOMALY_PROB</span>
+                <span class="text-emerald-400 font-bold">0.0012%</span>
+              </div>
+              <div class="h-1.5 w-full rounded-full bg-white/5 overflow-hidden">
+                <div class="h-full w-3/4 bg-white/80 rounded-full"></div>
+              </div>
+              <div class="p-2 rounded bg-black/50 border border-white/5 flex items-center justify-between text-[10px]">
+                <span class="text-zinc-300">TX_9941_FLAG</span>
+                <span class="text-white bg-white/10 px-1.5 py-0.2 rounded">VERIFIED</span>
+              </div>
+            </div>
+          </div>
+          <!-- Text Area -->
+          <div class="pt-6 space-y-2">
+            <div class="flex items-center justify-between font-mono text-xs text-zinc-500">
+              <span>ARTIFICIAL INTELLIGENCE</span>
+              <span>// 03</span>
+            </div>
+            <h3 class="font-heading text-xl font-medium text-white">Heuristic Fraud Scoring</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">
+              Real-time graph neural networks inspect transactional vectors to preemptively neutralize anomalous routing.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature 4: High-Throughput Processing (lumina-float) -->
+        <div class="rounded-2xl bg-[#0e0e11] border border-white/5 p-6 flex flex-col justify-between hover:border-white/20 transition-all duration-300 animate-on-scroll group">
+          <!-- Graphic Area (h-64) -->
+          <div class="h-64 rounded-xl bg-[#09090b] border border-white/5 relative overflow-hidden flex items-center justify-center p-6 animate-lumina-float">
+            <!-- Pipeline Wave -->
+            <div class="flex items-end gap-1.5 h-24">
+              <div class="w-3 bg-white/20 rounded-t h-12"></div>
+              <div class="w-3 bg-white/30 rounded-t h-16"></div>
+              <div class="w-3 bg-white/60 rounded-t h-20"></div>
+              <div class="w-3 bg-white rounded-t h-24 shadow-[0_0_15px_rgba(255,255,255,0.4)]"></div>
+              <div class="w-3 bg-white/70 rounded-t h-18"></div>
+              <div class="w-3 bg-white/40 rounded-t h-14"></div>
+              <div class="w-3 bg-white/20 rounded-t h-8"></div>
+            </div>
+            <div class="absolute bottom-3 text-[10px] font-mono text-zinc-400">
+              PEAK: 1,200,000 TPS
+            </div>
+          </div>
+          <!-- Text Area -->
+          <div class="pt-6 space-y-2">
+            <div class="flex items-center justify-between font-mono text-xs text-zinc-500">
+              <span>INFRASTRUCTURE</span>
+              <span>// 04</span>
+            </div>
+            <h3 class="font-heading text-xl font-medium text-white">1M+ TPS Ring Buffer</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">
+              Zero-copy memory mapped ring buffers running directly on kernel bypass interfaces eliminate queue latency.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature 5: Workspace Switcher with Nested Dropdown Menu Mockup -->
+        <div class="rounded-2xl bg-[#0e0e11] border border-white/5 p-6 flex flex-col justify-between hover:border-white/20 transition-all duration-300 animate-on-scroll group">
+          <!-- Graphic Area (h-64) -->
+          <div class="h-64 rounded-xl bg-[#09090b] border border-white/5 relative overflow-hidden flex items-center justify-center p-4">
+            <!-- Nested Dropdown Visual -->
+            <div class="w-full max-w-[230px] rounded-xl bg-[#131316] border border-white/10 p-3 shadow-2xl space-y-2 relative z-10">
+              <!-- Top Selector Bar -->
+              <div class="flex items-center justify-between pb-2 border-b border-white/5 text-xs text-white">
+                <div class="flex items-center gap-2">
+                  <div class="w-4 h-4 rounded bg-white text-black font-bold text-[9px] flex items-center justify-center">L</div>
+                  <span class="font-medium text-[11px]">Apex Global HQ</span>
+                </div>
+                <iconify-icon icon="solar:alt-arrow-down-linear" class="text-zinc-400"></iconify-icon>
+              </div>
+              <!-- Dropped options -->
+              <div class="space-y-1 pt-1">
+                <div class="p-1.5 rounded-lg bg-white/5 border border-white/5 flex items-center justify-between text-[10px]">
+                  <span class="text-white font-medium">Lumina Treasury (Production)</span>
+                  <iconify-icon icon="solar:check-circle-bold" class="text-emerald-400"></iconify-icon>
+                </div>
+                <div class="p-1.5 rounded-lg hover:bg-white/5 flex items-center justify-between text-[10px] text-zinc-400">
+                  <span>EMEA Liquidity Pool</span>
+                  <span class="text-[9px] font-mono text-zinc-500">DEV</span>
+                </div>
+                <div class="p-1.5 rounded-lg hover:bg-white/5 flex items-center justify-between text-[10px] text-zinc-400">
+                  <span>APAC Settlement Node</span>
+                  <span class="text-[9px] font-mono text-zinc-500">AUDIT</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Text Area -->
+          <div class="pt-6 space-y-2">
+            <div class="flex items-center justify-between font-mono text-xs text-zinc-500">
+              <span>MULTI-TENANCY</span>
+              <span>// 05</span>
+            </div>
+            <h3 class="font-heading text-xl font-medium text-white">Hierarchical Workspaces</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">
+              Granular role-based access control and isolated cryptographic ledgers for multi-subsidiary enterprise groups.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature 6: On-Premise Air-Gapped Deployment with Working Terminal & lumina-load -->
+        <div class="rounded-2xl bg-[#0e0e11] border border-white/5 p-6 flex flex-col justify-between hover:border-white/20 transition-all duration-300 animate-on-scroll group">
+          <!-- Graphic Area (h-64) -->
+          <div class="h-64 rounded-xl bg-[#09090b] border border-white/5 relative overflow-hidden flex flex-col justify-between p-4 font-mono text-xs">
+            <!-- Terminal Header -->
+            <div class="flex items-center justify-between pb-2 border-b border-white/5 text-[10px] text-zinc-500">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-zinc-700"></span>
+                <span class="w-2 h-2 rounded-full bg-zinc-700"></span>
+                <span class="w-2 h-2 rounded-full bg-zinc-700"></span>
+              </div>
+              <span>lumina-daemon v2.4</span>
+            </div>
+
+            <!-- Terminal Output -->
+            <div class="space-y-1 text-[11px]">
+              <div class="text-zinc-400">$ lumina deploy --airgap --secure</div>
+              <div class="text-emerald-400">✓ Isolated enclave initialized</div>
+              <div class="text-zinc-300">Synchronizing hardware security module...</div>
+            </div>
+
+            <!-- Working Progress Bar with lumina-load -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-[10px] text-zinc-400">
+                <span>PROVISIONING_ENCLAVE</span>
+                <span class="animate-lumina-blink">RUNNING</span>
+              </div>
+              <div class="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                <div class="h-full bg-white rounded-full animate-lumina-load shadow-[0_0_10px_white]"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Text Area -->
+          <div class="pt-6 space-y-2">
+            <div class="flex items-center justify-between font-mono text-xs text-zinc-500">
+              <span>DEPLOYMENT</span>
+              <span>// 06</span>
+            </div>
+            <h3 class="font-heading text-xl font-medium text-white">Air-Gapped Sovereign Cloud</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">
+              Deploy natively on bare-metal racks or isolated sovereign VPCs with hardware security module (HSM) attestation.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- SECTION 3: DASHBOARD PREVIEW                                            -->
+    <!-- ======================================================================= -->
+    <section id="dashboard" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 border-t border-white/5">
+      <div class="max-w-3xl mb-14 animate-on-scroll">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-zinc-400 mb-4">
+          <iconify-icon icon="solar:chart-square-linear" class="text-white"></iconify-icon>
+          <span>INTELLIGENCE INTERFACE</span>
+        </div>
+        <h2 class="font-heading text-3xl sm:text-5xl font-medium tracking-tight text-white mb-4">
+          Unified command over global liquidity.
+        </h2>
+        <p class="text-zinc-400 text-base leading-relaxed">
+          Monitor multi-currency positions, inspect sub-millisecond execution logs, and trigger automated hedging routines from a single glass canvas.
+        </p>
+      </div>
+
+      <!-- Complex Financial App Mockup -->
+      <div class="rounded-3xl bg-[#09090b] border border-white/10 p-2 sm:p-4 shadow-[0_30px_100px_rgba(0,0,0,0.8)] animate-on-scroll">
+        <div class="rounded-2xl bg-[#0e0e11] border border-white/5 overflow-hidden flex flex-col md:flex-row min-h-[640px]">
+
+          <!-- Sidebar with .no-scrollbar quirk -->
+          <aside class="w-full md:w-64 border-b md:border-b-0 md:border-r border-white/5 bg-[#09090b]/90 p-5 flex flex-col justify-between no-scrollbar overflow-y-auto">
+            <div class="space-y-6">
+              <!-- Account Switcher -->
+              <div class="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center font-heading font-bold text-xs">
+                    LM
+                  </div>
+                  <div>
+                    <div class="text-xs font-medium text-white">Apex Master</div>
+                    <div class="text-[10px] font-mono text-zinc-500">ID: #0092-US</div>
+                  </div>
+                </div>
+                <iconify-icon icon="solar:alt-arrow-down-linear" class="text-zinc-400 text-sm"></iconify-icon>
+              </div>
+
+              <!-- Nav Menu Items -->
+              <nav class="space-y-1 text-xs font-medium">
+                <a href="#dashboard" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-white/10 text-white">
+                  <iconify-icon icon="solar:widget-linear" class="text-base"></iconify-icon>
+                  <span>Overview</span>
+                </a>
+                <a href="#dashboard" class="flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
+                  <iconify-icon icon="solar:transfer-horizontal-linear" class="text-base"></iconify-icon>
+                  <span>Transactions</span>
+                </a>
+                <a href="#dashboard" class="flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
+                  <iconify-icon icon="solar:chart-2-linear" class="text-base"></iconify-icon>
+                  <span>Analytics</span>
+                </a>
+                <a href="#dashboard" class="flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
+                  <iconify-icon icon="solar:card-linear" class="text-base"></iconify-icon>
+                  <span>Corporate Cards</span>
+                </a>
+                <a href="#dashboard" class="flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
+                  <iconify-icon icon="solar:settings-linear" class="text-base"></iconify-icon>
+                  <span>Rules &amp; Limits</span>
+                </a>
+              </nav>
+            </div>
+
+            <!-- Sidebar Bottom Metric -->
+            <div class="pt-6 border-t border-white/5 text-[11px] font-mono text-zinc-500 flex items-center justify-between">
+              <span>SYSTEM LATENCY</span>
+              <span class="text-emerald-400 font-bold">0.18 ms</span>
+            </div>
+          </aside>
+
+          <!-- Main Content Area -->
+          <div class="flex-1 p-6 sm:p-8 flex flex-col justify-between space-y-8 overflow-x-hidden">
+
+            <!-- Top Header & Quick Actions with Inner Shadows -->
+            <div class="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <h3 class="font-heading text-xl sm:text-2xl font-semibold text-white">Consolidated Treasury</h3>
+                <p class="text-xs font-mono text-zinc-400 mt-0.5">ACTIVE REBALANCING: ALGORITHMIC</p>
+              </div>
+
+              <!-- Quick Action Buttons with Inner Shadow -->
+              <div class="flex items-center gap-2.5">
+                <button type="button" class="h-9 px-4 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-xs font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] flex items-center gap-2 transition-all">
+                  <iconify-icon icon="solar:add-circle-linear" class="text-sm text-zinc-300"></iconify-icon>
+                  <span>Add Funds</span>
+                </button>
+                <button type="button" class="h-9 px-4 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-xs font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] flex items-center gap-2 transition-all">
+                  <iconify-icon icon="solar:send-square-linear" class="text-sm text-zinc-300"></iconify-icon>
+                  <span>Sweep Yield</span>
+                </button>
+                <button type="button" class="h-9 px-4 rounded-xl bg-white text-black text-xs font-semibold hover:bg-zinc-200 transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                  <iconify-icon icon="solar:dollar-linear" class="text-sm"></iconify-icon>
+                  <span>Transfer</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Stat Cards Row -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="p-5 rounded-2xl bg-[#131316] border border-white/5 space-y-2">
+                <div class="flex justify-between items-center text-zinc-400 text-xs font-medium">
+                  <span>Total Managed Liquidity</span>
+                  <iconify-icon icon="solar:wallet-money-linear" class="text-base text-zinc-400"></iconify-icon>
+                </div>
+                <div class="font-heading text-2xl sm:text-3xl font-semibold text-white tracking-tight">$142,850,420</div>
+                <div class="flex items-center gap-1.5 text-[11px] font-mono text-emerald-400">
+                  <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+                  <span>+18.4% this quarter</span>
+                </div>
+              </div>
+
+              <div class="p-5 rounded-2xl bg-[#131316] border border-white/5 space-y-2">
+                <div class="flex justify-between items-center text-zinc-400 text-xs font-medium">
+                  <span>Automated Yield APR</span>
+                  <iconify-icon icon="solar:chart-square-linear" class="text-base text-zinc-400"></iconify-icon>
+                </div>
+                <div class="font-heading text-2xl sm:text-3xl font-semibold text-white tracking-tight">5.24%</div>
+                <div class="flex items-center gap-1.5 text-[11px] font-mono text-emerald-400">
+                  <iconify-icon icon="solar:check-circle-bold"></iconify-icon>
+                  <span>Optimized via Treasury MM</span>
+                </div>
+              </div>
+
+              <div class="p-5 rounded-2xl bg-[#131316] border border-white/5 space-y-2">
+                <div class="flex justify-between items-center text-zinc-400 text-xs font-medium">
+                  <span>Microsecond Settlements</span>
+                  <iconify-icon icon="solar:bolt-linear" class="text-base text-zinc-400"></iconify-icon>
+                </div>
+                <div class="font-heading text-2xl sm:text-3xl font-semibold text-white tracking-tight">99.999%</div>
+                <div class="flex items-center gap-1.5 text-[11px] font-mono text-zinc-400">
+                  <span>Zero failed routings</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activity Graph: Pure CSS Bar Chart -->
+            <div class="p-6 rounded-2xl bg-[#131316] border border-white/5 space-y-4">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h4 class="font-heading text-sm font-medium text-white">Execution Volume Flow</h4>
+                  <p class="text-[11px] font-mono text-zinc-500">24-HOUR ROLLING AGGREGATION</p>
+                </div>
+                <div class="flex items-center gap-4 text-xs font-mono text-zinc-400">
+                  <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-white"></span>
+                    <span>AUTOMATED</span>
+                  </span>
+                  <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-zinc-600"></span>
+                    <span>DISPATCH</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Pure CSS Bar Chart with Flex container and gradient bars -->
+              <div class="h-44 w-full flex items-end justify-between gap-2 sm:gap-3 pt-6 border-b border-white/5">
+                <!-- Bar 1 -->
+                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
+                  <div class="w-full rounded-t bg-gradient-to-t from-zinc-800 to-white/40 group-hover:to-white transition-all h-[45%]"></div>
+                  <span class="text-[9px] font-mono text-zinc-500">00:00</span>
+                </div>
+                <!-- Bar 2 -->
+                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
+                  <div class="w-full rounded-t bg-gradient-to-t from-zinc-800 to-white/50 group-hover:to-white transition-all h-[62%]"></div>
+                  <span class="text-[9px] font-mono text-zinc-500">03:00</span>
+                </div>
+                <!-- Bar 3 -->
+                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
+                  <div class="w-full rounded-t bg-gradient-to-t from-zinc-800 to-white/60 group-hover:to-white transition-all h-[85%]"></div>
+                  <span class="text-[9px] font-mono text-zinc-500">06:00</span>
+                </div>
+                <!-- Bar 4 (Peak) -->
+                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
+                  <div class="w-full rounded-t bg-gradient-to-t from-zinc-700 via-zinc-400 to-white group-hover:to-white transition-all h-[100%] shadow-[0_0_15px_rgba(255,255,255,0.3)]"></div>
+                  <span class="text-[9px] font-mono text-zinc-300 font-bold">09:00</span>
+                </div>
+                <!-- Bar 5 -->
+                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
+                  <div class="w-full rounded-t bg-gradient-to-t from-zinc-800 to-white/70 group-hover:to-white transition-all h-[78%]"></div>
+                  <span class="text-[9px] font-mono text-zinc-500">12:00</span>
+                </div>
+                <!-- Bar 6 -->
+                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
+                  <div class="w-full rounded-t bg-gradient-to-t from-zinc-800 to-white/55 group-hover:to-white transition-all h-[68%]"></div>
+                  <span class="text-[9px] font-mono text-zinc-500">15:00</span>
+                </div>
+                <!-- Bar 7 -->
+                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
+                  <div class="w-full rounded-t bg-gradient-to-t from-zinc-800 to-white/80 group-hover:to-white transition-all h-[92%]"></div>
+                  <span class="text-[9px] font-mono text-zinc-500">18:00</span>
+                </div>
+                <!-- Bar 8 -->
+                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
+                  <div class="w-full rounded-t bg-gradient-to-t from-zinc-800 to-white/45 group-hover:to-white transition-all h-[52%]"></div>
+                  <span class="text-[9px] font-mono text-zinc-500">21:00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Real-Time Transaction Table -->
+            <div class="space-y-3">
+              <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
+                <span>RECENT REAL-TIME SETTLEMENTS</span>
+                <a href="#dashboard" class="hover:text-white transition-colors">VIEW ALL →</a>
+              </div>
+              <div class="rounded-xl bg-[#131316] border border-white/5 overflow-x-auto no-scrollbar">
+                <table class="w-full text-left text-xs font-mono">
+                  <thead class="border-b border-white/5 text-zinc-500 text-[10px]">
+                    <tr>
+                      <th class="p-3 font-normal">TRANSACTION_ID</th>
+                      <th class="p-3 font-normal">ROUTING_PAIR</th>
+                      <th class="p-3 font-normal">TIMESTAMP</th>
+                      <th class="p-3 font-normal">STATUS</th>
+                      <th class="p-3 font-normal text-right">VOLUME</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-white/5 text-zinc-300">
+                    <tr class="hover:bg-white/[0.02] transition-colors">
+                      <td class="p-3 font-medium text-white flex items-center gap-2">
+                        <iconify-icon icon="solar:arrow-up-down-linear" class="text-zinc-400"></iconify-icon>
+                        <span>TX-98420-US</span>
+                      </td>
+                      <td class="p-3 text-zinc-400">USD → EUR SWAP</td>
+                      <td class="p-3 text-zinc-500">Just now</td>
+                      <td class="p-3">
+                        <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px]">SETTLED</span>
+                      </td>
+                      <td class="p-3 text-right font-medium text-white">$4,250,000.00</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02] transition-colors">
+                      <td class="p-3 font-medium text-white flex items-center gap-2">
+                        <iconify-icon icon="solar:arrow-right-down-linear" class="text-zinc-400"></iconify-icon>
+                        <span>TX-98419-GB</span>
+                      </td>
+                      <td class="p-3 text-zinc-400">GBP TREASURY SWEEP</td>
+                      <td class="p-3 text-zinc-500">2m ago</td>
+                      <td class="p-3">
+                        <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px]">SETTLED</span>
+                      </td>
+                      <td class="p-3 text-right font-medium text-white">£1,120,000.00</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.02] transition-colors">
+                      <td class="p-3 font-medium text-white flex items-center gap-2">
+                        <iconify-icon icon="solar:arrow-left-up-linear" class="text-zinc-400"></iconify-icon>
+                        <span>TX-98418-SG</span>
+                      </td>
+                      <td class="p-3 text-zinc-400">SGD REBALANCE</td>
+                      <td class="p-3 text-zinc-500">5m ago</td>
+                      <td class="p-3">
+                        <span class="px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20 text-[10px]">CLEARING</span>
+                      </td>
+                      <td class="p-3 text-right font-medium text-white">S$850,000.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- SECTION 4: PRICING & INTEGRATIONS                                       -->
+    <!-- ======================================================================= -->
+    <section id="pricing" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 border-t border-white/5">
+      <div class="max-w-3xl mb-16 animate-on-scroll">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-zinc-400 mb-4">
+          <iconify-icon icon="solar:tag-price-linear" class="text-white"></iconify-icon>
+          <span>TIER ARCHITECTURE</span>
+        </div>
+        <h2 class="font-heading text-3xl sm:text-5xl font-medium tracking-tight text-white mb-4">
+          Predictable scale. Transparent pricing.
+        </h2>
+        <p class="text-zinc-400 text-base leading-relaxed">
+          From fast-growing ventures to global financial conglomerates, select the deployment profile aligned with your transaction density.
+        </p>
+      </div>
+
+      <!-- 3 Pricing Cards Layout -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch mb-24">
+
+        <!-- Card 1: Starter -->
+        <div class="rounded-3xl bg-[#0e0e11] border border-white/5 p-8 flex flex-col justify-between hover:border-white/20 transition-all duration-300 animate-on-scroll">
+          <div class="space-y-6">
+            <div class="space-y-2">
+              <h3 class="font-heading text-xl font-medium text-white">Starter</h3>
+              <p class="text-zinc-400 text-xs">For early-stage startups and modern fintech teams.</p>
+            </div>
+            <div class="flex items-baseline gap-1 font-heading">
+              <span class="text-4xl font-semibold text-white">$29</span>
+              <span class="text-zinc-500 text-xs font-mono">/ mo</span>
+            </div>
+            <ul class="space-y-3 text-xs text-zinc-300 pt-4 border-t border-white/5">
+              <li class="flex items-center gap-2">
+                <iconify-icon icon="solar:check-circle-linear" class="text-zinc-400"></iconify-icon>
+                <span>Up to $500k monthly volume</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <iconify-icon icon="solar:check-circle-linear" class="text-zinc-400"></iconify-icon>
+                <span>5 automated routing strategies</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <iconify-icon icon="solar:check-circle-linear" class="text-zinc-400"></iconify-icon>
+                <span>Sub-50ms API response</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <iconify-icon icon="solar:check-circle-linear" class="text-zinc-400"></iconify-icon>
+                <span>Community Discord support</span>
+              </li>
+            </ul>
+          </div>
+
+          <a href="#contact" class="mt-8 w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold text-center block transition-all">
+            Deploy Starter
+          </a>
+        </div>
+
+        <!-- Card 2: Pro (Elevated via md:-translate-y-4 with white/5 gradient overlay) -->
+        <div class="rounded-3xl bg-[#131316] border border-white/20 p-8 flex flex-col justify-between md:-translate-y-4 shadow-[0_20px_60px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.2)] relative overflow-hidden transition-all duration-300 animate-on-scroll">
+          <!-- Extra white/5 gradient overlay -->
+          <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-white/[0.02] to-transparent pointer-events-none"></div>
+
+          <!-- Highlight Pill -->
+          <div class="absolute top-4 right-4">
+            <span class="px-2.5 py-0.5 rounded-full bg-white text-black font-mono text-[9px] font-bold uppercase tracking-wider">
+              MOST POPULAR
+            </span>
+          </div>
+
+          <div class="space-y-6 relative z-10">
+            <div class="space-y-2">
+              <h3 class="font-heading text-xl font-medium text-white">Professional</h3>
+              <p class="text-zinc-400 text-xs">For high-velocity platforms demanding sub-millisecond execution.</p>
+            </div>
+            <div class="flex items-baseline gap-1 font-heading">
+              <span class="text-4xl font-semibold text-white">$79</span>
+              <span class="text-zinc-400 text-xs font-mono">/ mo</span>
+            </div>
+            <ul class="space-y-3 text-xs text-zinc-200 pt-4 border-t border-white/10">
+              <li class="flex items-center gap-2">
+                <iconify-icon icon="solar:check-circle-bold" class="text-emerald-400"></iconify-icon>
+                <span>Up to $10M monthly volume</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <iconify-icon icon="solar:check-circle-bold" class="text-emerald-400"></iconify-icon>
+                <span>Unlimited algorithmic rules</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <iconify-icon icon="solar:check-circle-bold" class="text-emerald-400"></iconify-icon>
+                <span>Sub-5ms kernel bypass routing</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <iconify-icon icon="solar:check-circle-bold" class="text-emerald-400"></iconify-icon>
+                <span>Dedicated Slack channel &amp; 99.99% SLA</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <iconify-icon icon="solar:check-circle-bold" class="text-emerald-400"></iconify-icon>
+                <span>Multi-region Paxos sync</span>
+              </li>
+            </ul>
+          </div>
+
+          <a href="#contact" class="relative z-10 mt-8 w-full py-3.5 rounded-xl bg-white text-black text-xs font-semibold text-center block hover:bg-zinc-200 transition-all shadow-[0_0_25px_rgba(255,255,255,0.2)]">
+            Upgrade to Pro
+          </a>
+        </div>
+
+        <!-- Card 3: Enterprise -->
+        <div class="rounded-3xl bg-[#0e0e11] border border-white/5 p-8 flex flex-col justify-between hover:border-white/20 transition-all duration-300 animate-on-scroll">
+          <div class="space-y-6">
+            <div class="space-y-2">
+              <h3 class="font-heading text-xl font-medium text-white">Enterprise</h3>
+              <p class="text-zinc-400 text-xs">Custom sovereign architecture for planetary institutions.</p>
+            </div>
+            <div class="flex items-baseline gap-1 font-heading">
+              <span class="text-4xl font-semibold text-white">$199</span>
+              <span class="text-zinc-500 text-xs font-mono">/ mo+</span>
+            </div>
+            <ul class="space-y-3 text-xs text-zinc-300 pt-4 border-t border-white/5">
+              <li class="flex items-center gap-2">
+                <iconify-icon icon="solar:check-circle-linear" class="text-zinc-400"></iconify-icon>
+                <span>Unlimited transaction throughput</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <iconify-icon icon="solar:check-circle-linear" class="text-zinc-400"></iconify-icon>
+                <span>Air-gapped on-premise deployment</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <iconify-icon icon="solar:check-circle-linear" class="text-zinc-400"></iconify-icon>
+                <span>Custom HSM cryptographic integration</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <iconify-icon icon="solar:check-circle-linear" class="text-zinc-400"></iconify-icon>
+                <span>24/7 dedicated solutions engineer</span>
+              </li>
+            </ul>
+          </div>
+
+          <a href="#contact" class="mt-8 w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold text-center block transition-all">
+            Contact Enterprise Sales
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Feature Comparison Table: divide-white/5 with UPPERCASE TRACKING-WIDER subheaders -->
+      <div class="space-y-6 mb-24 animate-on-scroll">
+        <div class="space-y-1">
+          <h3 class="font-heading text-xl font-medium text-white">Comprehensive Matrix Comparison</h3>
+          <p class="text-xs font-mono text-zinc-400 uppercase tracking-wider">FULL CAPABILITY AUDIT BY DEPLOYMENT TIER</p>
+        </div>
+
+        <div class="rounded-2xl bg-[#0e0e11] border border-white/5 overflow-x-auto no-scrollbar">
+          <table class="w-full text-left text-xs font-mono divide-y divide-white/5">
+            <thead>
+              <tr class="text-zinc-400 uppercase tracking-wider text-[11px] bg-white/[0.02]">
+                <th class="p-4 font-semibold text-white">CAPABILITY SPECIFICATION</th>
+                <th class="p-4 font-semibold text-center">STARTER</th>
+                <th class="p-4 font-semibold text-center text-white">PRO</th>
+                <th class="p-4 font-semibold text-center">ENTERPRISE</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 text-zinc-300">
+              <!-- Subheader 1 -->
+              <tr class="bg-white/[0.01]">
+                <td colspan="4" class="p-3 px-4 font-bold text-[10px] text-zinc-500 uppercase tracking-wider">
+                  // PERFORMANCE &amp; THROUGHPUT
+                </td>
+              </tr>
+              <tr>
+                <td class="p-4 font-sans text-white">Peak Sustained TPS</td>
+                <td class="p-4 text-center text-zinc-400">5,000 TPS</td>
+                <td class="p-4 text-center text-white font-bold">100,000 TPS</td>
+                <td class="p-4 text-center text-white font-bold">1,200,000+ TPS</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-sans text-white">Guaranteed API Latency</td>
+                <td class="p-4 text-center text-zinc-400">&lt; 50 ms</td>
+                <td class="p-4 text-center text-emerald-400 font-bold">&lt; 5 ms</td>
+                <td class="p-4 text-center text-emerald-400 font-bold">&lt; 0.4 ms (Kernel Bypass)</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-sans text-white">Global Availability SLA</td>
+                <td class="p-4 text-center text-zinc-400">99.9%</td>
+                <td class="p-4 text-center text-white">99.99%</td>
+                <td class="p-4 text-center text-white font-bold">99.999%</td>
+              </tr>
+
+              <!-- Subheader 2 -->
+              <tr class="bg-white/[0.01]">
+                <td colspan="4" class="p-3 px-4 font-bold text-[10px] text-zinc-500 uppercase tracking-wider">
+                  // SECURITY &amp; COMPLIANCE
+                </td>
+              </tr>
+              <tr>
+                <td class="p-4 font-sans text-white">Hardware Security Module (HSM)</td>
+                <td class="p-4 text-center text-zinc-600">—</td>
+                <td class="p-4 text-center text-zinc-400">Cloud HSM</td>
+                <td class="p-4 text-center text-emerald-400 font-bold">Dedicated On-Prem HSM</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-sans text-white">Air-Gapped Sovereign Hosting</td>
+                <td class="p-4 text-center text-zinc-600">—</td>
+                <td class="p-4 text-center text-zinc-600">—</td>
+                <td class="p-4 text-center text-emerald-400 font-bold">Supported (Bare Metal)</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-sans text-white">Audit Trail Retention</td>
+                <td class="p-4 text-center text-zinc-400">90 Days</td>
+                <td class="p-4 text-center text-white">3 Years</td>
+                <td class="p-4 text-center text-white font-bold">Immutable Forever (WORM)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Integrations: 8-item grid using iconify-icon inside rounded cards -->
+      <div class="space-y-8 animate-on-scroll" id="integrations">
+        <div class="text-center max-w-2xl mx-auto space-y-2">
+          <h3 class="font-heading text-2xl sm:text-3xl font-medium text-white">Ecosystem Native Integrations</h3>
+          <p class="text-zinc-400 text-sm">Plug directly into modern cloud infrastructure and banking switches.</p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <!-- Item 1: AWS -->
+          <div class="p-5 rounded-2xl bg-[#0e0e11] border border-white/5 flex flex-col items-center justify-center gap-2 hover:border-white/20 transition-all duration-200 group">
+            <iconify-icon icon="logos:aws" class="text-3xl filter grayscale group-hover:grayscale-0 transition-all"></iconify-icon>
+            <span class="text-xs font-medium text-zinc-400 group-hover:text-white mt-1">Amazon Web Services</span>
+          </div>
+
+          <!-- Item 2: Stripe -->
+          <div class="p-5 rounded-2xl bg-[#0e0e11] border border-white/5 flex flex-col items-center justify-center gap-2 hover:border-white/20 transition-all duration-200 group">
+            <iconify-icon icon="logos:stripe" class="text-3xl filter grayscale group-hover:grayscale-0 transition-all"></iconify-icon>
+            <span class="text-xs font-medium text-zinc-400 group-hover:text-white mt-1">Stripe Treasury</span>
+          </div>
+
+          <!-- Item 3: GitHub -->
+          <div class="p-5 rounded-2xl bg-[#0e0e11] border border-white/5 flex flex-col items-center justify-center gap-2 hover:border-white/20 transition-all duration-200 group">
+            <iconify-icon icon="logos:github-icon" class="text-3xl filter grayscale group-hover:grayscale-0 transition-all"></iconify-icon>
+            <span class="text-xs font-medium text-zinc-400 group-hover:text-white mt-1">GitHub CI/CD</span>
+          </div>
+
+          <!-- Item 4: Slack -->
+          <div class="p-5 rounded-2xl bg-[#0e0e11] border border-white/5 flex flex-col items-center justify-center gap-2 hover:border-white/20 transition-all duration-200 group">
+            <iconify-icon icon="logos:slack-icon" class="text-3xl filter grayscale group-hover:grayscale-0 transition-all"></iconify-icon>
+            <span class="text-xs font-medium text-zinc-400 group-hover:text-white mt-1">Slack Alerts</span>
+          </div>
+
+          <!-- Item 5: Vercel -->
+          <div class="p-5 rounded-2xl bg-[#0e0e11] border border-white/5 flex flex-col items-center justify-center gap-2 hover:border-white/20 transition-all duration-200 group">
+            <iconify-icon icon="logos:vercel-icon" class="text-3xl filter grayscale group-hover:grayscale-0 transition-all"></iconify-icon>
+            <span class="text-xs font-medium text-zinc-400 group-hover:text-white mt-1">Vercel Edge</span>
+          </div>
+
+          <!-- Item 6: Supabase -->
+          <div class="p-5 rounded-2xl bg-[#0e0e11] border border-white/5 flex flex-col items-center justify-center gap-2 hover:border-white/20 transition-all duration-200 group">
+            <iconify-icon icon="logos:supabase-icon" class="text-3xl filter grayscale group-hover:grayscale-0 transition-all"></iconify-icon>
+            <span class="text-xs font-medium text-zinc-400 group-hover:text-white mt-1">Supabase Realtime</span>
+          </div>
+
+          <!-- Item 7: Linear -->
+          <div class="p-5 rounded-2xl bg-[#0e0e11] border border-white/5 flex flex-col items-center justify-center gap-2 hover:border-white/20 transition-all duration-200 group">
+            <iconify-icon icon="logos:linear-icon" class="text-3xl filter grayscale group-hover:grayscale-0 transition-all"></iconify-icon>
+            <span class="text-xs font-medium text-zinc-400 group-hover:text-white mt-1">Linear Workflows</span>
+          </div>
+
+          <!-- Item 8: Snowflake -->
+          <div class="p-5 rounded-2xl bg-[#0e0e11] border border-white/5 flex flex-col items-center justify-center gap-2 hover:border-white/20 transition-all duration-200 group">
+            <iconify-icon icon="logos:snowflake-icon" class="text-3xl filter grayscale group-hover:grayscale-0 transition-all"></iconify-icon>
+            <span class="text-xs font-medium text-zinc-400 group-hover:text-white mt-1">Snowflake Data Cloud</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- SECTION 5: TESTIMONIALS & FINAL CTA                                     -->
+    <!-- ======================================================================= -->
+    <section id="testimonials" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-36 border-t border-white/5">
+
+      <!-- Testimonial: Large Editorial Layout with Giant "40" -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-32 animate-on-scroll">
+        <!-- Left Column: Giant "40" Masked Graphic & Editorial Quote -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="flex items-baseline gap-2">
+            <span class="testimonial-giant-metric">40</span>
+            <span class="font-heading text-4xl sm:text-6xl font-light text-zinc-400">%</span>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="font-heading text-2xl sm:text-4xl font-medium tracking-tight text-white leading-snug">
+              “Lumina reduced our liquidity fragmentation across 14 international jurisdictions, cutting manual settlement overhead by over 40%.”
+            </h3>
+            <p class="text-zinc-400 text-sm sm:text-base leading-relaxed">
+              Elena Rostova — Chief Operating Officer, Nexus Planetary Capital
+            </p>
+          </div>
+
+          <div class="pt-4 flex items-center gap-3">
+            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-zinc-300">
+              $42B AUM MANAGED
+            </span>
+            <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono">
+              ZERO OUTAGES IN 3 YEARS
+            </span>
+          </div>
+        </div>
+
+        <!-- Right Column: Two Portrait Images in rounded-3xl frames -->
+        <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+          <!-- Testimonial Image 1 -->
+          <div class="glass-card rounded-3xl p-2.5 overflow-hidden shadow-2xl hover:scale-105 transition-all duration-500">
+            <div class="glass-highlight rounded-2xl"></div>
+            <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/91a69d34-7bfd-4a15-802d-67ddeff8c160_800w.webp" alt="Executive Leader" class="w-full h-64 sm:h-80 object-cover rounded-2xl" loading="lazy" />
+            <div class="p-3 text-center">
+              <div class="text-xs font-medium text-white">Elena Rostova</div>
+              <div class="text-[10px] font-mono text-zinc-500">COO @ Nexus Capital</div>
+            </div>
+          </div>
+
+          <!-- Testimonial Image 2 -->
+          <div class="glass-card rounded-3xl p-2.5 overflow-hidden shadow-2xl hover:scale-105 transition-all duration-500 mt-8">
+            <div class="glass-highlight rounded-2xl"></div>
+            <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/e2b6bfe8-29b7-48cb-9aa6-a44e21613618_800w.webp" alt="Chief Architect" class="w-full h-64 sm:h-80 object-cover rounded-2xl" loading="lazy" />
+            <div class="p-3 text-center">
+              <div class="text-xs font-medium text-white">Marcus Vance</div>
+              <div class="text-[10px] font-mono text-zinc-500">CTO @ Hyperion FX</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Final CTA: Centered layout inside bg-gradient-to-b from-[#131316] to-[#0e0e11] with radial bloom -->
+      <div id="contact" class="rounded-3xl bg-gradient-to-b from-[#131316] to-[#0e0e11] border border-white/10 p-8 sm:p-16 text-center relative overflow-hidden shadow-[0_30px_100px_rgba(0,0,0,0.8)] animate-on-scroll">
+        <!-- Radial Gradient Bloom -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-b from-white/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-2xl mx-auto space-y-6 relative z-10">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-zinc-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>INSTANT PROVISIONING</span>
+          </div>
+
+          <h2 class="font-heading text-3xl sm:text-5xl font-medium tracking-tight text-white leading-tight">
+            Ready to orchestrate your planetary financial layer?
+          </h2>
+
+          <p class="text-zinc-400 text-sm sm:text-base leading-relaxed">
+            Join forward-thinking treasuries, exchanges, and algorithmic market makers already executing billions through Lumina.
+          </p>
+
+          <!-- Double Text CTA Button -->
+          <div class="pt-4 flex flex-wrap items-center justify-center gap-4">
+            <a href="#pricing" class="btn-double-text h-12 px-8 rounded-full bg-white text-black font-heading font-medium text-sm hover:bg-zinc-200 transition-all duration-1000 ease-lumina shadow-[0_0_35px_rgba(255,255,255,0.25)]">
+              <span class="text-primary-layer">
+                <span>Start Free 14-Day Trial</span>
+                <iconify-icon icon="solar:arrow-right-linear" class="text-base"></iconify-icon>
+              </span>
+              <span class="text-clone-layer">
+                <span>Start Free 14-Day Trial</span>
+                <iconify-icon icon="solar:arrow-right-linear" class="text-base"></iconify-icon>
+              </span>
+            </a>
+
+            <a href="#dashboard" class="btn-double-text h-12 px-6 rounded-full glass-card text-white font-heading font-normal text-sm hover:border-white/30 transition-all duration-1000 ease-lumina">
+              <span class="text-primary-layer">
+                <span>Talk to Solutions Engineer</span>
+              </span>
+              <span class="text-clone-layer">
+                <span>Talk to Solutions Engineer</span>
+              </span>
+            </a>
+          </div>
+
+          <div class="pt-4 text-xs font-mono text-zinc-500">
+            No credit card required • Dedicated testnet keys provisioned in &lt;60s
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- FOOTER                                                                    -->
+  <!-- ========================================================================= -->
+  <footer class="relative z-20 border-t border-white/5 bg-[#09090b] py-16 text-zinc-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-8 mb-12">
+        <!-- Brand Col -->
+        <div class="col-span-2 space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+              <iconify-icon icon="solar:widget-6-bold" class="text-white text-base rotate-90 transform"></iconify-icon>
+            </div>
+            <span class="font-heading font-semibold text-white text-base">Lumina</span>
+          </div>
+          <p class="text-zinc-400 text-xs max-w-sm leading-relaxed">
+            Autonomous financial intelligence and deterministic liquidity infrastructure designed for zero-tolerance capital markets.
+          </p>
+          <div class="flex items-center gap-2 font-mono text-[10px] text-zinc-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-lumina-pulse"></span>
+            <span>ALL SYSTEMS OPERATIONAL (99.999%)</span>
+          </div>
+        </div>
+
+        <!-- Col 1: Platform -->
+        <div class="space-y-3 font-sans">
+          <div class="font-heading font-medium text-white text-sm">Platform</div>
+          <ul class="space-y-2">
+            <li><a href="#features" class="hover:text-white transition-colors">Quantum Security</a></li>
+            <li><a href="#features" class="hover:text-white transition-colors">Paxos State Sync</a></li>
+            <li><a href="#features" class="hover:text-white transition-colors">Kernel Bypass TPS</a></li>
+            <li><a href="#features" class="hover:text-white transition-colors">Air-Gapped Sovereign</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 2: Solutions -->
+        <div class="space-y-3 font-sans">
+          <div class="font-heading font-medium text-white text-sm">Solutions</div>
+          <ul class="space-y-2">
+            <li><a href="#dashboard" class="hover:text-white transition-colors">Corporate Treasury</a></li>
+            <li><a href="#dashboard" class="hover:text-white transition-colors">Cross-Border FX</a></li>
+            <li><a href="#dashboard" class="hover:text-white transition-colors">Algorithmic MM</a></li>
+            <li><a href="#pricing" class="hover:text-white transition-colors">Multi-Subsidiary</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Company -->
+        <div class="space-y-3 font-sans">
+          <div class="font-heading font-medium text-white text-sm">Company</div>
+          <ul class="space-y-2">
+            <li><a href="#testimonials" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="#testimonials" class="hover:text-white transition-colors">Customer Stories</a></li>
+            <li><a href="#pricing" class="hover:text-white transition-colors">Careers (Hiring)</a></li>
+            <li><a href="#contact" class="hover:text-white transition-colors">Security Disclosures</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-8 border-t border-white/5 flex flex-wrap items-center justify-between gap-4 font-mono text-[11px] text-zinc-500">
+        <div>© 2026 Lumina Global Technologies Inc. All rights reserved.</div>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-zinc-300 transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-zinc-300 transition-colors">Terms of Service</a>
+          <a href="#" class="hover:text-zinc-300 transition-colors">SOC2 Verification</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- VANILLA JS ENGINE                                                         -->
+  <!-- ========================================================================= -->
+  <script>
+    // 1. IntersectionObserver for .animate-on-scroll elements
+    document.addEventListener('DOMContentLoaded', () => {
+      const scrollElements = document.querySelectorAll('.animate-on-scroll');
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      scrollElements.forEach(el => observer.observe(el));
+
+      // 2. Initialize Lucide Icons
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+
+      // 3. Fallback Generative Canvas Aura Background
+      const canvas = document.getElementById('fallback-aura-canvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width = 0;
+        let height = 0;
+        let time = 0;
+
+        const resize = () => {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+        };
+        resize();
+        window.addEventListener('resize', resize);
+
+        const renderAura = () => {
+          time += 0.008;
+          ctx.clearRect(0, 0, width, height);
+
+          // Subtle moving aura light blooms
+          const cx1 = width * 0.45 + Math.sin(time) * 120;
+          const cy1 = height * 0.35 + Math.cos(time * 0.8) * 80;
+          const grad1 = ctx.createRadialGradient(cx1, cy1, 0, cx1, cy1, width * 0.45);
+          grad1.addColorStop(0, 'rgba(255, 255, 255, 0.04)');
+          grad1.addColorStop(0.5, 'rgba(161, 161, 170, 0.015)');
+          grad1.addColorStop(1, 'transparent');
+
+          ctx.fillStyle = grad1;
+          ctx.fillRect(0, 0, width, height);
+
+          const cx2 = width * 0.65 + Math.cos(time * 0.7) * 100;
+          const cy2 = height * 0.55 + Math.sin(time * 0.9) * 90;
+          const grad2 = ctx.createRadialGradient(cx2, cy2, 0, cx2, cy2, width * 0.4);
+          grad2.addColorStop(0, 'rgba(113, 113, 122, 0.035)');
+          grad2.addColorStop(1, 'transparent');
+
+          ctx.fillStyle = grad2;
+          ctx.fillRect(0, 0, width, height);
+
+          requestAnimationFrame(renderAura);
+        };
+        renderAura();
+      }
+
+      // 4. Initialize UnicornStudio if available
+      if (window.UnicornStudio) {
+        try {
+          window.UnicornStudio.init();
+        } catch (err) {
+          console.warn('UnicornStudio initialized with local fallback:', err);
+        }
+      }
+
+      // 5. Ensure glass-card z-index hover overlap
+      document.querySelectorAll('.glass-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          card.style.zIndex = '100';
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.zIndex = '';
+        });
+      });
+    });
+  </script>
+</body>
+</html>
