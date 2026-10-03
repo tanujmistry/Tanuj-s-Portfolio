@@ -125,7 +125,7 @@ export const Navbar: React.FC = () => {
             >
               <div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-white/[0.08] light:bg-black/[0.04] backdrop-blur-md border border-white/15 light:border-black/10 group-hover:border-[#4ADEDE] light:group-hover:border-[#EA580C] shadow-sm transition-all overflow-visible p-1">
                 <img
-                  src="/assets/atom-logo.png"
+                  src="./assets/atom-logo.png"
                   alt="Tanuj Mistry Atom Logo"
                   className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(74,222,222,0.4)] light:drop-shadow-[0_0_6px_rgba(234,88,12,0.3)] animate-atom-spin group-hover:drop-shadow-[0_0_14px_rgba(74,222,222,0.8)] light:group-hover:drop-shadow-[0_0_12px_rgba(234,88,12,0.6)] group-hover:scale-110 transition-all duration-300"
                 />
@@ -268,7 +268,7 @@ export const Navbar: React.FC = () => {
                 <div className="flex items-center justify-between pb-6 border-b border-white/10 light:border-black/10">
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-full bg-white/10 light:bg-black/5 backdrop-blur-md border border-white/15 light:border-black/10 p-0.5 flex items-center justify-center">
-                      <img src="/assets/atom-logo.png" alt="Atom Logo" className="w-full h-full object-contain animate-atom-spin" />
+                      <img src="./assets/atom-logo.png" alt="Atom Logo" className="w-full h-full object-contain animate-atom-spin" />
                     </div>
                     <span className="font-mono text-xs text-[#4ADEDE] font-bold tracking-wider uppercase">// Navigation</span>
                   </div>

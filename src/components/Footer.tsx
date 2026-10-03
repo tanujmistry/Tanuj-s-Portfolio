@@ -14,7 +14,7 @@ export const Footer: React.FC = () => {
           <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-2">
             <div className="flex items-center gap-2">
               <div className="w-6 h-6 rounded-full bg-[#18181B] light:bg-[#F3F4F6] border border-[#27272A] light:border-[#E5E7EB] p-0.5 flex items-center justify-center">
-                <img src="/assets/atom-logo.png" alt="Atom Logo" className="w-full h-full object-contain animate-atom-spin" />
+                <img src="./assets/atom-logo.png" alt="Atom Logo" className="w-full h-full object-contain animate-atom-spin" />
               </div>
               <span className="text-[#FFFFFF] light:text-[#111827] font-sans font-bold text-sm">{personalInfo.name}</span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#60F1AD] light:bg-[#FDBA74]" />

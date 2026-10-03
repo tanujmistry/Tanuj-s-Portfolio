@@ -149,7 +149,7 @@ export const About: React.FC = () => {
               {/* Silicon Architecture Graphic */}
               <div className="relative aspect-square w-full overflow-hidden bg-[#030712]">
                 <img
-                  src="/assets/silicon_architecture.jpg"
+                  src="./assets/silicon_architecture.jpg"
                   alt="Silicon Microprocessor and FPGA Circuit Architecture"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter brightness-95 contrast-110"
                   loading="lazy"
